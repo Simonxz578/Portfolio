@@ -1,0 +1,29 @@
+---
+import type { ProjectStep } from "@data/en/projects";
+
+interface Props {
+  steps: ProjectStep[];
+  caption?: string;
+}
+
+const { steps, caption = "Sanitised public workflow" } = Astro.props;
+---
+
+<figure class="flow-figure">
+  <figcaption>
+    <span>Workflow map</span>
+    {caption}
+  </figcaption>
+  <ol class="flow-diagram">
+    {
+      steps.map((step, index) => (
+        <li>
+          <span class="flow-index">{String(index + 1).padStart(2, "0")}</span>
+          <strong>{step.label}</strong>
+          <p>{step.detail}</p>
+        </li>
+      ))
+    }
+  </ol>
+</figure>
+

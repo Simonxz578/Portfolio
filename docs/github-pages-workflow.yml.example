@@ -1,0 +1,40 @@
+# Example only. Do not move this file into .github/workflows until GitHub Pages
+# is deliberately chosen as the single production deployment.
+name: Deploy portfolio to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install, build and upload the Astro site
+        uses: withastro/action@v6
+        with:
+          path: portfolio
+        env:
+          SITE_URL: https://YOUR-USERNAME.github.io
+          BASE_PATH: /YOUR-REPOSITORY
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+

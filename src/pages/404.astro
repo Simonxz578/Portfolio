@@ -1,0 +1,22 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { withBase } from "../utils/urls";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The requested page could not be found."
+  noIndex={true}
+>
+  <section class="not-found">
+    <div class="shell">
+      <p class="eyebrow">404 · Page not found</p>
+      <h1>This path does not lead to a published page.</h1>
+      <p>The project may have moved, or the link may be incomplete.</p>
+      <div class="button-row">
+        <a class="button button-primary" href={withBase("/")}>Return home</a>
+        <a class="button button-secondary" href={withBase("/work/")}>View selected work</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

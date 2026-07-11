@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="XZ monogram">
+  <rect width="64" height="64" rx="4" fill="#0b1721"/>
+  <rect x="7.5" y="7.5" width="49" height="49" fill="none" stroke="#c99c82"/>
+  <path d="M18 21h9l-9 22h9M37 21h10L36 43h11" fill="none" stroke="#f6f3ed" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>
+

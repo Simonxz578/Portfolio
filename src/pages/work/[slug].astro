@@ -1,0 +1,157 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactPanel from "@components/ContactPanel.astro";
+import FlowDiagram from "@components/FlowDiagram.astro";
+import PageHero from "@components/PageHero.astro";
+import { projects, type CaseStudy } from "@data/en/projects";
+import { site } from "@data/site";
+import { withBase } from "../../utils/urls";
+
+export const getStaticPaths = (() =>
+  projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project }
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  project: CaseStudy;
+}
+
+const { project } = Astro.props;
+const projectUrl = new URL(withBase("/work/" + project.slug + "/"), Astro.site ?? Astro.url.origin).href;
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: project.title,
+  description: project.summary,
+  url: projectUrl,
+  author: {
+    "@type": "Person",
+    name: site.name
+  },
+  temporalCoverage: project.period,
+  about: project.capabilities
+};
+---
+
+<BaseLayout
+  title={project.title}
+  description={project.summary}
+  pageType="article"
+  structuredData={projectSchema}
+>
+  <PageHero
+    eyebrow={project.kicker}
+    title={project.title}
+    intro={project.summary}
+    meta={[project.period, project.organisation, project.status]}
+  />
+
+  <section class="case-overview section">
+    <div class="shell case-overview-grid">
+      <div>
+        <p class="eyebrow">Overview</p>
+        <h2>{project.question}</h2>
+      </div>
+      <dl class="case-ledger">
+        <div><dt>Context</dt><dd>{project.organisation}</dd></div>
+        <div><dt>Period</dt><dd>{project.period}</dd></div>
+        <div><dt>Status</dt><dd>{project.status}</dd></div>
+        <div><dt>Evidence</dt><dd>Public-safe summary</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="shell case-section-grid">
+      <header>
+        <p class="section-number">01</p>
+        <h2>Users and constraints</h2>
+      </header>
+      <div class="case-columns">
+        <article>
+          <h3>Users and stakeholders</h3>
+          <ul class="plain-list">{project.users.map((item) => <li>{item}</li>)}</ul>
+        </article>
+        <article>
+          <h3>Constraints</h3>
+          <ul class="plain-list">{project.constraints.map((item) => <li>{item}</li>)}</ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section case-section-tinted">
+    <div class="shell case-section-grid">
+      <header>
+        <p class="section-number">02</p>
+        <h2>My role and decisions</h2>
+      </header>
+      <div>
+        <p class="case-lead">{project.role}</p>
+        <ol class="decision-list">
+          {project.decisions.map((decision, index) => <li><span>{String(index + 1).padStart(2, "0")}</span><p>{decision}</p></li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="shell">
+      <header class="case-wide-heading">
+        <p class="section-number">03</p>
+        <div>
+          <h2>Workflow</h2>
+          <p>A redrawn, public-safe view. It communicates sequence and decision points without reproducing private artefacts.</p>
+        </div>
+      </header>
+      <FlowDiagram steps={project.workflow} />
+    </div>
+  </section>
+
+  <section class="case-section case-section-dark">
+    <div class="shell case-section-grid">
+      <header>
+        <p class="section-number">04</p>
+        <h2>Evaluation and outcomes</h2>
+      </header>
+      <div class="case-columns">
+        <article>
+          <h3>Evaluation approach</h3>
+          <ul class="plain-list">{project.evaluation.map((item) => <li>{item}</li>)}</ul>
+        </article>
+        <article>
+          <h3>What can be stated</h3>
+          <ul class="plain-list">{project.outcomes.map((item) => <li>{item}</li>)}</ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="shell case-section-grid">
+      <header>
+        <p class="section-number">05</p>
+        <h2>Limitations and learning</h2>
+      </header>
+      <div>
+        <ul class="limitation-list">{project.limitations.map((item) => <li>{item}</li>)}</ul>
+        <blockquote>
+          <p>{project.learning}</p>
+        </blockquote>
+        {project.relatedResearch && <p class="related-line"><strong>Related research:</strong> {project.relatedResearch}</p>}
+        <div class="tag-list" aria-label="Capabilities">{project.capabilities.map((item) => <span>{item}</span>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="shell case-nav" aria-label="Case-study navigation">
+    <a href={withBase("/work/")}><span aria-hidden="true">←</span> All work</a>
+    <a href={withBase("/contact/")}>Discuss this work <span aria-hidden="true">→</span></a>
+  </nav>
+
+  <div class="shell section">
+    <ContactPanel title="Interested in the decisions behind the work?" />
+  </div>
+</BaseLayout>

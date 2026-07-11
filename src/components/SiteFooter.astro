@@ -1,0 +1,22 @@
+---
+import { site } from "@data/site";
+import { withBase } from "../utils/urls";
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <p class="footer-name">{site.displayName}</p>
+      <p class="footer-role">{site.role}</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <a href={withBase("/work/")}>Work</a>
+      <a href={withBase("/about/")}>About</a>
+      <a href={withBase("/contact/")}>Contact</a>
+      <a href={site.linkedin} rel="me">LinkedIn</a>
+      <a href={"mailto:" + site.email}>Email</a>
+    </nav>
+    <p class="footer-meta">© {year} Xiang Zhang. Built as a lightweight static Astro site.</p>
+  </div>
+</footer>

@@ -1,0 +1,82 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactPanel from "@components/ContactPanel.astro";
+import PageHero from "@components/PageHero.astro";
+import { education } from "@data/en/experience";
+import { site } from "@data/site";
+import { withBase } from "../utils/urls";
+---
+
+<BaseLayout
+  title="About"
+  description="About Xiang Zhang: from physics and systems thinking to applied AI, education research, product judgement and organisational adoption."
+>
+  <PageHero
+    eyebrow="About"
+    title="Physics taught me to see systems. AI made the human system impossible to ignore."
+    intro="I work where technical capability meets user judgement, organisational constraints and the evidence needed to adopt a system responsibly."
+    meta={["Cambridge", "London", "Beijing"]}
+  />
+
+  <section class="section">
+    <div class="shell about-story">
+      <figure>
+        <picture>
+          <source type="image/webp" srcset={withBase(site.portrait.webpSmall) + " 480w, " + withBase(site.portrait.webp) + " 724w"} />
+          <img
+            src={withBase(site.portrait.jpeg)}
+            srcset={withBase(site.portrait.jpegSmall) + " 480w, " + withBase(site.portrait.jpeg) + " 724w"}
+            sizes="(max-width: 760px) calc(100vw - 40px), 32vw"
+            width={site.portrait.width}
+            height={site.portrait.height}
+            loading="lazy"
+            decoding="async"
+            alt={site.portrait.alt}
+          />
+        </picture>
+      </figure>
+      <div class="prose">
+        <p class="lede">
+          My path into AI began with physics: modelling systems, isolating variables and learning to move between
+          abstraction and measurement.
+        </p>
+        <p>
+          Industrial work then made model capability concrete. At Hirain, I worked with local and API-based LLMs,
+          retrieval and agent workflows in an engineering context. The central lesson was not that one model wins;
+          it was that capability must be assembled into a dependable workflow.
+        </p>
+        <p>
+          Education added the user and organisational layers. Teaching, classroom observation and research into
+          teacher confidence and AI policy showed how trust, professional judgement and evidence determine whether a
+          tool is actually adopted.
+        </p>
+        <p>
+          I now bring those lenses together: technical implementation, product framing, evaluation and the practical
+          work of helping people and organisations use AI well.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-warm">
+    <div class="shell education-grid">
+      <div>
+        <p class="eyebrow">Education</p>
+        <h2>Three disciplines, one trajectory.</h2>
+      </div>
+      <ol>
+        {education.map((item, index) => <li><span>{String(index + 1).padStart(2, "0")}</span><div><time>{item.period}</time><h3>{item.institution}</h3><p>{item.degree}</p></div></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell value-grid">
+      <article><span>01</span><h2>Capability</h2><p>What can the model and surrounding system actually do?</p></article>
+      <article><span>02</span><h2>Use</h2><p>What decision, task or workflow deserves support?</p></article>
+      <article><span>03</span><h2>Evidence</h2><p>How will we know the system is useful, trustworthy and adopted?</p></article>
+    </div>
+  </section>
+
+  <div class="shell section"><ContactPanel /></div>
+</BaseLayout>

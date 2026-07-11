@@ -1,0 +1,15 @@
+node_modules/
+.pnpm-store/
+dist/
+.astro/
+.vercel/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Keep private source material out of the deployed project.
+content/resume-source.docx
+content/project-evidence/private/
+public/resume/*.docx
+public/resume/*-draft.pdf

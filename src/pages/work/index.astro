@@ -1,0 +1,60 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactPanel from "@components/ContactPanel.astro";
+import PageHero from "@components/PageHero.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import SectionIntro from "@components/SectionIntro.astro";
+import { projects } from "@data/en/projects";
+---
+
+<BaseLayout
+  title="Work"
+  description="Selected applied AI, model-workflow, user-research and organisational-adoption case studies by Xiang Zhang."
+>
+  <PageHero
+    eyebrow="Work / Projects"
+    title="From model capability to working context."
+    intro="These case studies prioritise decision quality and evidence. Confidential implementation details and unsupported metrics are left out deliberately."
+    meta={["3 selected case studies", "Applied AI", "Research translated for product"]}
+  />
+
+  <section class="section">
+    <div class="shell">
+      <div class="project-grid">
+        {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-ink">
+    <div class="shell evidence-grid">
+      <SectionIntro
+        eyebrow="Evidence standard"
+        title="Clear about what the work can prove."
+        description="A portfolio should make strong work legible without converting private experience into public overclaiming."
+      />
+      <div class="evidence-points">
+        <article>
+          <span>01</span>
+          <h3>Verified scope</h3>
+          <p>Roles, models, research questions and workflow components come from supplied source material.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Sanitised detail</h3>
+          <p>Industrial architecture is redrawn at a public-safe level; internal data, code and documents stay private.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Named limits</h3>
+          <p>Missing evaluation artefacts, unpublished findings and unavailable demos are stated on each case study.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell section">
+    <ContactPanel title="Have a workflow worth examining?" />
+  </div>
+</BaseLayout>
+

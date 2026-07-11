@@ -1,0 +1,76 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactPanel from "@components/ContactPanel.astro";
+import PageHero from "@components/PageHero.astro";
+import { leadershipItems } from "@data/en/leadership";
+---
+
+<BaseLayout
+  title="Leadership"
+  description="Xiang Zhang’s leadership in Cambridge CEO and the student-led Formal Hall Networking Society, focused on community, programmes, operations and continuity."
+>
+  <PageHero
+    eyebrow="Leadership"
+    title="Communities are products with memory."
+    intro="My leadership work centres on designing the conditions for useful participation: clear purpose, thoughtful programmes, reliable operations and continuity beyond one organiser."
+    meta={["Community building", "Programme operations", "Digital stewardship"]}
+  />
+
+  <section class="section">
+    <div class="shell leadership-list">
+      {
+        leadershipItems.map((item, index) => (
+          <article>
+            <div class="leadership-number">{String(index + 1).padStart(2, "0")}</div>
+            <header>
+              <p class="eyebrow">{item.period}</p>
+              <h2>{item.title}</h2>
+              <p class="leadership-role">{item.role}</p>
+            </header>
+            <div>
+              <p class="leadership-summary">{item.summary}</p>
+              <ul class="plain-list">{item.contributions.map((contribution) => <li>{contribution}</li>)}</ul>
+              <div class="leadership-links" aria-label={`${item.title} public links`}>
+                {item.links.map((link) => <a class="text-link" href={link.href}>{link.label} <span aria-hidden="true">↗</span></a>)}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section-ink">
+    <div class="shell website-story">
+      <div>
+        <p class="eyebrow">Website development</p>
+        <h2>Turning a society’s first year into a maintainable public record.</h2>
+      </div>
+      <div>
+        <p>
+          For the Formal Hall Networking Society archive, I worked across information architecture, editorial
+          structure and front-end development. The current site uses semantic HTML, custom CSS and vanilla JavaScript,
+          with responsive images, keyboard-accessible navigation and a lightweight image viewer.
+        </p>
+        <p>
+          The project is intentionally small in technical footprint. Its harder product problem is stewardship:
+          preserving verified names, dates and photographs without overstating affiliation or inventing institutional history.
+        </p>
+        <div class="stack-line" aria-label="Technology stack">
+          <span>Semantic HTML</span><span>Custom CSS</span><span>Vanilla JavaScript</span><span>GitHub Pages</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell continuity-note">
+      <p class="eyebrow">Operating principle</p>
+      <blockquote>
+        <p>Good community design makes participation meaningful now and leaves enough structure for the next team to continue.</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <div class="shell section"><ContactPanel title="Building a community around difficult work?" /></div>
+</BaseLayout>

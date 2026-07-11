@@ -1,0 +1,41 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactPanel from "@components/ContactPanel.astro";
+import PageHero from "@components/PageHero.astro";
+import { site } from "@data/site";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact Xiang Zhang about applied AI, AI product, model evaluation, education technology, organisational adoption or startup collaboration."
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Start with the problem, the users and the decision."
+    intro="I welcome focused conversations about applied AI systems, product roles, model and workflow evaluation, education technology, organisational adoption and startup collaboration."
+    meta={["Applied AI", "AI product", "Startup collaboration"]}
+  />
+
+  <section class="section">
+    <div class="shell contact-page-grid">
+      <div>
+        <p class="eyebrow">Best route</p>
+        <h2>Email</h2>
+        <a class="contact-email" href={"mailto:" + site.email}>{site.email}</a>
+        <p><a class="text-link" href={site.linkedin} rel="me">LinkedIn profile <span aria-hidden="true">↗</span></a></p>
+        <p class="contact-note">A professional email is published; mobile and private messaging details are deliberately not included.</p>
+      </div>
+      <div class="contact-prompts">
+        <h2>Useful context to include</h2>
+        <ul class="plain-list">
+          <li>The product, workflow or research problem you are working on</li>
+          <li>The users or organisation affected</li>
+          <li>The kind of role, collaboration or decision you want to discuss</li>
+          <li>Any timeline or public material that would help make the conversation concrete</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell section"><ContactPanel title="Ready when the problem is." /></div>
+</BaseLayout>

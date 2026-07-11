@@ -1,0 +1,49 @@
+---
+import { site } from "@data/site";
+
+interface Props {
+  title?: string;
+  copy?: string;
+}
+
+const {
+  title = "Let’s discuss a useful AI problem.",
+  copy = "I’m open to conversations about applied AI, AI product, model evaluation, education technology, organisational adoption and thoughtful startup collaboration."
+} = Astro.props;
+---
+
+<section class="contact-panel" aria-labelledby="contact-panel-title">
+  <div>
+    <p class="eyebrow">Start a conversation</p>
+    <h2 id="contact-panel-title">{title}</h2>
+  </div>
+  <div>
+    <p>{copy}</p>
+    <div class="button-row">
+      <a class="button button-primary" href={"mailto:" + site.email}>Email Simon</a>
+      <button class="button button-secondary js-only" type="button" data-copy-email data-email={site.email}>
+        Copy email
+      </button>
+    </div>
+    <p class="copy-status" aria-live="polite" data-copy-status></p>
+  </div>
+</section>
+
+<script>
+  const copyButton = document.querySelector<HTMLButtonElement>("[data-copy-email]");
+  const copyStatus = document.querySelector<HTMLElement>("[data-copy-status]");
+
+  copyButton?.addEventListener("click", async () => {
+    const email = copyButton.dataset.email;
+    if (!email) return;
+
+    try {
+      await navigator.clipboard.writeText(email);
+      if (copyStatus) copyStatus.textContent = "Email copied.";
+      copyButton.textContent = "Copied";
+    } catch {
+      if (copyStatus) copyStatus.textContent = "Copy was unavailable. Use the email link instead.";
+    }
+  });
+</script>
+

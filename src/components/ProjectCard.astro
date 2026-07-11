@@ -1,0 +1,31 @@
+---
+import type { CaseStudy } from "@data/en/projects";
+import { withBase } from "../utils/urls";
+
+interface Props {
+  project: CaseStudy;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const sequence = String(index + 1).padStart(2, "0");
+---
+
+<article class="project-card">
+  <a href={withBase("/work/" + project.slug + "/")} aria-label={"View case study: " + project.title}>
+    <div class="project-card-topline">
+      <span>{sequence}</span>
+      <span>{project.period}</span>
+    </div>
+    <div class="project-card-visual" aria-hidden="true">
+      <i></i><i></i><i></i><i></i>
+      <span>{project.capabilities.slice(0, 3).join(" · ")}</span>
+    </div>
+    <div class="project-card-copy">
+      <p class="eyebrow">{project.kicker}</p>
+      <h3>{project.shortTitle}</h3>
+      <p>{project.summary}</p>
+      <span class="card-link">Read case study <span aria-hidden="true">↗</span></span>
+    </div>
+  </a>
+</article>

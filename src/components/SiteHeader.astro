@@ -1,0 +1,105 @@
+---
+import { site } from "@data/site";
+import { withBase } from "../utils/urls";
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const logicalPath =
+  basePath && currentPath.startsWith(basePath)
+    ? currentPath.slice(basePath.length) || "/"
+    : currentPath;
+
+function isCurrent(href: string): boolean {
+  return logicalPath === href || (href !== "/" && logicalPath.startsWith(href));
+}
+---
+
+<header class="site-header" data-site-header>
+  <div class="shell header-inner">
+    <a class="identity" href={withBase("/")} aria-label="Xiang Zhang — home">
+      <span class="identity-mark" aria-hidden="true">XZ</span>
+      <span class="identity-copy">
+        <strong>Xiang Zhang</strong>
+        <span>AI Product & Applied AI</span>
+      </span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+      data-nav-toggle
+    >
+      <span data-nav-label>Menu</span>
+      <span class="nav-toggle-lines" aria-hidden="true"><i></i><i></i></span>
+    </button>
+
+    <nav id="primary-navigation" class="primary-nav" aria-label="Primary navigation" data-nav-panel>
+      {
+        site.navigation.map((item) => (
+          <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+  const panel = document.querySelector<HTMLElement>("[data-nav-panel]");
+  const label = document.querySelector<HTMLElement>("[data-nav-label]");
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+
+  function setOpen(open: boolean, returnFocus = false): void {
+    if (!toggle || !panel) return;
+    toggle.setAttribute("aria-expanded", String(open));
+    panel.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+    if (label) label.textContent = open ? "Close" : "Menu";
+    if (!open && returnFocus) toggle.focus();
+  }
+
+  toggle?.addEventListener("click", () => {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  panel?.addEventListener("click", (event) => {
+    if (event.target instanceof Element && event.target.closest("a")) {
+      setOpen(false);
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (
+      toggle?.getAttribute("aria-expanded") === "true" &&
+      event.target instanceof Node &&
+      !toggle.contains(event.target) &&
+      !panel?.contains(event.target)
+    ) {
+      setOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && toggle?.getAttribute("aria-expanded") === "true") {
+      setOpen(false, true);
+    }
+  });
+
+  const desktop = window.matchMedia("(min-width: 960px)");
+  desktop.addEventListener("change", () => setOpen(false));
+
+  function updateHeader(): void {
+    header?.classList.toggle("is-scrolled", window.scrollY > 8);
+  }
+
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
+</script>

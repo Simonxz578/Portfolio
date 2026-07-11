@@ -1,0 +1,66 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactPanel from "@components/ContactPanel.astro";
+import PageHero from "@components/PageHero.astro";
+import { capabilities, education, selectedExperience } from "@data/en/experience";
+import { site } from "@data/site";
+import { withBase } from "../utils/urls";
+---
+
+<BaseLayout
+  title="Résumé"
+  description="A concise résumé view of Xiang Zhang’s applied AI, research, product and leadership experience."
+>
+  <PageHero
+    eyebrow="Résumé"
+    title="A concise record, not a résumé dump."
+    intro="The portfolio prioritises the evidence most relevant to applied AI and AI product work. A separate approved public PDF has not yet been supplied."
+    meta={["English", "Selected experience", "Public-safe"]}
+  />
+
+  <section class="section">
+    <div class="shell resume-layout">
+      <aside class="resume-aside">
+        <p class="eyebrow">Profile</p>
+        <h2>{site.role}</h2>
+        <p>Applied AI, model workflows, user research, evaluation and organisational adoption.</p>
+        {
+          site.resumePdfPath ? (
+            <a class="button button-primary" href={withBase(site.resumePdfPath)} download>Download PDF résumé</a>
+          ) : (
+            <div class="resume-pending" role="note">
+              <strong>PDF pending</strong>
+              <p>No downloadable public résumé has been added. The private source document is not exposed.</p>
+              <a class="text-link" href={"mailto:" + site.email}>Request the current résumé <span aria-hidden="true">→</span></a>
+            </div>
+          )
+        }
+      </aside>
+
+      <div class="resume-main">
+        <section aria-labelledby="resume-experience">
+          <h2 id="resume-experience">Selected experience</h2>
+          <ol class="resume-list">
+            {selectedExperience.map((item) => <li><time>{item.period}</time><div><h3>{item.role}</h3><p class="resume-org">{item.organisation}</p><p>{item.summary}</p></div></li>)}
+          </ol>
+        </section>
+
+        <section aria-labelledby="resume-education">
+          <h2 id="resume-education">Education</h2>
+          <ol class="resume-list compact">
+            {education.map((item) => <li><time>{item.period}</time><div><h3>{item.degree}</h3><p class="resume-org">{item.institution}</p></div></li>)}
+          </ol>
+        </section>
+
+        <section aria-labelledby="resume-capabilities">
+          <h2 id="resume-capabilities">Capabilities</h2>
+          <div class="resume-capabilities">
+            {capabilities.map((group) => <article><h3>{group.group}</h3><p>{group.items.join(" · ")}</p></article>)}
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell section"><ContactPanel title="Would a targeted résumé help?" copy="Email me with the role or problem context and I can share the current approved résumé directly." /></div>
+</BaseLayout>
