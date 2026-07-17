@@ -6,7 +6,7 @@ The site is intentionally not a full online résumé. Its information architectu
 
 **Physics → Applied AI → Education, users and organisational adoption**
 
-The portfolio currently lives in the `portfolio/` subdirectory so it does not disturb the existing Formal Hall Networking Society site in the repository root.
+The portfolio is maintained as a standalone repository and deploys as a static Astro site.
 
 ## Technology
 
@@ -23,9 +23,8 @@ The portfolio currently lives in the `portfolio/` subdirectory so it does not di
 From this directory:
 
 ```bash
-cd portfolio
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 Astro will print the local URL, normally <http://localhost:4321>.
@@ -33,14 +32,15 @@ Astro will print the local URL, normally <http://localhost:4321>.
 Production commands:
 
 ```bash
-npm run build
-npm run preview
-npm run check:build
+pnpm lint
+pnpm run build
+pnpm run preview
+pnpm run check:build
 ```
 
-- `npm run build` runs Astro’s type/content checks and creates `dist/`.
-- `npm run preview` serves the production output locally.
-- `npm run check:build` verifies expected routes, internal assets, one `h1` per page, image alt attributes and common private-source patterns.
+- `pnpm run build` runs Astro’s type/content checks and creates `dist/`.
+- `pnpm run preview` serves the production output locally.
+- `pnpm run check:build` verifies expected routes, internal assets, one `h1` per page, image alt attributes and common private-source patterns.
 
 ## Routes
 
@@ -49,7 +49,8 @@ npm run check:build
 ├── work/
 │   ├── industrial-ai-agent-rag-workflow/
 │   ├── ai-policy-teacher-agency/
-│   └── ai-enhanced-science-education/
+│   ├── ai-enhanced-science-education/
+│   └── formal-hall-networking-society-website/
 ├── research/
 ├── leadership/
 ├── about/
@@ -94,7 +95,7 @@ English is the only published language. The `src/data/en/` boundary keeps future
 4. Set `featured: true` only when the project has enough evidence for the home page.
 5. Use a unique lower-case, hyphenated `slug`.
 6. Keep confidential diagrams sanitised and redrawn; never place internal screenshots in `public/`.
-7. Run `npm run build` and `npm run check:build`.
+7. Run `pnpm run build` and `pnpm run check:build`.
 8. Test the generated route with keyboard and mobile widths before review.
 
 The dynamic route `src/pages/work/[slug].astro` creates each case-study page. Do not duplicate its layout for ordinary projects.
@@ -105,7 +106,7 @@ Each project supports:
 
 1. overview and problem;
 2. users and stakeholders;
-3. constraints;
+3. operating context;
 4. role and decisions;
 5. sanitised workflow;
 6. evaluation;
@@ -142,7 +143,7 @@ When an approved, targeted public PDF exists:
 2. save it as `public/resume/xiang-zhang-resume.pdf`;
 3. set `resumePdfPath` in `src/data/site.ts` to `/resume/xiang-zhang-resume.pdf`;
 4. confirm that the home and résumé-page links download the correct file;
-5. run `npm run check:build`.
+5. run `pnpm run check:build`.
 
 Until then, the website links to the concise résumé page and clearly states that the PDF is pending.
 
@@ -175,7 +176,7 @@ Recommended preparation:
 
 Every meaningful image needs useful alt text. Decorative technical motifs should be CSS or use empty alt text.
 
-## Vercel deployment
+## Vercel deployment (alternative only)
 
 The site is prepared for static Vercel deployment. Astro and Vercel both support static Astro sites without a server adapter.
 
@@ -183,9 +184,9 @@ Do not deploy until the local site and content have been approved.
 
 1. Push the reviewed code to a Git repository.
 2. Import that repository into Vercel.
-3. Set **Root Directory** to `portfolio` while this project remains a subdirectory.
+3. Keep **Root Directory** at the repository root.
 4. Confirm framework preset **Astro**.
-5. Confirm build command `npm run build` and output directory `dist`.
+5. Confirm build command `pnpm run build` and output directory `dist`.
 6. Keep `BASE_PATH=/`.
 7. For a custom domain, set `SITE_URL=https://your-final-domain.example` in Production and Preview as appropriate.
 8. Review the preview deployment before promoting the production branch.
@@ -198,19 +199,11 @@ Current official references:
 - [Astro on Vercel](https://docs.astro.build/en/guides/deploy/vercel/)
 - [Vercel’s Astro guide](https://vercel.com/docs/frameworks/frontend/astro)
 
-## Optional GitHub Pages deployment
+## GitHub Pages deployment
 
-Vercel is the intended production target. Do not activate GitHub Pages at the same time unless one deployment is explicitly designated non-production.
+GitHub Pages is the production deployment target. The active workflow is `.github/workflows/deploy.yml`.
 
-The inactive example is `docs/github-pages-workflow.yml.example`. To use it deliberately:
-
-1. replace the placeholder username and repository in that file;
-2. keep `SITE_URL` as the host, for example `https://username.github.io`;
-3. set `BASE_PATH=/repository-name` for a project site, or `/` for a `username.github.io` repository or custom domain;
-4. move the reviewed example to the repository root at `.github/workflows/deploy.yml`;
-5. if the portfolio becomes its own repository, change the action’s `path` from `portfolio` to `.`;
-6. commit the generated lockfile;
-7. choose **GitHub Actions** under **Settings → Pages → Source**.
+The workflow builds the repository root with the committed pnpm lockfile, sets `SITE_URL=https://simonxz578.github.io` and `BASE_PATH=/Portfolio`, uploads `dist/`, and deploys only pushes to `main` (or a manual dispatch). In GitHub, select **Settings → Pages → Source: GitHub Actions**.
 
 For a custom GitHub Pages domain, add the approved domain to `public/CNAME`, set `SITE_URL` to that domain and set `BASE_PATH=/`.
 
@@ -245,8 +238,8 @@ Search both source and `dist/` for:
 Then run:
 
 ```bash
-npm run build
-npm run check:build
+pnpm run build
+pnpm run check:build
 rg -n -i 'wechat|mobile|phone|resume-source|\.docx' dist
 ```
 
@@ -260,4 +253,4 @@ git status
 git diff --check
 ```
 
-After local review, stage only the intended `portfolio/` files. Do not commit, push or deploy until the content owner has approved the local website.
+After local review, stage only the intended portfolio files. Review the complete diff before committing or publishing.

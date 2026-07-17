@@ -31,7 +31,7 @@ import { leadershipItems } from "@data/en/leadership";
               <p class="leadership-summary">{item.summary}</p>
               <ul class="plain-list">{item.contributions.map((contribution) => <li>{contribution}</li>)}</ul>
               <div class="leadership-links" aria-label={`${item.title} public links`}>
-                {item.links.map((link) => <a class="text-link" href={link.href}>{link.label} <span aria-hidden="true">↗</span></a>)}
+                {item.links.map((link) => <a class="text-link" href={link.href} rel="external">{link.label} <span aria-hidden="true">↗</span></a>)}
               </div>
             </div>
           </article>
@@ -43,19 +43,26 @@ import { leadershipItems } from "@data/en/leadership";
   <section class="section section-ink">
     <div class="shell website-story">
       <div>
-        <p class="eyebrow">Website development</p>
-        <h2>Turning a society’s first year into a maintainable public record.</h2>
+        <p class="eyebrow">0→1 product and agentic delivery</p>
+        <h2>Turning a society’s first year into a maintainable public product.</h2>
       </div>
       <div>
         <p>
-          For the Formal Hall Networking Society archive, I worked across information architecture, editorial
-          structure and front-end development. The current site uses semantic HTML, custom CSS and vanilla JavaScript,
-          with responsive images, keyboard-accessible navigation and a lightweight image viewer.
+          I led the product framing, user and stakeholder definition, information architecture, evidence standards,
+          privacy and institutional-independence boundaries, accessibility requirements, responsive behaviour,
+          deployment constraints and long-term update workflow for the Formal Hall Networking Society website.
         </p>
         <p>
-          The project is intentionally small in technical footprint. Its harder product problem is stewardship:
-          preserving verified names, dates and photographs without overstating affiliation or inventing institutional history.
+          I converted those requirements into boundary-defined system prompts and used Codex for supervised AI-assisted
+          implementation and vibe coding. The agent worked within explicit filesystem, factual, privacy, design and
+          deployment constraints; I manually reviewed, corrected, tested and approved outputs before publication.
         </p>
+        <p>
+          Human judgement retained product ownership, organisational knowledge, factual and privacy authority, design
+          and risk judgement, final acceptance and publication responsibility. Codex supported code generation,
+          implementation, repetitive changes, responsive refinement, testing and deployment assistance.
+        </p>
+        <p><a class="text-link" href="https://camformal.com/" rel="external">Live production website <span aria-hidden="true">↗</span></a></p>
         <div class="stack-line" aria-label="Technology stack">
           <span>Semantic HTML</span><span>Custom CSS</span><span>Vanilla JavaScript</span><span>GitHub Pages</span>
         </div>

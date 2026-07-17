@@ -24,6 +24,8 @@ export type CaseStudy = {
   learning: string;
   capabilities: string[];
   relatedResearch?: string;
+  links?: { href: string; label: string }[];
+  comparisonWorkflows?: { title: string; description: string; steps: ProjectStep[] }[];
   featured: boolean;
 };
 
@@ -44,11 +46,7 @@ export const projects: CaseStudy[] = [
       "Engineers working around PCB packaging inspection",
       "Technical collaborators responsible for model deployment and integration"
     ],
-    constraints: [
-      "A short industrial placement with multiple local and hosted model paths",
-      "Internal code, data and company documents cannot be published",
-      "The source material does not include an approved benchmark, latency study or cost analysis"
-    ],
+    constraints: [],
     role:
       "Worked with a team including Tsinghua University collaborators to deploy, debug and evaluate GLM-4, GLM-4V, Qwen1.5-14B and GPT-4o; connected model access to retrieval, crawling and multimodal workflow components; and applied RAG retrieval in a PCB packaging-inspection context.",
     decisions: [
@@ -74,11 +72,7 @@ export const projects: CaseStudy[] = [
       "Practical experience moving from individual model capabilities to an agentic workflow.",
       "A reusable lesson: integration choices and workflow ownership matter as much as model selection."
     ],
-    limitations: [
-      "No public repository or live demo is available.",
-      "Confidential code, internal data and commercial claims are deliberately omitted.",
-      "Error analysis, privacy controls, latency and cost evidence are not available in the supplied materials."
-    ],
+    limitations: [],
     learning:
       "Applied AI becomes useful when model capability is connected to the right context, interfaces and human review point. The work strengthened my preference for evaluating the whole workflow—not only the model response.",
     capabilities: ["LLM deployment", "RAG", "Agent workflows", "API integration", "Multimodal processing", "Model evaluation"],
@@ -139,7 +133,36 @@ export const projects: CaseStudy[] = [
     learning:
       "Adoption is socio-technical: a capable model can still fail when responsibility is unclear, evidence is difficult to judge or guidance does not fit the real workflow.",
     capabilities: ["Policy analysis", "Stakeholder analysis", "Organisational adoption", "Trust", "Evaluation design", "Workflow analysis"],
-    relatedResearch: "MPhil in Education (Education Policy & Leadership), University of Cambridge",
+    relatedResearch:
+      "MPhil in Education (Education Policy, Leadership and Improvement), University of Cambridge",
+    comparisonWorkflows: [
+      {
+        title: "Education implementation loop",
+        description:
+          "The research context: capability is interpreted through institutions, professional practice, behaviour and evidence before policy is adjusted.",
+        steps: [
+          { label: "AI policy and capability", detail: "Policy intent and available technical capability" },
+          { label: "School interpretation", detail: "School-level institution-building and guidance" },
+          { label: "Teacher enactment", detail: "Adaptation or resistance in professional context" },
+          { label: "Student behaviour", detail: "Changes in learning behaviour and practice" },
+          { label: "Evidence and risk", detail: "Learning evidence, new risks and user needs" },
+          { label: "Adjustment", detail: "Institutional and policy revision" }
+        ]
+      },
+      {
+        title: "Enterprise AI implementation loop",
+        description:
+          "A transferable product-thinking analogy, not an empirical claim about companies or a finding that the two institutions are identical.",
+        steps: [
+          { label: "Model capability", detail: "What the model and surrounding system can do" },
+          { label: "Organisational absorption", detail: "Recognition, interpretation and governance" },
+          { label: "Workflow translation", detail: "Managers and employees adapt real work" },
+          { label: "User behaviour", detail: "Changes in employee and user action" },
+          { label: "Outcomes and failures", detail: "Data, outcomes and failure cases" },
+          { label: "Iteration", detail: "Product, model and governance revision" }
+        ]
+      }
+    ],
     featured: true
   },
   {
@@ -199,6 +222,87 @@ export const projects: CaseStudy[] = [
     capabilities: ["User research", "Education technology", "Trust", "Adoption", "Evidence synthesis", "Product implications"],
     relatedResearch: "MA in Education (Science), University College London",
     featured: true
+  },
+  {
+    slug: "formal-hall-networking-society-website",
+    title: "Formal Hall Networking Society Website",
+    shortTitle: "FHNS Website",
+    kicker: "0→1 Product Build · System Prompting · Agentic Delivery",
+    period: "2025–2026",
+    organisation: "Formal Hall Networking Society",
+    status: "Live production website",
+    summary:
+      "Led the end-to-end creation and launch of a production website for a Cambridge student society, translating an informal cross-college community and its founding history into a durable public product.",
+    question:
+      "How can an informal community’s history, operations and public entry points become a trustworthy product that future committees can maintain?",
+    users: [
+      "Prospective members seeking a clear route into the society",
+      "Current participants looking for an accurate public record",
+      "Future committees responsible for continuity and publication",
+      "Colleges and venues referenced in the archive without implied endorsement"
+    ],
+    constraints: [
+      "Only verified names, dates, photographs and event information could be published",
+      "Private community records, contact details and participant information had to remain outside the product",
+      "The society’s student-led independence had to remain explicit",
+      "The site needed to stay lightweight, accessible and maintainable without a build system"
+    ],
+    role:
+      "Owned the product purpose, user and stakeholder definition, organisational requirements, information architecture, content hierarchy, evidence standards, privacy rules, institutional-independence boundaries, accessibility requirements, responsive behaviour, deployment constraints and long-term update workflow.",
+    decisions: [
+      "Framed the need as a durable public product and organisational record, not simply a visual website project.",
+      "Defined what was factually supportable, what could be public, what the agent could access or modify, which actions required approval and what counted as completion.",
+      "Converted the requirements into boundary-defined system prompts and used Codex for supervised AI-assisted implementation and vibe coding.",
+      "Manually reviewed, corrected, tested and approved outputs before publication, retaining product ownership and final responsibility.",
+      "Created a maintainable static architecture and handover documentation to support succession across academic years."
+    ],
+    workflow: [
+      { label: "Community need", detail: "An informal cross-college network needed a durable public identity" },
+      { label: "Product framing", detail: "Users, purpose, scope and organisational value defined by the product owner" },
+      { label: "Boundaries", detail: "Factual, privacy, institutional, design, permission and stop conditions" },
+      { label: "System prompting", detail: "Requirements translated into explicit instructions for supervised Codex work" },
+      { label: "Agentic delivery", detail: "Code generation, implementation, repetitive changes and responsive refinements" },
+      { label: "Human QA", detail: "Manual factual, design, privacy, accessibility and responsive review" },
+      { label: "Publication", detail: "Git, GitHub Pages, custom domain and production verification" },
+      { label: "Continuity", detail: "A maintainable workflow and archive for future committees" }
+    ],
+    evaluation: [
+      "Iterative QA covered mobile and desktop layouts, keyboard interaction, accessibility, image behaviour, internal paths and browser errors.",
+      "Human judgement remained responsible for factual authority, privacy, design, institutional risk and final acceptance.",
+      "The production release was verified through local builds, Git review, GitHub Pages publication and the custom domain."
+    ],
+    outcomes: [
+      "Delivered a durable public identity, founding-year archive, membership entry point and maintainable publishing workflow.",
+      "Launched the live production website at camformal.com.",
+      "Demonstrated a transferable AI product-management process spanning problem framing, requirements, human–AI task allocation, QA, deployment and handover."
+    ],
+    limitations: [
+      "The website does not use a generative AI model at runtime; AI was used in the supervised product-development workflow.",
+      "Codex supported implementation but did not independently determine product purpose, factual boundaries or publication decisions.",
+      "Community reach is not presented as registered membership, formal event attendance or University endorsement."
+    ],
+    learning:
+      "Boundary-defined prompting works when human judgement remains explicit: the product owner decides what should be built, for whom, what evidence is acceptable and where the agent must stop; Codex accelerates implementation, testing and repetitive delivery work within those boundaries.",
+    capabilities: [
+      "Problem framing",
+      "Product scoping",
+      "Information architecture",
+      "Content governance",
+      "Privacy and institutional risk",
+      "System prompting",
+      "Human–AI task allocation",
+      "Supervised vibe coding",
+      "Accessibility and responsive QA",
+      "Deployment and maintainability"
+    ],
+    links: [
+      { href: "https://camformal.com/", label: "Live website" },
+      {
+        href: "https://github.com/Simonxz578/formal-hall-networking-society",
+        label: "Public repository"
+      }
+    ],
+    featured: true
   }
 ];
 
@@ -207,4 +311,3 @@ export const featuredProjects = projects.filter((project) => project.featured);
 export function getProject(slug: string): CaseStudy | undefined {
   return projects.find((project) => project.slug === slug);
 }
-

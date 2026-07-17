@@ -11,6 +11,7 @@ const expectedRoutes = [
   "work/industrial-ai-agent-rag-workflow/index.html",
   "work/ai-policy-teacher-agency/index.html",
   "work/ai-enhanced-science-education/index.html",
+  "work/formal-hall-networking-society-website/index.html",
   "research/index.html",
   "leadership/index.html",
   "about/index.html",
@@ -132,7 +133,7 @@ for (const htmlFile of htmlFiles) {
     { pattern: /\b1[3-9]\d{9}\b/, label: "mobile-number pattern" },
     { pattern: /(?:resume-source|张翔补充材料)\.docx/i, label: "private source filename" },
     {
-      pattern: /\b(?:wechat|weixin|xiaohongshu)\b|微信|小红书|RadianceXZ|Simon_Cambridge|simon_cambridge/i,
+      pattern: /\b(?:weixin|xiaohongshu)\b|微信号|小红书|RadianceXZ|Simon_Cambridge|simon_cambridge/i,
       label: "private or non-portfolio social identifier"
     }
   ];

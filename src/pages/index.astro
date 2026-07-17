@@ -32,7 +32,7 @@ const personSchema = {
     { "@type": "CollegeOrUniversity", name: "University College London" },
     { "@type": "CollegeOrUniversity", name: "University of Manchester" }
   ],
-  sameAs: [site.linkedin]
+  sameAs: [site.linkedin, site.github]
 };
 ---
 
@@ -56,6 +56,8 @@ const personSchema = {
         </div>
         <div class="hero-links" aria-label="Direct links">
           <a href={site.linkedin} rel="me">LinkedIn</a>
+          <span aria-hidden="true">·</span>
+          <a href={site.github} rel="me external">GitHub</a>
           <span aria-hidden="true">·</span>
           <a href={"mailto:" + site.email}>Email</a>
           <span aria-hidden="true">·</span>
@@ -108,7 +110,7 @@ const personSchema = {
       <SectionIntro
         eyebrow="Selected work"
         title="Evidence across models, users and organisations."
-        description="Three case studies chosen for relevance, not chronology. Each states what is known, what is withheld and what still needs evidence."
+        description="Four case studies chosen for relevance, not chronology. Each states what is known, what is withheld and what still needs evidence."
         align="split"
       />
       <div class="project-grid">

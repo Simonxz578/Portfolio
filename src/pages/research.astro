@@ -1,9 +1,28 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
+import FlowDiagram from "@components/FlowDiagram.astro";
 import PageHero from "@components/PageHero.astro";
 import { researchItems } from "@data/en/research";
 import { withBase } from "../utils/urls";
+
+const educationLoop = [
+  { label: "AI policy and capability", detail: "Policy intent and available technical capability" },
+  { label: "School interpretation", detail: "School-level institution-building and guidance" },
+  { label: "Teacher enactment", detail: "Adaptation or resistance in professional context" },
+  { label: "Student behaviour", detail: "Changes in learning behaviour and practice" },
+  { label: "Evidence and risk", detail: "Learning evidence, new risks and user needs" },
+  { label: "Adjustment", detail: "Institutional and policy revision" }
+];
+
+const enterpriseLoop = [
+  { label: "Model capability", detail: "What the model and surrounding system can do" },
+  { label: "Organisational absorption", detail: "Recognition, interpretation and governance" },
+  { label: "Workflow translation", detail: "Managers and employees adapt real work" },
+  { label: "User behaviour", detail: "Changes in employee and user action" },
+  { label: "Outcomes and failures", detail: "Data, outcomes and failure cases" },
+  { label: "Iteration", detail: "Product, model and governance revision" }
+];
 ---
 
 <BaseLayout
@@ -37,6 +56,48 @@ import { withBase } from "../utils/urls";
           </article>
         ))
       }
+    </div>
+  </section>
+
+  <section class="section implementation-framework">
+    <div class="shell">
+      <div class="case-wide-heading">
+        <p class="eyebrow">Transferable implementation logic</p>
+        <div>
+          <h2>The organisational layer between capability and outcomes.</h2>
+          <div class="prose">
+            <p>
+              My MPhil research examines how AI policy and technical capability are interpreted through school-level
+              institutions, enacted, adapted or resisted by teachers, reflected in student learning behaviour and
+              evidence, and revised as new risks and needs emerge.
+            </p>
+            <p>
+              The same implementation structure offers a cautious analogy for enterprise AI: model capability must be
+              recognised and absorbed by an organisation, translated into real workflows, and evaluated through changes
+              in employee and user behaviour. Those behaviours generate data, outcomes and failure cases for the next
+              iteration of the product, model and governance system.
+            </p>
+            <p>
+              This is a transferable analytical framework, not a claim that schools and companies are identical or that
+              the dissertation empirically tested enterprises. It shapes my product approach: capability is the starting
+              point; value emerges through organisational absorption, workflow redesign, behavioural change and
+              evidence-led iteration.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="comparison-flows" aria-label="Education and enterprise AI implementation-loop comparison">
+        <div>
+          <h3>Education implementation loop</h3>
+          <p>Research context: schools, teachers, students and learning evidence.</p>
+          <FlowDiagram steps={educationLoop} caption="Education · iterative implementation logic" />
+        </div>
+        <div>
+          <h3>Enterprise AI implementation loop</h3>
+          <p>Product-thinking analogy: organisations, workflows, users and operational evidence.</p>
+          <FlowDiagram steps={enterpriseLoop} caption="Enterprise · analogous, not identical" />
+        </div>
+      </div>
     </div>
   </section>
 

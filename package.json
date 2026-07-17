@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
+    "lint": "astro check",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",

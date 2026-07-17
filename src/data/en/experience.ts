@@ -39,7 +39,11 @@ export const selectedExperience: ExperienceItem[] = [
 ];
 
 export const education = [
-  { institution: "University of Cambridge", degree: "MPhil in Education (Education Policy & Leadership)", period: "2025–2026" },
+  {
+    institution: "University of Cambridge",
+    degree: "MPhil in Education (Education Policy, Leadership and Improvement)",
+    period: "2025–2026"
+  },
   { institution: "University College London", degree: "MA in Education (Science)", period: "2024–2025" },
   { institution: "University of Manchester", degree: "BSc (Hons) in Physics", period: "2020–2023" }
 ] as const;
@@ -62,4 +66,3 @@ export const capabilities = [
     items: ["Community building", "Programme operations", "Project delivery", "Cross-team coordination", "Succession planning"]
   }
 ] as const;
-
