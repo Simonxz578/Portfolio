@@ -4,7 +4,7 @@ export const site = {
   role: "AI Product & Applied AI",
   description:
     "Xiang Zhang works across applied AI, product judgement, model evaluation and organisational adoption.",
-  email: "xz578@cam.ac.uk",
+  email: "2877042547@qq.com",
   linkedin: "https://www.linkedin.com/in/xiang-zhang-1673a2369",
   github: "https://github.com/Simonxz578",
   locale: "en-GB",
