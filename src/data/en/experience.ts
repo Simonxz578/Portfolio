@@ -13,6 +13,12 @@ export const selectedExperience: ExperienceItem[] = [
     summary: "Researching how AI policy and school-level guidance are interpreted in professional practice."
   },
   {
+    period: "2025",
+    organisation: "Harris St John’s Wood, London",
+    role: "Science (Physics) Teacher",
+    summary: "Worked directly with classroom practice, observation and student feedback in a real organisational setting."
+  },
+  {
     period: "2024–2025",
     organisation: "University College London",
     role: "MA research · AI in science education",
@@ -29,12 +35,6 @@ export const selectedExperience: ExperienceItem[] = [
     organisation: "Siemens, Beijing",
     role: "Materials Engineering Intern",
     summary: "Analysed medical-tubing material data and used Python-supported analytical workflows for engineering decisions."
-  },
-  {
-    period: "2025",
-    organisation: "Harris St John’s Wood, London",
-    role: "Science (Physics) Teacher",
-    summary: "Worked directly with classroom practice, observation and student feedback in a real organisational setting."
   }
 ];
 
