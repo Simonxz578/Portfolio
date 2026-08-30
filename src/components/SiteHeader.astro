@@ -4,9 +4,10 @@ import { withBase } from "../utils/urls";
 
 interface Props {
   currentPath: string;
+  locale?: "en-GB" | "zh-CN";
 }
 
-const { currentPath } = Astro.props;
+const { currentPath, locale = "en-GB" } = Astro.props;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 const logicalPath =
   basePath && currentPath.startsWith(basePath)
@@ -16,15 +17,30 @@ const logicalPath =
 function isCurrent(href: string): boolean {
   return logicalPath === href || (href !== "/" && logicalPath.startsWith(href));
 }
+
+const isZh = locale === "zh-CN";
+const switchablePath = /(?:^|\/)404(?:\.html)?\/?$/.test(logicalPath) ? "/" : logicalPath;
+const englishPath = switchablePath.startsWith("/zh/") ? switchablePath.slice(3) || "/" : switchablePath;
+const chinesePath = switchablePath.startsWith("/zh/") ? switchablePath : `/zh${switchablePath}`;
+const navigation = isZh
+  ? [
+      { label: "项目", href: "/zh/work/" },
+      { label: "研究", href: "/zh/research/" },
+      { label: "领导力", href: "/zh/leadership/" },
+      { label: "关于我", href: "/zh/about/" },
+      { label: "履历", href: "/zh/resume/" },
+      { label: "联系", href: "/zh/contact/" }
+    ]
+  : site.navigation;
 ---
 
 <header class="site-header" data-site-header>
   <div class="shell header-inner">
-    <a class="identity" href={withBase("/")} aria-label="Xiang Zhang — home">
+    <a class="identity" href={withBase(isZh ? "/zh/" : "/")} aria-label={isZh ? "张翔—首页" : "Xiang Zhang — home"}>
       <span class="identity-mark" aria-hidden="true">XZ</span>
       <span class="identity-copy">
-        <strong>Xiang Zhang</strong>
-        <span>AI Product & Applied AI</span>
+        <strong>{isZh ? "张翔 Simon" : "Xiang Zhang"}</strong>
+        <span>{isZh ? "AI 产品与应用 AI" : "AI Product & Applied AI"}</span>
       </span>
     </a>
 
@@ -35,18 +51,23 @@ function isCurrent(href: string): boolean {
       aria-controls="primary-navigation"
       data-nav-toggle
     >
-      <span data-nav-label>Menu</span>
+      <span data-nav-label>{isZh ? "菜单" : "Menu"}</span>
       <span class="nav-toggle-lines" aria-hidden="true"><i></i><i></i></span>
     </button>
 
     <nav id="primary-navigation" class="primary-nav" aria-label="Primary navigation" data-nav-panel>
       {
-        site.navigation.map((item) => (
+        navigation.map((item) => (
           <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
             {item.label}
           </a>
         ))
       }
+      <div class="language-switch" aria-label={isZh ? "语言选择" : "Language selection"}>
+        <a href={withBase(chinesePath)} lang="zh-CN" aria-current={isZh ? "page" : undefined}>中文</a>
+        <span aria-hidden="true">/</span>
+        <a href={withBase(englishPath)} lang="en-GB" aria-current={!isZh ? "page" : undefined}>EN</a>
+      </div>
     </nav>
   </div>
 </header>
@@ -62,7 +83,7 @@ function isCurrent(href: string): boolean {
     toggle.setAttribute("aria-expanded", String(open));
     panel.classList.toggle("is-open", open);
     document.body.classList.toggle("nav-open", open);
-    if (label) label.textContent = open ? "Close" : "Menu";
+    if (label) label.textContent = open ? (document.documentElement.lang === "zh-CN" ? "关闭" : "Close") : (document.documentElement.lang === "zh-CN" ? "菜单" : "Menu");
     if (!open && returnFocus) toggle.focus();
   }
 

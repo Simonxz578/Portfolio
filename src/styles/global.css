@@ -393,6 +393,31 @@ h3 {
   transform: scaleX(1);
 }
 
+.language-switch {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.28rem;
+  margin-left: 0.25rem;
+  padding: 0.2rem 0.35rem;
+  border: 1px solid rgba(246, 243, 237, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.language-switch a {
+  min-width: 42px;
+  justify-content: center;
+  padding-inline: 0.45rem;
+}
+
+.language-switch a[aria-current="page"] {
+  color: var(--ink-deep);
+  background: var(--paper);
+}
+
+.language-switch a::after { display: none; }
+.language-switch span { color: rgba(246, 243, 237, 0.32); }
+
 .nav-toggle {
   display: none;
   min-width: 88px;
@@ -2197,6 +2222,18 @@ h3 {
 
   .js .primary-nav a::after {
     display: none;
+  }
+
+  .js .primary-nav .language-switch {
+    order: -1;
+    width: max-content;
+    margin: 0 0 0.4rem;
+  }
+
+  .js .primary-nav .language-switch a {
+    min-width: 64px;
+    justify-content: center;
+    border: 0;
   }
 
   .home-hero-grid {

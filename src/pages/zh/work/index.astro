@@ -1,0 +1,8 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro"; import PageHero from "@components/PageHero.astro"; import ProjectCard from "@components/ProjectCard.astro"; import ContactPanel from "@components/ContactPanel.astro"; import {projects} from "@data/zh/projects";
+---
+<BaseLayout locale="zh-CN" title="项目" description="张翔的应用AI、产品开发、用户研究与组织采用项目。">
+<PageHero eyebrow="项目" title="把模型能力带进真实场景。" intro="这些案例重点呈现问题、判断、行动和交付结果。" meta={["5个代表案例","应用AI","产品与用户研究"]}/>
+<section class="section"><div class="shell"><div class="project-grid">{projects.map((p,i)=><ProjectCard project={p} index={i} locale="zh" />)}</div></div></section>
+<div class="shell section"><ContactPanel locale="zh-CN" title="有一个值得解决的AI产品问题？" copy="欢迎联系我讨论用户研究、产品范围、AI评估和交付。"/></div>
+</BaseLayout>

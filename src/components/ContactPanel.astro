@@ -4,25 +4,28 @@ import { site } from "@data/site";
 interface Props {
   title?: string;
   copy?: string;
+  locale?: "en-GB" | "zh-CN";
 }
 
 const {
   title = "Let’s discuss a useful AI problem.",
-  copy = "I’m open to conversations about applied AI, AI product, model evaluation, education technology, organisational adoption and thoughtful startup collaboration."
+  copy = "I’m open to conversations about applied AI, AI product, model evaluation, education technology, organisational adoption and thoughtful startup collaboration.",
+  locale = "en-GB"
 } = Astro.props;
+const isZh = locale === "zh-CN";
 ---
 
 <section class="contact-panel" aria-labelledby="contact-panel-title">
   <div>
-    <p class="eyebrow">Start a conversation</p>
+    <p class="eyebrow">{isZh ? "聊聊合作" : "Start a conversation"}</p>
     <h2 id="contact-panel-title">{title}</h2>
   </div>
   <div>
     <p>{copy}</p>
     <div class="button-row">
-      <a class="button button-primary" href={"mailto:" + site.email}>Email Simon</a>
+      <a class="button button-primary" href={"mailto:" + site.email}>{isZh ? "给 Simon 发邮件" : "Email Simon"}</a>
       <button class="button button-secondary js-only" type="button" data-copy-email data-email={site.email}>
-        Copy email
+        {isZh ? "复制邮箱" : "Copy email"}
       </button>
     </div>
     <p class="copy-status" aria-live="polite" data-copy-status></p>
@@ -46,4 +49,3 @@ const {
     }
   });
 </script>
-

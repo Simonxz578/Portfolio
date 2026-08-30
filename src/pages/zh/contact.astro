@@ -1,0 +1,4 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro"; import PageHero from "@components/PageHero.astro"; import {site} from "@data/site";
+---
+<BaseLayout locale="zh-CN" title="联系" description="联系张翔，讨论AI产品、应用AI与合作机会。"><PageHero eyebrow="联系" title="从一个具体问题开始。" intro="如果你正在组建AI产品团队、评估模型能力或把研究转成产品，欢迎联系我。" meta={["剑桥 / 伦敦","可讨论AI产品岗位","中英文沟通"]}/><section class="section"><div class="shell contact-page-grid"><div><p class="eyebrow">邮箱</p><h2><a href={"mailto:"+site.email}>{site.email}</a></h2><p>这是联系我的最快方式。</p></div><div class="contact-methods"><a href={site.linkedin}><span>LinkedIn</span><strong>职业经历与联系 ↗</strong></a><a href={site.github}><span>GitHub</span><strong>代码与公开项目 ↗</strong></a></div></div></section></BaseLayout>

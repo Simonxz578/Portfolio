@@ -2,22 +2,25 @@
 import { site } from "@data/site";
 import { withBase } from "../utils/urls";
 const year = new Date().getFullYear();
+interface Props { locale?: "en-GB" | "zh-CN"; }
+const { locale = "en-GB" } = Astro.props;
+const isZh = locale === "zh-CN";
 ---
 
 <footer class="site-footer">
   <div class="shell footer-grid">
     <div>
-      <p class="footer-name">{site.displayName}</p>
-      <p class="footer-role">{site.role}</p>
+      <p class="footer-name">{isZh ? "张翔 Simon" : site.displayName}</p>
+      <p class="footer-role">{isZh ? "AI 产品与应用 AI" : site.role}</p>
     </div>
     <nav aria-label="Footer navigation">
-      <a href={withBase("/work/")}>Work</a>
-      <a href={withBase("/about/")}>About</a>
-      <a href={withBase("/contact/")}>Contact</a>
+      <a href={withBase(isZh ? "/zh/work/" : "/work/")}>{isZh ? "项目" : "Work"}</a>
+      <a href={withBase(isZh ? "/zh/about/" : "/about/")}>{isZh ? "关于我" : "About"}</a>
+      <a href={withBase(isZh ? "/zh/contact/" : "/contact/")}>{isZh ? "联系" : "Contact"}</a>
       <a href={site.linkedin} rel="me">LinkedIn</a>
       <a href={site.github} rel="me external">GitHub</a>
-      <a href={"mailto:" + site.email}>Email</a>
+      <a href={"mailto:" + site.email}>{isZh ? "邮件" : "Email"}</a>
     </nav>
-    <p class="footer-meta">© {year} Xiang Zhang. Built as a lightweight static Astro site.</p>
+    <p class="footer-meta">© {year} Xiang Zhang. {isZh ? "使用 Astro 构建的轻量静态网站。" : "Built as a lightweight static Astro site."}</p>
   </div>
 </footer>

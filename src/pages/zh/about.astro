@@ -1,0 +1,5 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro"; import PageHero from "@components/PageHero.astro"; import ContactPanel from "@components/ContactPanel.astro"; import {site} from "@data/site"; import {withBase} from "../../utils/urls";
+---
+<BaseLayout locale="zh-CN" title="关于我" description="张翔：从物理和系统思维走向应用AI、产品与教育研究。"><PageHero eyebrow="关于我" title="物理教会我理解系统，AI让我把人放回系统中心。" intro="我关注技术能力如何进入用户判断、组织流程和真实决策。" meta={["剑桥","伦敦","北京"]}/>
+<section class="section"><div class="shell about-story"><figure><img src={withBase(site.portrait.jpeg)} alt="张翔在剑桥学院建筑旁"/></figure><div class="prose"><h2>我的路径</h2><p>我在曼彻斯特大学学习物理，训练了建模、实验和数据分析能力。后来，我把这种系统思维带入工业AI、教育研究和产品开发。</p><p>在经纬恒润，我参与语言模型部署、RAG检索和Agent工作流。在伦敦大学学院与剑桥大学，我研究教师如何理解、信任和采用AI。这些经历让我能够同时讨论模型表现、用户任务和组织条件。</p><p>我也创办并运营剑桥跨学院社群，负责团队、活动流程、网站和交接。它让我真正理解：产品经理需要推动人、信息与执行共同向前。</p><h2>我正在寻找</h2><p>我希望加入重视用户问题、技术判断和快速交付的AI产品团队，参与从问题定义到上线迭代的完整过程。</p></div></div></section><div class="shell section"><ContactPanel locale="zh-CN" title="一起做真正有用的AI产品。"/></div></BaseLayout>

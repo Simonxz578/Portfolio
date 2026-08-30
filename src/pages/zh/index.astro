@@ -1,0 +1,34 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactPanel from "@components/ContactPanel.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import SectionIntro from "@components/SectionIntro.astro";
+import { featuredProjects } from "@data/zh/projects";
+import { site } from "@data/site";
+import { withBase } from "../../utils/urls";
+const capabilities = [
+  {group:"应用AI",items:["LLM部署","RAG与Agent工作流","API与多模态集成","模型评估"]},
+  {group:"产品",items:["用户研究","需求拆解","产品范围","采用与信任"]},
+  {group:"研究",items:["定性研究","政策分析","评估设计","利益相关者分析"]},
+  {group:"领导力",items:["社区搭建","项目运营","跨团队推进","交接规划"]}
+];
+---
+<BaseLayout locale="zh-CN" title="张翔 Simon｜AI产品与应用AI" description="张翔的AI产品经理作品集：应用AI、产品判断、用户研究、模型评估和组织采用。">
+  <section class="home-hero">
+    <div class="shell home-hero-grid">
+      <div class="home-hero-copy">
+        <p class="eyebrow">张翔 Simon · AI产品与应用AI</p>
+        <h1>我把模型能力、用户需求和真实工作流程连接成可用的AI产品。</h1>
+        <p class="hero-lede">我的经历横跨物理、LLM工作流、教育研究和组织领导。我关注技术能否落进具体场景，也负责把判断变成可以测试和交付的产品。</p>
+        <div class="button-row"><a class="button button-primary" href="#selected-work">查看项目</a><a class="button button-secondary" href={withBase("/zh/resume/")}>查看履历</a></div>
+        <div class="hero-links"><a href={site.linkedin}>LinkedIn</a><span>·</span><a href={site.github}>GitHub</a><span>·</span><a href={"mailto:"+site.email}>邮件</a><span>·</span><a href={withBase("/zh/leadership/")}>领导力</a><span>·</span><a href={withBase("/zh/research/")}>研究</a></div>
+      </div>
+      <figure class="portrait-frame"><picture><source type="image/webp" srcset={withBase(site.portrait.webpSmall)+" 480w, "+withBase(site.portrait.webp)+" 724w"}/><img src={withBase(site.portrait.jpeg)} width={site.portrait.width} height={site.portrait.height} alt="张翔身着剑桥学术礼服，站在学院石墙旁。"/></picture><figcaption><span>物理 → 应用AI</span><strong>产品、用户与组织采用</strong></figcaption></figure>
+    </div>
+    <div class="shell capability-rail"><span>模型能力</span><i></i><span>工作流设计</span><i></i><span>评估</span><i></i><span>信任</span><i></i><span>采用</span></div>
+  </section>
+  <section class="section" id="selected-work"><div class="shell"><SectionIntro eyebrow="代表项目" title="从真实问题到可交付产品。" description="五个案例展示我如何发现问题、做出取舍、推动开发并完成交付。" align="split"/><div class="project-grid">{featuredProjects.map((project,index)=><ProjectCard project={project} index={index} locale="zh" />)}</div><p class="section-link"><a class="text-link" href={withBase("/zh/work/")}>查看全部项目 <span>→</span></a></p></div></section>
+  <section class="section section-ink"><div class="shell"><SectionIntro eyebrow="能力" title="从四个角度推进AI产品。" description="我把技术实现、用户理解、产品判断和组织协作放进同一套工作方式。" align="split"/><div class="capability-grid">{capabilities.map((c,i)=><article><span class="capability-number">{String(i+1).padStart(2,"0")}</span><h3>{c.group}</h3><ul>{c.items.map(x=><li>{x}</li>)}</ul></article>)}</div></div></section>
+  <section class="section trajectory"><div class="shell trajectory-grid"><p class="eyebrow">我的判断</p><div><h2>有用的AI产品，需要同时理解模型、用户和组织。</h2><p>物理训练让我学会拆解复杂系统；AI实践让我理解模型与工作流；教育研究和社团领导经历让我看到信任、责任和协作如何决定产品能否真正被采用。</p></div></div></section>
+  <div class="shell section"><ContactPanel locale="zh-CN" title="如果你正在解决一个值得投入的AI问题，我们可以聊聊。" copy="我关注AI产品、模型评估、教育科技、组织采用，以及需要跨技术与业务推进的早期项目。"/></div>
+</BaseLayout>

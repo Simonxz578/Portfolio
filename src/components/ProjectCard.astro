@@ -5,15 +5,16 @@ import { withBase } from "../utils/urls";
 interface Props {
   project: CaseStudy;
   index: number;
+  locale?: "en" | "zh";
 }
 
-const { project, index } = Astro.props;
+const { project, index, locale = "en" } = Astro.props;
 const sequence = String(index + 1).padStart(2, "0");
 ---
 
 <article class="project-card">
-  {project.slug === "ninefold" && <span class="project-card-badge">New · 中文 / EN</span>}
-  <a href={withBase("/work/" + project.slug + "/")} aria-label={"View case study: " + project.title}>
+  {project.slug === "ninefold" && <span class="project-card-badge">{locale === "zh" ? "新项目 · 中文 / EN" : "New · 中文 / EN"}</span>}
+  <a href={withBase((locale === "zh" ? "/zh/work/" : "/work/") + project.slug + "/")} aria-label={(locale === "zh" ? "查看案例：" : "View case study: ") + project.title}>
     <div class="project-card-topline">
       <span>{sequence}</span>
       <span>{project.period}</span>
@@ -27,8 +28,8 @@ const sequence = String(index + 1).padStart(2, "0");
       <p class="eyebrow">{project.kicker}</p>
       <h3>{project.shortTitle}</h3>
       <p>{project.summary}</p>
-      <span class="card-link">Read case study <span aria-hidden="true">↗</span></span>
-      {project.slug === "ninefold" && <span class="card-language-link">中文案例可用</span>}
+      <span class="card-link">{locale === "zh" ? "查看案例" : "Read case study"} <span aria-hidden="true">↗</span></span>
+      {project.slug === "ninefold" && <span class="card-language-link">{locale === "zh" ? "English version available" : "中文案例可用"}</span>}
     </div>
   </a>
 </article>

@@ -1,0 +1,5 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro"; import PageHero from "@components/PageHero.astro"; import {site} from "@data/site";
+const items=[{t:"2025–2026",o:"剑桥大学",r:"教育学硕士 · AI政策与教师能动性"},{t:"2024–2025",o:"伦敦大学学院",r:"教育学硕士 · AI与科学教育"},{t:"2024",o:"经纬恒润，北京",r:"硬件工程实习生 · LLM工作流"},{t:"2023",o:"西门子，北京",r:"材料工程实习生"},{t:"2020–2023",o:"曼彻斯特大学",r:"物理学荣誉学士"}];
+---
+<BaseLayout locale="zh-CN" title="履历" description="张翔的教育、应用AI、研究与产品经历。"><PageHero eyebrow="履历" title="从物理、研究到AI产品。" intro="一份面向AI产品岗位的简明经历记录。" meta={["应用AI","教育研究","产品与领导力"]}/><section class="section"><div class="shell resume-layout"><div><h2>经历与教育</h2></div><ol class="experience-list">{items.map(x=><li><time>{x.t}</time><div><p>{x.o}</p><h3>{x.r}</h3></div></li>)}</ol></div></section><section class="section section-warm"><div class="shell resume-cta"><div><p class="eyebrow">联系</p><h2>需要完整履历或想讨论岗位？</h2></div><a class="button button-primary" href={"mailto:"+site.email}>发送邮件</a></div></section></BaseLayout>

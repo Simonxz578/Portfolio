@@ -64,7 +64,7 @@ export const projects: CaseStudy[] = [
     summary:
       "Deploying and evaluating local and API-based language models, then connecting retrieval, web crawling and multimodal processing to an industrial inspection context.",
     question:
-      "How can several model capabilities become a coherent engineering workflow rather than a set of disconnected demonstrations?",
+      "How can several model capabilities work together in one coherent engineering workflow?",
     users: [
       "Engineers working around PCB packaging inspection",
       "Technical collaborators responsible for model deployment and integration"
@@ -73,7 +73,7 @@ export const projects: CaseStudy[] = [
     role:
       "Worked with a team including Tsinghua University collaborators to deploy, debug and evaluate GLM-4, GLM-4V, Qwen1.5-14B and GPT-4o; connected model access to retrieval, crawling and multimodal workflow components; and applied RAG retrieval in a PCB packaging-inspection context.",
     decisions: [
-      "Used both local deployment and API integration rather than assuming one model-access pattern.",
+      "Tested both local deployment and API integration to suit different access needs.",
       "Treated retrieval and context assembly as workflow components, not prompt decoration.",
       "Connected model calls to an agent workflow spanning retrieval, web crawling and multimodal processing.",
       "Kept the public architecture sanitised so it communicates design logic without exposing internal implementation."
@@ -97,7 +97,7 @@ export const projects: CaseStudy[] = [
     ],
     limitations: [],
     learning:
-      "Applied AI becomes useful when model capability is connected to the right context, interfaces and human review point. The work strengthened my preference for evaluating the whole workflow—not only the model response.",
+      "Applied AI becomes useful when model capability connects to the right context, interfaces and human review point. I learned to evaluate the whole workflow, from retrieval to engineering review.",
     capabilities: ["LLM deployment", "RAG", "Agent workflows", "API integration", "Multimodal processing", "Model evaluation"],
     featured: true
   },
@@ -127,7 +127,7 @@ export const projects: CaseStudy[] = [
       "Developed an MPhil research project around teacher agency under AI policy, focusing on how teachers interpret policy and school guidance. This public case study translates the verified research question into an organisational-adoption lens without publishing participant data or unsupported findings.",
     decisions: [
       "Separated national policy, school-level guidance and professional judgement as distinct implementation layers.",
-      "Centred learning evidence and teacher responsibility rather than treating adoption as software rollout alone.",
+      "Centred learning quality and teacher responsibility throughout the adoption process.",
       "Used an organisational lens to locate where ambiguity, trust and workflow design can shape implementation.",
       "Presented product implications as questions for design and evaluation, not universal research conclusions."
     ],
@@ -139,7 +139,7 @@ export const projects: CaseStudy[] = [
       { label: "Feedback to policy", detail: "Where implementation experience should inform revision" }
     ],
     evaluation: [
-      "The project asks whether policy is interpretable at the point of use, not only whether it exists.",
+      "The project asks whether teachers can interpret policy at the point of use.",
       "A product team could evaluate clarity, decision burden, escalation paths and the quality of evidence available to teachers.",
       "No sample, method or empirical result is stated here because those materials were not supplied for publication."
     ],
@@ -175,7 +175,7 @@ export const projects: CaseStudy[] = [
       {
         title: "Enterprise AI implementation loop",
         description:
-          "A transferable product-thinking analogy, not an empirical claim about companies or a finding that the two institutions are identical.",
+          "A product lens for tracing capability through organisations, workflows, user behaviour and iteration.",
         steps: [
           { label: "Model capability", detail: "What the model and surrounding system can do" },
           { label: "Organisational absorption", detail: "Recognition, interpretation and governance" },
@@ -213,10 +213,10 @@ export const projects: CaseStudy[] = [
     role:
       "Completed an MA dissertation on teachers’ confidence and pedagogical approaches with AI in science education. The associated manuscript is under revision following a major-revision decision at the International Journal of Science Education.",
     decisions: [
-      "Distinguished teacher-facing uses from student-facing uses instead of grouping all AI adoption together.",
+      "Separated teacher-facing and student-facing uses because they create different needs and risks.",
       "Treated confidence as one input to adoption, alongside trust, task fit and professional judgement.",
       "Translated pedagogical questions into product questions about timing, control, feedback and evidence.",
-      "Used the relationship between technology, pedagogy and subject knowledge—the concern often described through AI-TPACK—as a design lens, not a marketing label."
+      "Used the relationship between technology, pedagogy and subject knowledge—often described through AI-TPACK—to guide design questions."
     ],
     workflow: [
       { label: "Teaching task", detail: "Planning, explanation, feedback or classroom activity" },
@@ -226,7 +226,7 @@ export const projects: CaseStudy[] = [
       { label: "Adoption signal", detail: "Use, adapt, defer or reject in the actual workflow" }
     ],
     evaluation: [
-      "The research centres teachers’ confidence and pedagogical judgement rather than adoption counts alone.",
+      "The research examines teachers’ confidence and pedagogical judgement at the point of use.",
       "For product evaluation, the relevant questions include task fit, reviewability, control and the quality of evidence presented to the teacher.",
       "This page does not publish a sample size, statistical result or universal finding because the underlying evidence was not supplied."
     ],
@@ -302,7 +302,7 @@ export const projects: CaseStudy[] = [
     limitations: [
       "The website does not use a generative AI model at runtime; AI was used in the supervised product-development workflow.",
       "Codex supported implementation but did not independently determine product purpose, factual boundaries or publication decisions.",
-      "Community reach is not presented as registered membership, formal event attendance or University endorsement."
+      "Community reach refers to the wider WeChat ecosystem; formal membership and event attendance are tracked separately."
     ],
     learning:
       "Boundary-defined prompting works when human judgement remains explicit: the product owner decides what should be built, for whom, what evidence is acceptable and where the agent must stop; Codex accelerates implementation, testing and repetitive delivery work within those boundaries.",

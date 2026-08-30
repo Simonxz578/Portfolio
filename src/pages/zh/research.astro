@@ -1,0 +1,9 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro"; import PageHero from "@components/PageHero.astro"; import ContactPanel from "@components/ContactPanel.astro"; import {withBase} from "../../utils/urls";
+const items=[
+ {title:"AI政策下的教师能动性",type:"教育学硕士研究",status:"研究阶段已完成",period:"2025–2026",institution:"剑桥大学",description:"研究英格兰中学教师如何理解AI政策和校内指引，以及他们如何在教学中作出专业判断。",href:"/zh/work/ai-policy-teacher-agency/"},
+ {title:"教师使用AI的信心与教学方式",type:"教育学硕士论文",status:"论文正在根据大修意见修改",period:"2024–2025",institution:"伦敦大学学院",description:"研究科学教师在不同教学情境中使用AI时的信心、判断和采用方式。",href:"/zh/work/ai-enhanced-science-education/"},
+ {title:"二元材料光催化分解水",type:"物理学本科论文",status:"研究项目",period:"2023",institution:"曼彻斯特大学",description:"在Alexander Grigorenko教授指导下开展实验物理研究。"}
+];
+---
+<BaseLayout locale="zh-CN" title="研究" description="张翔关于AI政策、教师判断、科学教育和组织采用的研究。"><PageHero eyebrow="研究" title="把研究转化为产品判断。" intro="我研究人们如何理解、信任和使用AI，并把这些发现转成产品团队可以行动的问题。" meta={["AI政策","教师信心","采用与信任"]}/><section class="section"><div class="shell research-list">{items.map((x,i)=><article><div class="research-index">{String(i+1).padStart(2,"0")}</div><div><div class="research-meta"><span>{x.type}</span><span>{x.period}</span></div><h2>{x.title}</h2><p class="status-label">{x.status}</p><p>{x.description}</p><p class="research-institution">{x.institution}</p>{x.href&&<a class="text-link" href={withBase(x.href)}>查看产品案例 <span>→</span></a>}</div></article>)}</div></section><section class="section section-warm"><div class="shell principles-grid"><div><p class="eyebrow">研究如何进入产品</p><h2>我把三种习惯带进AI产品工作。</h2></div><ol><li><span>01</span><strong>观察真实使用现场。</strong><p>产品只有进入具体任务，才能看见阻力与机会。</p></li><li><span>02</span><strong>把抽象问题变成可测试问题。</strong><p>围绕任务匹配、控制权、可检查性和决策负担设计评估。</p></li><li><span>03</span><strong>理解信任怎样形成。</strong><p>清晰责任、可复核结果和稳定流程共同影响采用。</p></li></ol></div></section><div class="shell section"><ContactPanel locale="zh-CN" title="正在研究AI采用或评估？"/></div></BaseLayout>
