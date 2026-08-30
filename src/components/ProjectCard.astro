@@ -12,12 +12,14 @@ const sequence = String(index + 1).padStart(2, "0");
 ---
 
 <article class="project-card">
+  {project.slug === "ninefold" && <span class="project-card-badge">New · 中文 / EN</span>}
   <a href={withBase("/work/" + project.slug + "/")} aria-label={"View case study: " + project.title}>
     <div class="project-card-topline">
       <span>{sequence}</span>
       <span>{project.period}</span>
     </div>
     <div class="project-card-visual" aria-hidden="true">
+      {project.slug === "ninefold" && <img src={withBase("/images/ninefold/ninefold-world.webp")} alt="" />}
       <i></i><i></i><i></i><i></i>
       <span>{project.capabilities.slice(0, 3).join(" · ")}</span>
     </div>
@@ -26,6 +28,7 @@ const sequence = String(index + 1).padStart(2, "0");
       <h3>{project.shortTitle}</h3>
       <p>{project.summary}</p>
       <span class="card-link">Read case study <span aria-hidden="true">↗</span></span>
+      {project.slug === "ninefold" && <span class="card-language-link">中文案例可用</span>}
     </div>
   </a>
 </article>

@@ -12,6 +12,7 @@ interface Props {
   pageType?: "website" | "article";
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
   noIndex?: boolean;
+  locale?: "en-GB" | "zh-CN";
 }
 
 const {
@@ -20,7 +21,8 @@ const {
   image = site.socialImage,
   pageType = "website",
   structuredData,
-  noIndex = false
+  noIndex = false,
+  locale = "en-GB"
 } = Astro.props;
 
 const baseUrl = Astro.site ?? Astro.url.origin;
@@ -31,7 +33,7 @@ const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
-<html lang={site.locale}>
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,7 +48,7 @@ const currentPath = Astro.url.pathname;
     <link rel="icon" href={withBase("/icons/favicon.svg")} type="image/svg+xml" />
 
     <meta property="og:type" content={pageType} />
-    <meta property="og:locale" content="en_GB" />
+    <meta property="og:locale" content={locale === "zh-CN" ? "zh_CN" : "en_GB"} />
     <meta property="og:site_name" content={site.displayName} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />

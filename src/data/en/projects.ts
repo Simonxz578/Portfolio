@@ -31,6 +31,29 @@ export type CaseStudy = {
 
 export const projects: CaseStudy[] = [
   {
+    slug: "ninefold",
+    title: "Ninefold",
+    shortTitle: "Ninefold",
+    kicker: "Independent Product Design · AI-Assisted Development",
+    period: "Jun 2026 – Present",
+    organisation: "Independent product",
+    status: "Public bilingual beta",
+    summary: "A bilingual 30-second visual pause for cognitively overloaded moments. Early feedback led me to move personalisation behind the first moment of value, turning each completed pause into a persistent visual record.",
+    question: "How little should a tired user have to do before a pause begins?",
+    users: ["People experiencing cognitive fatigue", "Users who want a short pause without another task"],
+    constraints: ["First value must require no personal information", "The core loop must work without an account or runtime LLM"],
+    role: "Independent Product Designer and Product Owner across strategy, research, interaction design and AI-assisted delivery.",
+    decisions: ["Put the 30-second pause before personalisation", "Keep growth deterministic and pressure-free", "Store reflective state locally in the browser"],
+    workflow: [{ label: "Pause", detail: "Start with no setup" }, { label: "Grow", detail: "A completed pause earns one leaf" }, { label: "Remember", detail: "Calendar and world preserve the trace" }, { label: "Return", detail: "Come back without streak pressure" }],
+    evaluation: ["10+ early user-feedback inputs informed four major product iterations."],
+    outcomes: ["Public bilingual beta deployed on Cloudflare."],
+    limitations: ["Qualitative testing continues; no product-market-fit claim is made."],
+    learning: "The most important iteration removed setup before first value.",
+    capabilities: ["Product Strategy", "User Research", "Interaction Design", "AI-assisted Development", "Local-first", "Bilingual"],
+    links: [{ href: "https://ninefold-65f.pages.dev/#/en/", label: "Live beta" }],
+    featured: true
+  },
+  {
     slug: "industrial-ai-agent-rag-workflow",
     title: "Industrial AI Agent and RAG Workflow",
     shortTitle: "Industrial AI Agent & RAG",

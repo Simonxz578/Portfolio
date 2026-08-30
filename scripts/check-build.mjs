@@ -12,6 +12,8 @@ const expectedRoutes = [
   "work/ai-policy-teacher-agency/index.html",
   "work/ai-enhanced-science-education/index.html",
   "work/formal-hall-networking-society-website/index.html",
+  "work/ninefold/index.html",
+  "zh/work/ninefold/index.html",
   "research/index.html",
   "leadership/index.html",
   "about/index.html",

@@ -675,10 +675,92 @@ h3 {
 }
 
 .project-card {
+  position: relative;
   min-width: 0;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   background: rgba(252, 250, 246, 0.58);
+}
+
+.project-card-badge { position:absolute; top:.7rem; right:.7rem; z-index:3; padding:.3rem .5rem; color:#0b3550; background:#d9efff; font-family:var(--mono); font-size:.6rem; font-weight:800; letter-spacing:.05em; }
+.project-card:first-child .project-card-visual { background:#86c8ec; }
+.project-card:first-child .project-card-visual img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.project-card:first-child .project-card-visual::after { background:linear-gradient(0deg,rgba(11,23,33,.58),transparent); inset:auto 0 0; width:100%; height:60%; transform:none; }
+.card-language-link { margin-top:.35rem; color:var(--ink-soft); font-family:var(--mono); font-size:.68rem; }
+
+/* Ninefold case */
+.ninefold-case { --sky:#83c8ef; --sky-deep:#245d80; --sky-pale:#e4f5ff; }
+.ninefold-hero { position:relative; min-height:min(860px,92vh); display:grid; align-items:end; overflow:hidden; color:white; background:#17415f; }
+.ninefold-hero::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(7,28,43,.88) 0%,rgba(7,28,43,.58) 48%,rgba(7,28,43,.08) 78%),linear-gradient(0deg,rgba(7,28,43,.65),transparent 45%); }
+.ninefold-hero-bg,.ninefold-hero-tree { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.ninefold-hero-tree { object-fit:contain; object-position:78% 65%; transform:scale(1.08); }
+.ninefold-hero-content { position:relative; z-index:2; padding-block:clamp(8rem,15vw,13rem) clamp(4rem,8vw,7rem); }
+.ninefold-hero-content>p:not(.eyebrow) { max-width:690px; color:rgba(255,255,255,.84); font-size:clamp(1.05rem,1.5vw,1.25rem); }
+.ninefold-hero h1 { max-width:780px; margin-bottom:.5rem; font-size:clamp(4rem,9vw,8.5rem); line-height:.9; }
+.ninefold-hero h2 { max-width:780px; margin-bottom:1.5rem; font-family:var(--serif); font-size:clamp(1.8rem,4vw,3.4rem); font-weight:500; line-height:1.08; }
+.ninefold-hero .eyebrow { color:#d9efff; }
+.ninefold-hero .button-secondary { color:white; border-color:rgba(255,255,255,.62); background:rgba(7,28,43,.16); }
+.ninefold-hero .button-secondary:hover { color:var(--ink); background:white; border-color:white; }
+.ninefold-language { position:absolute; top:calc(var(--header-height) + 2rem); right:0; }
+.ninefold-language a { color:white; font-weight:750; }
+.ninefold-ledger { color:white; background:#102c40; border-top:1px solid rgba(255,255,255,.2); }
+.ninefold-ledger>.shell { display:grid; grid-template-columns:1fr 1.3fr; gap:3rem; padding-block:2rem; }
+.ninefold-ledger dl { display:grid; grid-template-columns:repeat(2,1fr); margin:0; gap:1rem; }
+.ninefold-ledger dt { color:#a8dafa; font-family:var(--mono); font-size:.63rem; text-transform:uppercase; }
+.ninefold-ledger dd { margin:0; font-size:.86rem; }
+.ninefold-snapshot { display:grid; grid-template-columns:repeat(5,1fr); border-left:1px solid rgba(255,255,255,.18); }
+.ninefold-snapshot div { padding:0 1rem; border-right:1px solid rgba(255,255,255,.18); }
+.ninefold-snapshot strong { display:block; font-family:var(--serif); font-size:1.5rem; }
+.ninefold-snapshot span { color:rgba(255,255,255,.65); font-size:.7rem; }
+.ninefold-prose>p { max-width:780px; font-size:1.08rem; }
+.ninefold-prose blockquote { margin-top:2rem; background:var(--sky-pale); border-color:var(--sky-deep); }
+.ninefold-table { border-top:1px solid var(--line); }
+.ninefold-table-row { display:grid; grid-template-columns:1fr 1.3fr 1.3fr; border-bottom:1px solid var(--line); }
+.ninefold-table-row span { padding:1.15rem; border-right:1px solid var(--line); }
+.ninefold-table-row span:first-child { font-family:var(--serif); font-weight:650; }
+.ninefold-timeline { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }
+.ninefold-timeline article { min-height:360px; padding:1.5rem; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+.ninefold-timeline article>span { display:block; margin-bottom:4rem; color:var(--sky-deep); font-family:var(--serif); font-size:3rem; }
+.ninefold-timeline h3 { margin-bottom:.35rem; color:var(--sky-deep); font-family:var(--mono); font-size:.7rem; text-transform:uppercase; }
+.ninefold-timeline p { color:var(--ink-soft); font-size:.9rem; }
+.ninefold-visual-band { padding-block:3rem; background:#d9efff; }
+.ninefold-visual-band>.shell { display:grid; grid-template-columns:1.3fr .7fr; gap:1rem; }
+.ninefold-visual-band figure { overflow:hidden; background:white; }
+.ninefold-visual-band img { width:100%; height:420px; object-fit:cover; }
+.ninefold-visual-band figcaption { padding:1rem; color:var(--ink-soft); font-size:.8rem; }
+.ninefold-decisions { margin:0; padding:0; list-style:none; }
+.ninefold-decisions li { display:grid; grid-template-columns:48px 1fr; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--line-dark); }
+.ninefold-decisions li>span { color:#a8dafa; font-family:var(--mono); font-size:.7rem; }
+.ninefold-decisions h3 { margin-bottom:.25rem; color:white; }
+.ninefold-decisions p { margin:0; color:rgba(255,255,255,.68); }
+.ninefold-loop { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:2rem; padding:2rem; color:white; background:#17415f; font-family:var(--serif); font-size:clamp(1.5rem,3vw,3rem); }
+.ninefold-loop i { color:#8fd5ff; font-style:normal; }
+.ninefold-rules { display:grid; grid-template-columns:repeat(2,1fr); margin:0; padding:0; border-top:1px solid var(--line); list-style:none; }
+.ninefold-rules li { padding:1rem; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+.ninefold-feedback { display:grid; grid-template-columns:repeat(2,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }
+.ninefold-feedback article { min-height:220px; padding:1.5rem; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+.ninefold-feedback h3 { font-family:var(--serif); font-size:1.35rem; }
+.ninefold-feedback p { color:var(--ink-soft); }
+.ninefold-button-light { color:white; border-color:rgba(255,255,255,.55); }
+.ninefold-button-light:hover { color:var(--ink); background:white; }
+
+@media (max-width: 900px) {
+  .ninefold-ledger>.shell,.ninefold-visual-band>.shell { grid-template-columns:1fr; }
+  .ninefold-snapshot { border-left:0; border-top:1px solid rgba(255,255,255,.18); padding-top:1rem; }
+  .ninefold-timeline { grid-template-columns:repeat(2,1fr); }
+  .ninefold-hero-tree { object-position:72% 50%; opacity:.72; }
+}
+@media (max-width: 620px) {
+  .ninefold-hero { min-height:820px; }
+  .ninefold-hero::after { background:linear-gradient(0deg,rgba(7,28,43,.93) 0%,rgba(7,28,43,.56) 75%,rgba(7,28,43,.18)); }
+  .ninefold-hero-content { padding-top:8rem; }
+  .ninefold-language { top:calc(var(--header-height) + 1rem); right:1rem; }
+  .ninefold-ledger dl,.ninefold-snapshot,.ninefold-timeline,.ninefold-rules,.ninefold-feedback { grid-template-columns:1fr; }
+  .ninefold-snapshot div { padding:.7rem 0; border-right:0; border-bottom:1px solid rgba(255,255,255,.15); }
+  .ninefold-table { overflow-x:auto; }
+  .ninefold-table-row { min-width:720px; }
+  .ninefold-loop { flex-wrap:wrap; justify-content:center; }
+  .ninefold-visual-band img { height:300px; }
 }
 
 .project-card > a {

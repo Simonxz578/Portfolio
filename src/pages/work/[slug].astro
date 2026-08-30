@@ -9,7 +9,7 @@ import { site } from "@data/site";
 import { withBase } from "../../utils/urls";
 
 export const getStaticPaths = (() =>
-  projects.map((project) => ({
+  projects.filter((project) => project.slug !== "ninefold").map((project) => ({
     params: { slug: project.slug },
     props: { project }
   }))) satisfies GetStaticPaths;
