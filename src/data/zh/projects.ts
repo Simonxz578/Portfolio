@@ -3,11 +3,11 @@ import type { CaseStudy } from "@data/en/projects";
 export const projects: CaseStudy[] = [
   {
     slug: "ninefold", title: "九境生息 Ninefold", shortTitle: "九境生息", kicker: "独立产品设计 · AI 辅助开发", period: "2026年6月至今", organisation: "独立产品", status: "中英文公开测试版",
-    summary: "一款为认知过载时刻设计的30秒视觉微休息产品。早期反馈让我把个性化设置移到首次体验之后，并用持续生长的视觉世界记录每一次停顿。",
-    question: "一个疲惫的用户需要完成多少操作，才应该开始休息？", users: ["正经历认知疲劳的人", "想短暂停顿、又不想接收新任务的人"], constraints: ["首次获得价值前无需提供个人信息", "核心体验无需账号或运行时大模型"],
-    role: "作为独立产品负责人，我完成产品策略、用户研究、交互设计和AI辅助开发。", decisions: ["把30秒停顿放在个性化设置之前", "采用可预测、无压力的成长机制", "将个人记录保存在本地浏览器"],
+    summary: "一款为认知过载时刻设计的30秒视觉微休息产品。可选语音经 Whisper 与 GLM 提取有边界的情绪状态，再转化为雨转晴、流星或保持原景的动态环境。",
+    question: "一个疲惫的用户需要完成多少操作，才应该开始休息？", users: ["正经历认知疲劳的人", "想短暂停顿、又不想接收新任务的人"], constraints: ["首次获得价值前无需提供个人信息", "核心体验无需账号；运行时 AI 仅在用户主动语音时调用"],
+    role: "作为独立产品负责人，我完成产品策略、用户研究、交互设计、AI工作流与辅助开发。", decisions: ["把30秒停顿放在个性化设置之前", "将语音情绪限制为结构化环境参数，而不是聊天回复", "将个人反思保存在本地浏览器"],
     workflow: [{label:"停顿",detail:"无需设置即可开始"},{label:"生长",detail:"每次完成休息长出一片叶子"},{label:"记住",detail:"日历和世界保留经历"},{label:"回来",detail:"没有连续打卡压力，随时可以再次进入"}],
-    evaluation: ["收集10余条早期用户反馈，并据此完成四轮主要迭代。"], outcomes: ["中英文公开测试版已部署至 Cloudflare。"], limitations: ["定性测试仍在继续，目前不对产品市场匹配度作结论。"], learning: "最重要的一次迭代，是移除用户首次获得价值前的设置步骤。", capabilities: ["产品策略","用户研究","交互设计","AI辅助开发","本地优先","双语产品"], links: [{href:"https://ninefold-65f.pages.dev/#/zh/",label:"体验测试版"}], featured: true
+    evaluation: ["收集10余条早期用户反馈，并据此完成五轮主要迭代。", "用负向、正向、中性和服务失败场景验证环境映射与安全回退。"], outcomes: ["中英文公开测试版已部署至 Cloudflare。"], limitations: ["定性测试仍在继续，目前不对产品市场匹配度作结论。", "语音情绪输出不是心理诊断，也不长期保存音频或逐字稿。"], learning: "最重要的一次迭代，是移除用户首次获得价值前的设置步骤；最新学习是让 AI 只做它真正增加价值的情绪结构化。", capabilities: ["产品策略","用户研究","交互设计","Whisper / GLM","AI安全边界","本地优先","双语产品"], links: [{href:"https://ninefold-65f.pages.dev/#/zh/",label:"体验测试版"}], featured: true
   },
   {
     slug: "industrial-ai-agent-rag-workflow", title: "工业AI Agent与RAG工作流", shortTitle: "工业AI Agent与RAG", kicker: "应用AI · 工业工作流", period: "2024", organisation: "北京经纬恒润", status: "公开版项目案例",
