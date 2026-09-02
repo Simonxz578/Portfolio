@@ -2147,6 +2147,269 @@ h3 {
   font-size: 0.8rem;
 }
 
+/* Cambridge atmospheric background system
+   The supplied King's College + River Cam photograph is shared with the PDF
+   portfolio. Content, component geometry and interaction remain unchanged. */
+
+:root {
+  --cambridge-photo: url("/Portfolio/images/cambridge/kings-river-cam.jpeg");
+  --cambridge-white: rgba(255, 255, 255, 0.96);
+  --cambridge-ice: rgba(247, 251, 254, 0.92);
+  --cambridge-sky: rgba(224, 242, 255, 0.82);
+}
+
+body {
+  background:
+    linear-gradient(118deg, #ffffff 0%, #f7fbfe 48%, #eaf6ff 100%);
+}
+
+.home-hero,
+.page-hero,
+.section,
+.case-overview,
+.case-section {
+  isolation: isolate;
+}
+
+.home-hero > *,
+.page-hero > *,
+.section > *,
+.case-overview > *,
+.case-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero {
+  color: var(--ink);
+  background: #eef8ff;
+}
+
+.home-hero::before,
+.page-hero::before,
+.section:not(.section-ink)::before,
+.case-overview::before,
+.case-section:not(.case-section-dark)::before {
+  content: "";
+  position: absolute;
+  inset: -26px;
+  z-index: -2;
+  background-image: var(--cambridge-photo);
+  background-repeat: no-repeat;
+  background-size: cover;
+  pointer-events: none;
+  transform: scale(1.045);
+}
+
+.home-hero::before {
+  background-position: 54% 46%;
+  filter: blur(4px) saturate(0.92) brightness(1.07);
+  opacity: 0.55;
+}
+
+.home-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: auto;
+  opacity: 1;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(249, 253, 255, 0.86) 48%, rgba(226, 243, 255, 0.44) 100%);
+  pointer-events: none;
+}
+
+.home-hero-copy {
+  padding: clamp(1.5rem, 3vw, 3rem);
+  margin-left: clamp(-3rem, -3vw, -1rem);
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.36) 74%, transparent);
+  backdrop-filter: blur(3px);
+}
+
+.home-hero-copy .eyebrow,
+.page-hero .eyebrow {
+  color: var(--accent-dark);
+}
+
+.home-hero h1,
+.page-hero h1 {
+  color: var(--ink-deep);
+}
+
+.hero-lede,
+.page-hero-copy > p {
+  color: rgba(20, 35, 49, 0.78);
+}
+
+.home-hero .button-primary {
+  color: var(--white);
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+}
+
+.home-hero .button-primary:hover {
+  color: var(--white);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.home-hero .button-secondary {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.56);
+  border-color: rgba(20, 35, 49, 0.42);
+}
+
+.hero-links,
+.hero-links > span {
+  color: rgba(20, 35, 49, 0.68);
+}
+
+.hero-links a:hover {
+  color: var(--accent-dark);
+}
+
+.capability-rail {
+  color: rgba(20, 35, 49, 0.7);
+  border-top-color: rgba(20, 35, 49, 0.16);
+}
+
+.page-hero {
+  color: var(--ink);
+  background: #f1f9ff;
+}
+
+.page-hero::before {
+  background-position: 62% 38%;
+  filter: blur(12px) saturate(0.84) brightness(1.11);
+  opacity: 0.38;
+}
+
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: auto;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(116deg, rgba(255, 255, 255, 0.93) 0%, rgba(247, 251, 254, 0.86) 52%, rgba(218, 239, 255, 0.62) 100%);
+  pointer-events: none;
+}
+
+.meta-list {
+  color: var(--accent-dark);
+  border-top-color: rgba(20, 35, 49, 0.18);
+}
+
+.section:not(.section-ink),
+.case-overview,
+.case-section:not(.case-section-dark) {
+  position: relative;
+  overflow: hidden;
+  background: #f9fcfe;
+}
+
+.section:not(.section-ink)::before,
+.case-overview::before {
+  background-position: 30% 46%;
+  filter: blur(20px) saturate(0.78) brightness(1.14);
+  opacity: 0.19;
+}
+
+.case-section:not(.case-section-dark)::before {
+  background-position: 56% 42%;
+  filter: blur(24px) saturate(0.74) brightness(1.16);
+  opacity: 0.09;
+}
+
+.section:not(.section-ink)::after,
+.case-overview::after,
+.case-section:not(.case-section-dark)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.95), rgba(247, 252, 255, 0.89) 48%, rgba(230, 245, 255, 0.74));
+  pointer-events: none;
+}
+
+main > .section:nth-of-type(3n + 2)::before,
+main > .case-section:nth-of-type(3n + 2)::before {
+  background-position: 74% 42%;
+}
+
+main > .section:nth-of-type(3n + 3)::before,
+main > .case-section:nth-of-type(3n + 3)::before {
+  background-position: 52% 72%;
+}
+
+.section-warm,
+.case-section-tinted {
+  border-color: rgba(25, 66, 107, 0.14);
+}
+
+.project-card,
+.case-ledger,
+.research-list > article,
+.leadership-list > article,
+.resume-list li {
+  background-color: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(7px);
+}
+
+.project-card > a:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.contact-panel {
+  box-shadow: 0 26px 70px rgba(32, 85, 125, 0.13);
+}
+
+@media (max-width: 959px) {
+  .home-hero::before {
+    background-position: 64% 38%;
+    filter: blur(8px) saturate(0.84) brightness(1.11);
+    opacity: 0.43;
+  }
+
+  .page-hero::before {
+    background-position: 70% 35%;
+    opacity: 0.29;
+  }
+
+  .home-hero-copy {
+    margin-left: -1.25rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-hero::before {
+    background-position: 78% 28%;
+    filter: blur(12px) saturate(0.78) brightness(1.14);
+    opacity: 0.36;
+  }
+
+  .home-hero::after {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 252, 255, 0.83) 58%, rgba(225, 242, 255, 0.66));
+  }
+
+  .page-hero::before,
+  .section:not(.section-ink)::before,
+  .case-overview::before,
+  .case-section:not(.case-section-dark)::before {
+    background-position: 82% 26%;
+    filter: blur(22px) saturate(0.72) brightness(1.16);
+    opacity: 0.15;
+  }
+
+  .home-hero-copy {
+    padding: 1.25rem;
+    margin-left: -1.25rem;
+    margin-right: -0.5rem;
+    background: linear-gradient(110deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.48));
+  }
+}
+
 .footer-meta {
   grid-column: 1 / -1;
   margin-bottom: 0;
