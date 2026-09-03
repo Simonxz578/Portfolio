@@ -12,6 +12,13 @@ const capabilities = [
   {group:"研究",items:["定性研究","政策分析","评估设计","利益相关者分析"]},
   {group:"领导力",items:["社区搭建","项目运营","跨团队推进","交接规划"]}
 ];
+const experience = [
+ ["2025–2026","剑桥大学","硕士研究 · AI政策与教师能动性","研究教师如何在专业实践中理解AI政策与学校层面的指导。"],
+ ["2025","伦敦 Harris St John’s Wood","科学（物理）教师","在真实课堂与组织环境中开展教学、观察并收集学生反馈。"],
+ ["2024–2025","伦敦大学学院","硕士研究 · AI科学教育","研究教师使用AI的信心与教学方法，论文正在修订。"],
+ ["2024","北京经纬恒润","硬件工程实习生 · LLM工作流","参与工业场景中的模型部署、评估、RAG检索与Agent工作流集成。"],
+ ["2023","北京西门子","材料工程实习生","分析医疗管材数据，通过Python辅助分析支持工程决策。"]
+];
 ---
 <BaseLayout locale="zh-CN" title="张翔 Simon｜AI产品与应用AI" description="张翔的AI产品经理作品集：应用AI、产品判断、用户研究、模型评估和组织采用。">
   <section class="home-hero">
@@ -30,6 +37,8 @@ const capabilities = [
   </section>
   <section class="section" id="selected-work"><div class="shell"><SectionIntro eyebrow="代表项目" title="从真实问题到可交付产品。" description="五个案例展示我如何发现问题、做出取舍、推动开发并完成交付。" align="split"/><div class="project-grid">{featuredProjects.map((project,index)=><ProjectCard project={project} index={index} locale="zh" />)}</div><p class="section-link"><a class="text-link" href={withBase("/zh/work/")}>查看全部项目 <span>→</span></a></p></div></section>
   <section class="section section-ink"><div class="shell"><SectionIntro eyebrow="能力" title="从四个角度推进AI产品。" description="我把技术实现、用户理解、产品判断和组织协作放进同一套工作方式。" align="split"/><div class="capability-grid">{capabilities.map((c,i)=><article><span class="capability-number">{String(i+1).padStart(2,"0")}</span><h3>{c.group}</h3><ul>{c.items.map(x=><li>{x}</li>)}</ul></article>)}</div></div></section>
+  <section class="section"><div class="shell experience-layout"><SectionIntro eyebrow="精选经历" title="由真实用户启发的技术实践。" description="与应用AI和产品采用密切相关的研究与实践经历。"/><ol class="experience-list">{experience.map(([period,organisation,role,summary])=><li><time>{period}</time><div><p>{organisation}</p><h3>{role}</h3><span>{summary}</span></div></li>)}</ol></div></section>
+  <section class="section section-warm"><div class="shell research-preview"><SectionIntro eyebrow="研究与写作" title="以证据为基础的产品问题。" description="把政策、信任和专业实践研究转化为产品团队可以采取行动的问题。"/><div class="research-preview-list">{featuredProjects.filter(p=>["ai-policy-teacher-agency","ai-enhanced-science-education"].includes(p.slug)).map(p=><article><div><p class="status-label">{p.status}</p><h3>{p.title}</h3><p>{p.summary}</p></div><a class="text-link" href={withBase("/zh/work/"+p.slug+"/")}>阅读案例 <span aria-hidden="true">→</span></a></article>)}</div><p class="section-link"><a class="text-link" href={withBase("/zh/research/")}>查看研究记录 <span aria-hidden="true">→</span></a></p></div></section>
   <section class="section trajectory"><div class="shell trajectory-grid"><p class="eyebrow">我的判断</p><div><h2>有用的AI产品，需要同时理解模型、用户和组织。</h2><p>物理训练让我学会拆解复杂系统；AI实践让我理解模型与工作流；教育研究和社团领导经历让我看到信任、责任和协作如何决定产品能否真正被采用。</p></div></div></section>
   <div class="shell section"><ContactPanel locale="zh-CN" title="如果你正在解决一个值得投入的AI问题，我们可以聊聊。" copy="我关注AI产品、模型评估、教育科技、组织采用，以及需要跨技术与业务推进的早期项目。"/></div>
 </BaseLayout>

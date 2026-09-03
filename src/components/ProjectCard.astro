@@ -10,6 +10,12 @@ interface Props {
 
 const { project, index, locale = "en" } = Astro.props;
 const sequence = String(index + 1).padStart(2, "0");
+const covers: Record<string, string> = {
+  "industrial-ai-agent-rag-workflow": "hirain.jpeg",
+  "ai-policy-teacher-agency": "ai-policy.jpeg",
+  "ai-enhanced-science-education": "ai-tpack.png",
+  "formal-hall-networking-society-website": "caius-formal.jpeg",
+};
 ---
 
 <article class={`project-card project-scene project-scene-${sequence}`} data-reveal>
@@ -19,7 +25,8 @@ const sequence = String(index + 1).padStart(2, "0");
       <span>{sequence}</span>
       <span>{project.period}</span>
     </div>
-    <div class="project-card-visual" aria-hidden="true">
+    <div class:list={["project-card-visual", { "project-photo": covers[project.slug], "project-logo": project.slug === "industrial-ai-agent-rag-workflow" }]} aria-hidden="true">
+      {covers[project.slug] && <img src={withBase("/images/v2/" + covers[project.slug])} alt="" loading="lazy" decoding="async" />}
       {project.slug === "ninefold" && <img src={withBase("/images/ninefold/ninefold-world.webp")} alt="" />}
       <i></i><i></i><i></i><i></i>
       <span>{project.capabilities.slice(0, 3).join(" · ")}</span>

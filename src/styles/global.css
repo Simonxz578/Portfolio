@@ -3100,3 +3100,31 @@ body{background:var(--paper);background-image:none}.shell{width:min(var(--shell)
 @media(max-width:700px){.leadership-portrait{height:520px;border-radius:22px}.leadership-portrait img{object-position:center 42%}}
 .home-hero::before,.page-hero::before{display:none}.home-hero-background,.page-hero-background{position:absolute;inset:0;z-index:-3;width:100%;height:100%;object-fit:cover;object-position:center;transform:translate3d(0,var(--hero-drift),0) scale(var(--hero-scale));filter:saturate(.88) contrast(.94);will-change:transform}.page-hero-background{z-index:-2;object-position:center 38%;transform:none}.page-hero h1{color:#fff}.page-hero .eyebrow{color:#c8eaff}.page-hero-copy>p{color:rgba(255,255,255,.82)}
 @media(prefers-reduced-motion:reduce){.home-hero-background{transform:none}}
+
+/* Shared bilingual homepage composition and photographic project covers. */
+.home-hero-grid { z-index:auto; align-items:center; padding-top:10rem; gap:clamp(2rem,5vw,5rem); }
+.home-hero-copy { padding:0; margin:0; background:none; backdrop-filter:none; }
+.home-hero h1, html[lang="zh-CN"] .home-hero h1 {
+  font-size:clamp(2.6rem,4.1vw,4.5rem); line-height:1.12; letter-spacing:-.035em;
+  max-width:850px; text-wrap:balance;
+}
+.portrait-frame { align-self:center; background:none; border-radius:0; box-shadow:none; }
+.portrait-frame::before { display:none; }
+.portrait-frame img { border-radius:0; filter:none; aspect-ratio:auto; clip-path:polygon(0% 81%, 8% 78.5%, 16% 76%, 23% 72%, 29% 68%, 34% 65%, 35% 63%, 32% 60%, 29% 56%, 27% 52%, 25% 49%, 23% 45%, 22% 41%, 20% 37%, 19.5% 32%, 20% 28%, 22% 24%, 27% 20%, 34% 17%, 41% 14.5%, 50% 12.8%, 56% 13%, 62% 15%, 69% 18%, 74% 23%, 76% 28%, 77% 33%, 76% 38%, 74% 42%, 72% 46%, 70% 51%, 68% 55%, 65% 59%, 62% 63%, 63% 66%, 68% 70%, 76% 74%, 86% 78%, 100% 82%, 100% 100%, 0% 100%); }
+.portrait-frame figcaption { background:none; border:0; border-radius:0; padding:1rem 0; }
+.portrait-frame img {
+ clip-path:none;
+ mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 81 C12 77 24 74 34 65 L36 63 C31 59 28 55 27 51 C24 49 23 46 23 42 C20 38 19 33 21 28 C23 22 28 19 35 17 C43 14 49 12 55 13 C65 14 72 20 75 26 C79 33 76 39 73 44 C72 50 70 55 66 59 L62 63 C62 68 71 72 81 76 L100 82 L100 100 L0 100Z'/%3E%3C/svg%3E");
+ mask-size:100% 100%; mask-repeat:no-repeat;
+}
+.project-card-visual.project-photo { background:#dceefa; min-height:0; aspect-ratio:4/3; }
+.project-card-visual.project-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:1; }
+.project-card-visual.project-photo::before,.project-card-visual.project-photo::after,
+.project-card-visual.project-photo i,.project-card-visual.project-photo>span { display:none; }
+.project-card-visual.project-logo { background:#fff; }
+.project-card-visual.project-logo img { object-fit:contain; padding:8%; }
+@media(max-width:700px) {
+ .home-hero-grid { padding-top:8.2rem; }
+ .home-hero h1,html[lang="zh-CN"] .home-hero h1 { font-size:clamp(2.3rem,9vw,3.4rem); }
+ .project-card-visual.project-photo { min-height:0; aspect-ratio:4/3; }
+}
