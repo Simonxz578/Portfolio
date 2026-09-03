@@ -14,7 +14,7 @@ const covers: Record<string, string> = {
   "industrial-ai-agent-rag-workflow": "hirain.jpeg",
   "ai-policy-teacher-agency": "ai-policy-v2.webp",
   "ai-enhanced-science-education": "ai-tpack.webp",
-  "formal-hall-networking-society-website": "caius-formal.webp",
+  "formal-hall-networking-society-website": "caius-formal-fast.avif",
 };
 ---
 
@@ -27,7 +27,7 @@ const covers: Record<string, string> = {
     </div>
     <div class:list={["project-card-visual", { "project-photo": covers[project.slug], "project-logo": project.slug === "industrial-ai-agent-rag-workflow" }]} aria-hidden="true">
       {covers[project.slug] && <img src={withBase("/images/v2/" + covers[project.slug])} alt="" loading="lazy" decoding="async" />}
-      {project.slug === "ninefold" && <img src={withBase("/images/ninefold/ninefold-world.webp")} alt="" />}
+      {project.slug === "ninefold" && <img src={withBase("/images/ninefold/ninefold-world-fast.avif")} width="1200" height="800" loading="lazy" decoding="async" fetchpriority="low" alt="" />}
       <i></i><i></i><i></i><i></i>
       <span>{project.capabilities.slice(0, 3).join(" · ")}</span>
     </div>

@@ -45,6 +45,11 @@ const currentPath = Astro.url.pathname;
     {noIndex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="canonical" href={canonicalUrl} />
+    {(Astro.url.pathname === withBase('/') || Astro.url.pathname === withBase('/zh/')) && <>
+      <link rel="preload" as="image" href={withBase('/images/v2/river-cam-fast.avif')} fetchpriority="high" />
+      <link rel="preload" as="image" href={withBase('/images/v2/simon-formal-fast.avif')} fetchpriority="high" />
+      <link rel="preload" as="image" href={withBase('/images/v2/portrait-mask.svg')} />
+    </>}
     <link rel="icon" href={withBase("/icons/favicon.svg")} type="image/svg+xml" />
 
     <meta property="og:type" content={pageType} />
