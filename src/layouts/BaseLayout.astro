@@ -81,5 +81,37 @@ const currentPath = Astro.url.pathname;
       <slot />
     </main>
     <SiteFooter locale={locale} />
+    <script>
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const revealTargets = document.querySelectorAll<HTMLElement>("main > section, [data-reveal], .section-intro, .experience-list > li, .research-preview-list > article");
+      revealTargets.forEach((element) => element.classList.add("reveal-ready"));
+
+      if (reducedMotion.matches) {
+        revealTargets.forEach((element) => element.classList.add("is-revealed"));
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            (entry.target as HTMLElement).classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          });
+        }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
+        revealTargets.forEach((element) => observer.observe(element));
+
+        let ticking = false;
+        const updateAtmosphere = () => {
+          const progress = Math.min(1, window.scrollY / Math.max(1, window.innerHeight));
+          document.documentElement.style.setProperty("--hero-drift", `${progress * 12}px`);
+          document.documentElement.style.setProperty("--hero-scale", String(1 + progress * 0.018));
+          ticking = false;
+        };
+        window.addEventListener("scroll", () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(updateAtmosphere);
+        }, { passive: true });
+        updateAtmosphere();
+      }
+    </script>
   </body>
 </html>

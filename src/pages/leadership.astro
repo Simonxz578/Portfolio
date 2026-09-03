@@ -3,6 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
 import PageHero from "@components/PageHero.astro";
 import { leadershipItems } from "@data/en/leadership";
+import { withBase } from "../utils/urls";
 ---
 
 <BaseLayout
@@ -15,6 +16,10 @@ import { leadershipItems } from "@data/en/leadership";
     intro="My leadership work centres on designing the conditions for useful participation: clear purpose, thoughtful programmes, reliable operations and continuity beyond one organiser."
     meta={["Community building", "Programme operations", "Digital stewardship"]}
   />
+
+  <figure class="leadership-portrait shell" data-reveal>
+    <img src={withBase("/images/v2/simon-cambridge-court.jpg")} width="724" height="1086" loading="lazy" decoding="async" alt="Xiang Zhang in academic dress in a Cambridge college court." />
+  </figure>
 
   <section class="section">
     <div class="shell leadership-list">

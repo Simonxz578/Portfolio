@@ -12,7 +12,7 @@ const { project, index, locale = "en" } = Astro.props;
 const sequence = String(index + 1).padStart(2, "0");
 ---
 
-<article class="project-card">
+<article class={`project-card project-scene project-scene-${sequence}`} data-reveal>
   {project.slug === "ninefold" && <span class="project-card-badge">{locale === "zh" ? "新项目 · 中文 / EN" : "New · 中文 / EN"}</span>}
   <a href={withBase((locale === "zh" ? "/zh/work/" : "/work/") + project.slug + "/")} aria-label={(locale === "zh" ? "查看案例：" : "View case study: ") + project.title}>
     <div class="project-card-topline">
@@ -25,6 +25,7 @@ const sequence = String(index + 1).padStart(2, "0");
       <span>{project.capabilities.slice(0, 3).join(" · ")}</span>
     </div>
     <div class="project-card-copy">
+      <span class="project-scene-index" aria-hidden="true">{sequence}</span>
       <p class="eyebrow">{project.kicker}</p>
       <h3>{project.shortTitle}</h3>
       <p>{project.summary}</p>

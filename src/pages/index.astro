@@ -42,6 +42,7 @@ const personSchema = {
   structuredData={personSchema}
 >
   <section class="home-hero">
+    <img class="home-hero-background" src={withBase("/images/v2/river-cam.jpg")} width="730" height="410" alt="" aria-hidden="true" fetchpriority="high" />
     <div class="shell home-hero-grid">
       <div class="home-hero-copy">
         <p class="eyebrow">Xiang Zhang (Simon) · AI Product & Applied AI</p>
@@ -68,23 +69,7 @@ const personSchema = {
       </div>
 
       <figure class="portrait-frame">
-        <picture>
-          <source
-            type="image/webp"
-            srcset={withBase(site.portrait.webpSmall) + " 480w, " + withBase(site.portrait.webp) + " 724w"}
-            sizes="(max-width: 760px) calc(100vw - 40px), 38vw"
-          />
-          <img
-            src={withBase(site.portrait.jpeg)}
-            srcset={withBase(site.portrait.jpegSmall) + " 480w, " + withBase(site.portrait.jpeg) + " 724w"}
-            sizes="(max-width: 760px) calc(100vw - 40px), 38vw"
-            width={site.portrait.width}
-            height={site.portrait.height}
-            alt={site.portrait.alt}
-            fetchpriority="high"
-            decoding="async"
-          />
-        </picture>
+        <img src={withBase("/images/v2/simon-formal.jpg")} width="786" height="1100" alt="Xiang Zhang (Simon) in formal business attire." fetchpriority="high" decoding="async" />
         <figcaption>
           <span>Physics → Applied AI</span>
           <strong>Education, users and organisational adoption</strong>

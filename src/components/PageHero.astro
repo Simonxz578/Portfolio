@@ -7,9 +7,11 @@ interface Props {
 }
 
 const { eyebrow, title, intro, meta = [] } = Astro.props;
+import { withBase } from "../utils/urls";
 ---
 
 <section class="page-hero">
+  <img class="page-hero-background" src={withBase("/images/v2/river-cam.jpg")} width="730" height="410" alt="" aria-hidden="true" />
   <div class="shell page-hero-grid">
     <div>
       <p class="eyebrow">{eyebrow}</p>
@@ -27,4 +29,3 @@ const { eyebrow, title, intro, meta = [] } = Astro.props;
     </div>
   </div>
 </section>
-

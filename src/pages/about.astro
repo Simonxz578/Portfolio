@@ -21,19 +21,7 @@ import { withBase } from "../utils/urls";
   <section class="section">
     <div class="shell about-story">
       <figure>
-        <picture>
-          <source type="image/webp" srcset={withBase(site.portrait.webpSmall) + " 480w, " + withBase(site.portrait.webp) + " 724w"} />
-          <img
-            src={withBase(site.portrait.jpeg)}
-            srcset={withBase(site.portrait.jpegSmall) + " 480w, " + withBase(site.portrait.jpeg) + " 724w"}
-            sizes="(max-width: 760px) calc(100vw - 40px), 32vw"
-            width={site.portrait.width}
-            height={site.portrait.height}
-            loading="lazy"
-            decoding="async"
-            alt={site.portrait.alt}
-          />
-        </picture>
+        <img src={withBase("/images/v2/simon-cambridge-seated.jpg")} width="724" height="1086" loading="lazy" decoding="async" alt={site.portrait.alt} />
       </figure>
       <div class="prose">
         <p class="lede">
