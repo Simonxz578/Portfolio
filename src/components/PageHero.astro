@@ -4,14 +4,15 @@ interface Props {
   title: string;
   intro: string;
   meta?: string[];
+  variant?: string;
 }
 
-const { eyebrow, title, intro, meta = [] } = Astro.props;
+const { eyebrow, title, intro, meta = [], variant = "" } = Astro.props;
 import { withBase } from "../utils/urls";
 ---
 
-<section class="page-hero">
-  <img class="page-hero-background" src={withBase("/images/v2/river-cam.jpg")} width="730" height="410" alt="" aria-hidden="true" />
+<section class:list={["page-hero", variant && `page-hero-${variant}`]}>
+  <img class="page-hero-background" src={withBase("/images/v2/river-cam.webp")} width="730" height="410" alt="" aria-hidden="true" />
   <div class="shell page-hero-grid">
     <div>
       <p class="eyebrow">{eyebrow}</p>

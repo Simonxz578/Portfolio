@@ -33,7 +33,7 @@ const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} style={`--portrait-mask:url('${withBase('/images/v2/portrait-mask.svg')}')`}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -83,7 +83,7 @@ const currentPath = Astro.url.pathname;
     <SiteFooter locale={locale} />
     <script>
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-      const revealTargets = document.querySelectorAll<HTMLElement>("main > section, [data-reveal], .section-intro, .experience-list > li, .research-preview-list > article");
+      const revealTargets = document.querySelectorAll<HTMLElement>("main > section:not(.home-hero), [data-reveal], .section-intro, .experience-list > li, .research-preview-list > article");
       revealTargets.forEach((element) => element.classList.add("reveal-ready"));
 
       if (reducedMotion.matches) {
@@ -95,22 +95,9 @@ const currentPath = Astro.url.pathname;
             (entry.target as HTMLElement).classList.add("is-revealed");
             observer.unobserve(entry.target);
           });
-        }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
+        }, { rootMargin: "400px 0px", threshold: 0.01 });
         revealTargets.forEach((element) => observer.observe(element));
 
-        let ticking = false;
-        const updateAtmosphere = () => {
-          const progress = Math.min(1, window.scrollY / Math.max(1, window.innerHeight));
-          document.documentElement.style.setProperty("--hero-drift", `${progress * 12}px`);
-          document.documentElement.style.setProperty("--hero-scale", String(1 + progress * 0.018));
-          ticking = false;
-        };
-        window.addEventListener("scroll", () => {
-          if (ticking) return;
-          ticking = true;
-          requestAnimationFrame(updateAtmosphere);
-        }, { passive: true });
-        updateAtmosphere();
       }
     </script>
   </body>
