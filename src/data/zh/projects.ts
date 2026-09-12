@@ -2,12 +2,12 @@ import type { CaseStudy } from "@data/en/projects";
 
 export const projects: CaseStudy[] = [
   {
-    slug: "ninefold", title: "九境生息 Ninefold", shortTitle: "九境生息", kicker: "独立产品设计 · AI 辅助开发", period: "2026年6月至今", organisation: "独立产品", status: "中英文公开测试版",
-    summary: "一款为认知过载时刻设计的30秒视觉微休息产品。可选语音经 Whisper 与 GLM 提取有边界的情绪状态，再转化为雨转晴、流星或保持原景的动态环境。",
-    question: "一个疲惫的用户需要完成多少操作，才应该开始休息？", users: ["正经历认知疲劳的人", "想短暂停顿、又不想接收新任务的人"], constraints: ["首次获得价值前无需提供个人信息", "核心体验无需账号；运行时 AI 仅在用户主动语音时调用"],
-    role: "作为独立产品负责人，我完成产品策略、用户研究、交互设计、AI工作流与辅助开发。", decisions: ["把30秒停顿放在个性化设置之前", "将语音情绪限制为结构化环境参数，而不是聊天回复", "将个人反思保存在本地浏览器"],
-    workflow: [{label:"停顿",detail:"无需设置即可开始"},{label:"生长",detail:"每次完成休息长出一片叶子"},{label:"记住",detail:"日历和世界保留经历"},{label:"回来",detail:"没有连续打卡压力，随时可以再次进入"}],
-    evaluation: ["收集10余条早期用户反馈，并据此完成五轮主要迭代。", "用负向、正向、中性和服务失败场景验证环境映射与安全回退。"], outcomes: ["中英文公开测试版已部署至 Cloudflare。"], limitations: ["定性测试仍在继续，目前不对产品市场匹配度作结论。", "语音情绪输出不是心理诊断，也不长期保存音频或逐字稿。"], learning: "最重要的一次迭代，是移除用户首次获得价值前的设置步骤；最新学习是让 AI 只做它真正增加价值的情绪结构化。", capabilities: ["产品策略","用户研究","交互设计","Whisper / GLM","AI安全边界","本地优先","双语产品"], links: [{href:"https://ninefold-65f.pages.dev/#/zh/",label:"体验测试版"}], featured: true
+    slug: "ninefold", title: "Ninefold Physics｜AI 交互式物理学习世界", shortTitle: "Ninefold Physics", kicker: "旗舰项目 · AI辅导 · 物理教育", period: "2026年6月至今", organisation: "独立产品", status: "已上线的中英文公开 Beta",
+    summary: "Ninefold 是面向国际课程中学生和物理爱好者的沉浸式物理学习 Agent。学生选择二次元主角进入世界，在雨滴、落叶等情境中通过 AI 语音交互与自适应苏格拉底式引导，观察、推理、建模并解决物理问题。",
+    question: "学生究竟是从哪一步开始没想明白？", users: ["国际课程中学生和物理爱好者", "以学习模式准备 ESAT Physics 的学生"], constraints: ["让 AI 处理开放式表达，让确定性规则守住物理事实", "原创练习必须与课程范围一致，并明确区别于官方题目和官方评分"],
+    role: "独立负责问题定义、教学路径、课程映射、AI边界、交互设计、开发协作与发布验收。", decisions: ["先让学生观察现象，再引入公式", "根据完整、部分、误区和信息不足四种状态选择教学路径", "用 Physics Toolkit 记录公式、重排、代入和单位，而不是只收最终数字"],
+    workflow: [{label:"观察",detail:"从 Rain 或 Leaf 开始"},{label:"解释",detail:"用语音或文字说出理解"},{label:"诊断",detail:"找到第一个偏差"},{label:"引导",detail:"只补缺失概念"},{label:"构建",detail:"完成公式、代入与单位"},{label:"迁移",detail:"进入课程对齐原创练习"}],
+    evaluation: ["自动化回归覆盖中英文教学、题组、Toolkit 与回退流程。", "Ninefold 早期用户测试塑造了交互基础；下一步将验证真实学生的完成、诊断与迁移表现。"], outcomes: ["中英文移动端 Beta 已部署至 Cloudflare，包含 GLM 推理、结构化出题与确定性回退。"], limitations: ["当前内容集中在 Rain 与 Leaf 的力和运动。", "Board-informed practice marking 用于学习反馈，不等同于官方阅卷或成绩预测。"], learning: "真正改变的不是界面，而是问题本身：持续生长的世界变成了学生表达和构建物理思路的学习界面。", capabilities: ["AI辅导","自适应学习","物理教育","结构化LLM输出","Cloudflare Workers AI","双语产品"], links: [{href:"https://ninefold-65f.pages.dev/#/zh/world?physics=rain",label:"体验 Ninefold Physics"}], featured: true
   },
   {
     slug: "industrial-ai-agent-rag-workflow", title: "工业AI Agent与RAG工作流", shortTitle: "工业AI Agent与RAG", kicker: "应用AI · 工业工作流", period: "2024", organisation: "北京经纬恒润", status: "公开版项目案例",
