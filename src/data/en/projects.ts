@@ -195,7 +195,7 @@ export const projects: CaseStudy[] = [
     kicker: "User research · Education technology",
     period: "2024–2025",
     organisation: "University College London",
-    status: "MA dissertation · Manuscript under revision",
+    status: "MA dissertation · IJSE paper published (2026)",
     summary:
       "Research into science teachers’ confidence and pedagogical approaches when using AI, translated into product questions about fit, trust and adoption.",
     question:
@@ -208,10 +208,10 @@ export const projects: CaseStudy[] = [
     constraints: [
       "Teacher-facing and student-facing uses carry different risks and expectations",
       "Confidence does not necessarily equal capability, trust or pedagogical fit",
-      "The manuscript is not published and the full study materials were not supplied"
+      "The published article is public; underlying study materials are not included here"
     ],
     role:
-      "Completed an MA dissertation on teachers’ confidence and pedagogical approaches with AI in science education. The associated manuscript is under revision following a major-revision decision at the International Journal of Science Education.",
+      "Completed an MA dissertation on science teachers’ experiences of generative AI. The associated paper, co-authored with M. J. Reiss, was published in the International Journal of Science Education in 2026.",
     decisions: [
       "Separated teacher-facing and student-facing uses because they create different needs and risks.",
       "Treated confidence as one input to adoption, alongside trust, task fit and professional judgement.",
@@ -233,17 +233,18 @@ export const projects: CaseStudy[] = [
     outcomes: [
       "A research-led framing for distinguishing teacher-facing and student-facing product needs.",
       "A set of adoption questions that connect confidence with pedagogy, trust and workflow fit.",
-      "A manuscript currently under revision; it is not described as published."
+      "Published with M. J. Reiss in the International Journal of Science Education (2026)."
     ],
     limitations: [
-      "The manuscript, decision letter and approved public findings are not included in the project materials.",
+      "This product case does not reproduce the published paper’s methods, data or findings.",
       "The page does not infer causal effects or generalise beyond the study context.",
       "No public dataset, repository or live product is attached."
     ],
     learning:
       "Useful education AI must fit the teacher’s task and evidence standards. Product adoption is more credible when control, review and pedagogical purpose are designed together.",
     capabilities: ["User research", "Education technology", "Trust", "Adoption", "Evidence synthesis", "Product implications"],
-    relatedResearch: "MA in Education (Science), University College London",
+    relatedResearch: "Zhang, X., & Reiss, M. J. (2026). Investigating science teachers’ experiences of generative AI in science teaching and learning from a GenAI-TPACK perspective. International Journal of Science Education.",
+    links: [{ href: "https://doi.org/10.1080/09500693.2026.2733687", label: "Read the published paper" }],
     featured: true
   },
   {

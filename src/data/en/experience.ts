@@ -22,7 +22,7 @@ export const selectedExperience: ExperienceItem[] = [
     period: "2024–2025",
     organisation: "University College London",
     role: "MA research · AI in science education",
-    summary: "Studied teacher confidence and pedagogical approaches to AI, with a manuscript under revision."
+    summary: "Studied science teachers’ use of generative AI; co-authored a 2026 International Journal of Science Education paper."
   },
   {
     period: "2024",
