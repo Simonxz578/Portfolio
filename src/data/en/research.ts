@@ -13,10 +13,10 @@ export const researchItems = [
     title: "Investigating science teachers’ experiences of generative AI in science teaching and learning from a GenAI-TPACK perspective",
     type: "MA dissertation",
     status: "Published in International Journal of Science Education (2026)",
-    period: "2024–2025",
+    period: "2024–2026",
     institution: "University College London",
     description:
-      "Zhang, X., & Reiss, M. J. (2026). Investigating science teachers’ experiences of generative AI in science teaching and learning from a GenAI-TPACK perspective. International Journal of Science Education.",
+      "Zhang, X., & Reiss, M. J. (2026). Investigating science teachers’ experiences of generative AI in science teaching and learning from a GenAI-TPACK perspective. International Journal of Science Education, 1–20. https://doi.org/10.1080/09500693.2026.2733687",
     doi: "https://doi.org/10.1080/09500693.2026.2733687",
     href: "/work/ai-enhanced-science-education/"
   },

@@ -1,4 +1,5 @@
 ---
+import ResearchCitation from "@components/ResearchCitation.astro";
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
@@ -157,7 +158,7 @@ const projectSchema = {
         <blockquote>
           <p>{project.learning}</p>
         </blockquote>
-        {project.relatedResearch && <p class="related-line"><strong>Related research:</strong> {project.relatedResearch}</p>}
+        {project.relatedResearch && <p class="related-line"><strong>Related research:</strong> {project.slug === "ai-enhanced-science-education" ? <ResearchCitation /> : project.relatedResearch}</p>}
         {
           project.links && (
             <div class="case-links" aria-label={`${project.title} public links`}>

@@ -102,6 +102,65 @@ export const projects: CaseStudy[] = [
     featured: true
   },
   {
+    slug: "ai-enhanced-science-education",
+    title: "AI & Teacher Experience",
+    shortTitle: "AI & Teacher Experience",
+    kicker: "User research · Education technology",
+    period: "2024–2026",
+    organisation: "University College London",
+    status: "MA dissertation · IJSE paper published (2026)",
+    summary:
+      "Research into science teachers’ confidence and pedagogical approaches when using AI, translated into product questions about fit, trust and adoption.",
+    question:
+      "How should an AI product support teachers whose confidence, subject knowledge and intended use can vary across planning, feedback and classroom activity?",
+    users: [
+      "Science teachers considering AI for their own work",
+      "Teachers deciding whether and how students should use AI",
+      "Education-product teams designing for pedagogical fit"
+    ],
+    constraints: [
+      "Teacher-facing and student-facing uses carry different risks and expectations",
+      "Confidence does not necessarily equal capability, trust or pedagogical fit",
+      "The published article is public; underlying study materials are not included here"
+    ],
+    role:
+      "Completed an MA dissertation on science teachers’ experiences of generative AI. The associated paper, co-authored with M. J. Reiss, was published in the International Journal of Science Education in 2026.",
+    decisions: [
+      "Separated teacher-facing and student-facing uses because they create different needs and risks.",
+      "Treated confidence as one input to adoption, alongside trust, task fit and professional judgement.",
+      "Translated pedagogical questions into product questions about timing, control, feedback and evidence.",
+      "Used the relationship between technology, pedagogy and subject knowledge—often described through AI-TPACK—to guide design questions."
+    ],
+    workflow: [
+      { label: "Teaching task", detail: "Planning, explanation, feedback or classroom activity" },
+      { label: "Use mode", detail: "Teacher-facing support or student-facing interaction" },
+      { label: "Professional judgement", detail: "Fit with subject, pedagogy and learner needs" },
+      { label: "Trust decision", detail: "Whether the output can be checked and used responsibly" },
+      { label: "Adoption signal", detail: "Use, adapt, defer or reject in the actual workflow" }
+    ],
+    evaluation: [
+      "The research examines teachers’ confidence and pedagogical judgement at the point of use.",
+      "For product evaluation, the relevant questions include task fit, reviewability, control and the quality of evidence presented to the teacher.",
+      "This page does not publish a sample size, statistical result or universal finding because the underlying evidence was not supplied."
+    ],
+    outcomes: [
+      "A research-led framing for distinguishing teacher-facing and student-facing product needs.",
+      "A set of adoption questions that connect confidence with pedagogy, trust and workflow fit.",
+      "Published with M. J. Reiss in the International Journal of Science Education (2026)."
+    ],
+    limitations: [
+      "This product case does not reproduce the published paper’s methods, data or findings.",
+      "The page does not infer causal effects or generalise beyond the study context.",
+      "No public dataset, repository or live product is attached."
+    ],
+    learning:
+      "Useful education AI must fit the teacher’s task and evidence standards. Product adoption is more credible when control, review and pedagogical purpose are designed together.",
+    capabilities: ["User research", "Education technology", "Trust", "Adoption", "Evidence synthesis", "Product implications"],
+    relatedResearch: "Zhang, X., & Reiss, M. J. (2026). Investigating science teachers’ experiences of generative AI in science teaching and learning from a GenAI-TPACK perspective. International Journal of Science Education, 1–20. https://doi.org/10.1080/09500693.2026.2733687",
+    links: [{ href: "https://doi.org/10.1080/09500693.2026.2733687", label: "Read the published paper" }],
+    featured: true
+  },
+  {
     slug: "ai-policy-teacher-agency",
     title: "AI Policy, Teacher Agency and Organisational Adoption",
     shortTitle: "AI Policy & Teacher Agency",
@@ -186,65 +245,6 @@ export const projects: CaseStudy[] = [
         ]
       }
     ],
-    featured: true
-  },
-  {
-    slug: "ai-enhanced-science-education",
-    title: "AI-enhanced Science Education and Teacher Confidence",
-    shortTitle: "AI & Teacher Confidence",
-    kicker: "User research · Education technology",
-    period: "2024–2025",
-    organisation: "University College London",
-    status: "MA dissertation · IJSE paper published (2026)",
-    summary:
-      "Research into science teachers’ confidence and pedagogical approaches when using AI, translated into product questions about fit, trust and adoption.",
-    question:
-      "How should an AI product support teachers whose confidence, subject knowledge and intended use can vary across planning, feedback and classroom activity?",
-    users: [
-      "Science teachers considering AI for their own work",
-      "Teachers deciding whether and how students should use AI",
-      "Education-product teams designing for pedagogical fit"
-    ],
-    constraints: [
-      "Teacher-facing and student-facing uses carry different risks and expectations",
-      "Confidence does not necessarily equal capability, trust or pedagogical fit",
-      "The published article is public; underlying study materials are not included here"
-    ],
-    role:
-      "Completed an MA dissertation on science teachers’ experiences of generative AI. The associated paper, co-authored with M. J. Reiss, was published in the International Journal of Science Education in 2026.",
-    decisions: [
-      "Separated teacher-facing and student-facing uses because they create different needs and risks.",
-      "Treated confidence as one input to adoption, alongside trust, task fit and professional judgement.",
-      "Translated pedagogical questions into product questions about timing, control, feedback and evidence.",
-      "Used the relationship between technology, pedagogy and subject knowledge—often described through AI-TPACK—to guide design questions."
-    ],
-    workflow: [
-      { label: "Teaching task", detail: "Planning, explanation, feedback or classroom activity" },
-      { label: "Use mode", detail: "Teacher-facing support or student-facing interaction" },
-      { label: "Professional judgement", detail: "Fit with subject, pedagogy and learner needs" },
-      { label: "Trust decision", detail: "Whether the output can be checked and used responsibly" },
-      { label: "Adoption signal", detail: "Use, adapt, defer or reject in the actual workflow" }
-    ],
-    evaluation: [
-      "The research examines teachers’ confidence and pedagogical judgement at the point of use.",
-      "For product evaluation, the relevant questions include task fit, reviewability, control and the quality of evidence presented to the teacher.",
-      "This page does not publish a sample size, statistical result or universal finding because the underlying evidence was not supplied."
-    ],
-    outcomes: [
-      "A research-led framing for distinguishing teacher-facing and student-facing product needs.",
-      "A set of adoption questions that connect confidence with pedagogy, trust and workflow fit.",
-      "Published with M. J. Reiss in the International Journal of Science Education (2026)."
-    ],
-    limitations: [
-      "This product case does not reproduce the published paper’s methods, data or findings.",
-      "The page does not infer causal effects or generalise beyond the study context.",
-      "No public dataset, repository or live product is attached."
-    ],
-    learning:
-      "Useful education AI must fit the teacher’s task and evidence standards. Product adoption is more credible when control, review and pedagogical purpose are designed together.",
-    capabilities: ["User research", "Education technology", "Trust", "Adoption", "Evidence synthesis", "Product implications"],
-    relatedResearch: "Zhang, X., & Reiss, M. J. (2026). Investigating science teachers’ experiences of generative AI in science teaching and learning from a GenAI-TPACK perspective. International Journal of Science Education.",
-    links: [{ href: "https://doi.org/10.1080/09500693.2026.2733687", label: "Read the published paper" }],
     featured: true
   },
   {

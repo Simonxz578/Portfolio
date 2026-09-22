@@ -18,18 +18,18 @@ export const projects: CaseStudy[] = [
     evaluation: ["工作包含部署调试和模型对比。", "我从整个流程判断模型和检索能否支持检测任务。"], outcomes: ["形成连接模型部署、检索与工业检测的工作流。", "积累了从单点模型能力走向Agent流程的实践经验。", "明确了集成方式和流程责任人与模型选择同样重要。"], limitations: [], learning: "模型能力只有接入合适的场景、界面和人工复核节点，才能转化为可用产品。", capabilities: ["LLM部署","RAG","Agent工作流","API集成","多模态处理","模型评估"], featured: true
   },
   {
+    slug: "ai-enhanced-science-education", title: "AI与教师经验", shortTitle: "AI与教师经验", kicker: "用户研究 · 教育科技", period: "2024–2026", organisation: "伦敦大学学院", status: "教育学硕士论文 · IJSE论文已发表（2026）",
+    summary: "研究科学教师使用生成式AI时的信心与教学选择，并将发现转化为有关场景匹配、信任和采用的产品问题。", question: "面对信心、学科经验和使用目标各不相同的教师，AI产品应该怎样提供支持？", users: ["考虑在工作中使用AI的科学教师", "需要决定学生能否以及如何使用AI的教师", "设计教育产品的团队"], constraints: ["教师使用与学生使用面对不同风险", "信心并不直接代表能力、信任或教学适配", "本案例不重复刊载论文的研究数据和结论"],
+    role: "我完成了关于科学教师使用生成式AI经验的硕士研究，并与 M. J. Reiss 合著论文，于2026年发表于 International Journal of Science Education。", decisions: ["分别分析教师端和学生端的使用场景", "把信心与任务匹配、信任和专业判断共同考虑", "把教学问题转化为时机、控制、反馈和结果检查等产品问题", "用技术、教学法和学科知识的关系指导设计"],
+    workflow: [{label:"教学任务",detail:"备课、讲解、反馈或课堂活动"},{label:"使用方式",detail:"教师辅助或学生直接使用"},{label:"专业判断",detail:"判断与学科、教学法和学生需求是否匹配"},{label:"信任判断",detail:"确认结果是否容易检查"},{label:"采用选择",detail:"使用、调整、延后或拒绝"}],
+    evaluation: ["研究关注教师信心和教学判断。", "产品评估应考察任务匹配、可检查性、控制权和信息质量。"], outcomes: ["区分教师端与学生端的产品需求。", "形成连接信心、教学法、信任与工作流的采用问题。", "论文已发表于 International Journal of Science Education（2026）。"], limitations: ["本案例不重复刊载已发表论文的研究数据和结论。", "不推断因果关系或跨情境推广。"], learning: "教育AI需要贴合教师的具体任务和判断标准。控制权、可检查性与教学目的应当一起设计。", capabilities: ["用户研究","教育科技","信任","产品采用","研究综合","产品洞察"], relatedResearch: "Zhang, X., & Reiss, M. J. (2026). Investigating science teachers’ experiences of generative AI in science teaching and learning from a GenAI-TPACK perspective. International Journal of Science Education, 1–20. https://doi.org/10.1080/09500693.2026.2733687", links: [{href:"https://doi.org/10.1080/09500693.2026.2733687",label:"阅读已发表论文"}], featured: true
+  },
+  {
     slug: "ai-policy-teacher-agency", title: "AI政策、教师能动性与组织采用", shortTitle: "AI政策与教师能动性", kicker: "AI采用 · 政策与工作流研究", period: "2025–2026", organisation: "剑桥大学", status: "教育学硕士研究项目",
     summary: "研究英格兰中学教师如何理解AI政策与校内指引，以及这些要求如何进入日常专业判断。", question: "一份AI政策如何走到教师面对真实教学决策的那一刻？", users: ["需要理解AI指引的中学教师", "把政策转化为校内做法的学校管理者", "为教育场景设计工具与流程的团队"], constraints: ["政策语言与日常实践的具体程度不同", "专业判断无法简化成合规勾选", "公开页面不披露参与者资料和未发布结果"],
     role: "我围绕AI政策下的教师能动性设计硕士研究，把政策解释、学校实践和教师判断之间的关系转化为产品团队可以使用的问题。", decisions: ["区分国家政策、校内指引与教师判断三个实施层级", "把学习质量和教师责任放在采用过程中心", "定位含糊、信任和流程设计影响实施的位置", "把产品启示写成可测试的问题"],
     workflow: [{label:"政策目标",detail:"指引希望学校和教师实现什么"},{label:"学校解释",detail:"把原则转化为可执行要求"},{label:"专业判断",detail:"教师结合场景作决定"},{label:"学习表现",detail:"判断AI使用如何影响学习质量"},{label:"反馈调整",detail:"用实施经验修订要求"}],
     evaluation: ["关注政策在使用现场是否容易理解。", "可从清晰度、决策负担、升级路径和信息质量评估工具。"], outcomes: ["建立分析政策目标与专业实践落差的结构。", "把AI采用拆解为指引、信任、工作流和责任之间的关系。", "形成可用于后续产品评估的问题。"], limitations: ["本页呈现研究设计，不发布参与者资料或研究结果。", "结论只适用于具体教育情境。"], learning: "AI采用是技术与组织共同作用的结果。责任不清或流程不合适时，强大的模型也很难真正落地。", capabilities: ["政策分析","利益相关者分析","组织采用","信任","评估设计","工作流分析"], relatedResearch: "剑桥大学教育学硕士（教育政策、领导力与改进）", featured: true
-  },
-  {
-    slug: "ai-enhanced-science-education", title: "AI辅助科学教育与教师信心", shortTitle: "AI与教师信心", kicker: "用户研究 · 教育科技", period: "2024–2025", organisation: "伦敦大学学院", status: "教育学硕士论文 · IJSE论文已发表（2026）",
-    summary: "研究科学教师使用生成式AI时的信心与教学选择，并将发现转化为有关场景匹配、信任和采用的产品问题。", question: "面对信心、学科经验和使用目标各不相同的教师，AI产品应该怎样提供支持？", users: ["考虑在工作中使用AI的科学教师", "需要决定学生能否以及如何使用AI的教师", "设计教育产品的团队"], constraints: ["教师使用与学生使用面对不同风险", "信心并不直接代表能力、信任或教学适配", "本案例不重复刊载论文的研究数据和结论"],
-    role: "我完成了关于科学教师使用生成式AI经验的硕士研究，并与 M. J. Reiss 合著论文，于2026年发表于 International Journal of Science Education。", decisions: ["分别分析教师端和学生端的使用场景", "把信心与任务匹配、信任和专业判断共同考虑", "把教学问题转化为时机、控制、反馈和结果检查等产品问题", "用技术、教学法和学科知识的关系指导设计"],
-    workflow: [{label:"教学任务",detail:"备课、讲解、反馈或课堂活动"},{label:"使用方式",detail:"教师辅助或学生直接使用"},{label:"专业判断",detail:"判断与学科、教学法和学生需求是否匹配"},{label:"信任判断",detail:"确认结果是否容易检查"},{label:"采用选择",detail:"使用、调整、延后或拒绝"}],
-    evaluation: ["研究关注教师信心和教学判断。", "产品评估应考察任务匹配、可检查性、控制权和信息质量。"], outcomes: ["区分教师端与学生端的产品需求。", "形成连接信心、教学法、信任与工作流的采用问题。", "论文已发表于 International Journal of Science Education（2026）。"], limitations: ["本案例不重复刊载已发表论文的研究数据和结论。", "不推断因果关系或跨情境推广。"], learning: "教育AI需要贴合教师的具体任务和判断标准。控制权、可检查性与教学目的应当一起设计。", capabilities: ["用户研究","教育科技","信任","产品采用","研究综合","产品洞察"], relatedResearch: "Zhang, X., & Reiss, M. J. (2026). Investigating science teachers’ experiences of generative AI in science teaching and learning from a GenAI-TPACK perspective. International Journal of Science Education.", links: [{href:"https://doi.org/10.1080/09500693.2026.2733687",label:"阅读已发表论文"}], featured: true
   },
   {
     slug: "formal-hall-networking-society-website", title: "Formal Hall Networking Society 网站", shortTitle: "FHNS网站", kicker: "0→1产品 · 系统提示词 · Agent协作交付", period: "2025–2026", organisation: "Formal Hall Networking Society", status: "已上线网站",

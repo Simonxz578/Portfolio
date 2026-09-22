@@ -19,15 +19,15 @@ export const selectedExperience: ExperienceItem[] = [
     summary: "Worked directly with classroom practice, observation and student feedback in a real organisational setting."
   },
   {
-    period: "2024–2025",
+    period: "2024–2026",
     organisation: "University College London",
     role: "MA research · AI in science education",
-    summary: "Studied science teachers’ use of generative AI; co-authored a 2026 International Journal of Science Education paper."
+    summary: "Zhang, X., & Reiss, M. J. (2026). Investigating science teachers’ experiences of generative AI in science teaching and learning from a GenAI-TPACK perspective. International Journal of Science Education, 1–20. https://doi.org/10.1080/09500693.2026.2733687"
   },
   {
     period: "2024",
     organisation: "Hirain, Beijing",
-    role: "Hardware Engineering Intern · LLM workflows",
+    role: "Hardware Product Intern",
     summary: "Worked on model deployment, evaluation, RAG retrieval and agent workflow integration in an industrial context."
   },
   {

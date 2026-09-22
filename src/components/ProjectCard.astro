@@ -40,4 +40,5 @@ const covers: Record<string, string> = {
       {project.slug === "ninefold" && <span class="card-language-link">{locale === "zh" ? "English version available" : "中文案例可用"}</span>}
     </div>
   </a>
+  {project.slug === "ai-enhanced-science-education" && <a class="project-paper-link text-link" href="https://doi.org/10.1080/09500693.2026.2733687">{locale === "zh" ? "阅读已发表论文" : "Read the published paper"} <span aria-hidden="true">↗</span></a>}
 </article>
