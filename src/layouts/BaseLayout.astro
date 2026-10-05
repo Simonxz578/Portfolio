@@ -33,7 +33,7 @@ const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
-<html lang={locale} style={`--portrait-mask:url('${withBase('/images/v2/portrait-mask.svg')}')`}>
+<html lang={locale} style={`--portrait-mask:url('${withBase('/images/v2/portrait-mask.svg?v=20261005')}')`}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,7 +48,7 @@ const currentPath = Astro.url.pathname;
     <link rel="preload" as="image" href={withBase("/images/v2/cambridge-paper.webp")} fetchpriority="high" />
     {(Astro.url.pathname === withBase('/') || Astro.url.pathname === withBase('/zh/')) && <>
       <link rel="preload" as="image" href={withBase('/images/v2/simon-formal-fast.avif')} fetchpriority="high" />
-      <link rel="preload" as="image" href={withBase('/images/v2/portrait-mask.svg')} />
+      <link rel="preload" as="image" href={withBase('/images/v2/portrait-mask.svg?v=20261005')} />
     </>}
     <link rel="icon" href={withBase("/icons/favicon.svg")} type="image/svg+xml" />
 
