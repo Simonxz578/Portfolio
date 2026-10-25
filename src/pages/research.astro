@@ -1,4 +1,5 @@
 ---
+import "../styles/editorial.css";
 import ResearchCitation from "@components/ResearchCitation.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
@@ -30,6 +31,7 @@ const enterpriseLoop = [
   title="Research & Writing"
   description="Research by Xiang Zhang on AI policy, teacher agency, science education and organisational adoption, with precise publication-status labels."
 >
+<div class="editorial-page editorial-research">
   <PageHero
     eyebrow="Research & Writing"
     title="Research translated for product decisions."
@@ -37,11 +39,11 @@ const enterpriseLoop = [
     meta={["AI policy", "Teacher confidence", "Adoption and trust"]}
   />
 
-  <section class="section">
+  <section class="section editorial-reading">
     <div class="shell research-list">
       {
         researchItems.map((item, index) => (
-          <article>
+          <article id={`research-${index + 1}`} data-reveal>
             <div class="research-index">{String(index + 1).padStart(2, "0")}</div>
             <div>
               <div class="research-meta">
@@ -116,4 +118,5 @@ const enterpriseLoop = [
   </section>
 
   <div class="shell section"><ContactPanel title="Working on AI adoption or evaluation?" /></div>
+</div>
 </BaseLayout>

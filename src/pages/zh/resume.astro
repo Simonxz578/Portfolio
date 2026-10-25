@@ -1,4 +1,5 @@
 ---
+import "../../styles/editorial.css";
 import ResearchCitation from "@components/ResearchCitation.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
@@ -24,14 +25,16 @@ const capabilities = [
 ];
 ---
 <BaseLayout locale="zh-CN" title="履历" description="张翔的应用AI、研究、产品与领导力经历。">
+<div class="editorial-page editorial-resume">
   <PageHero eyebrow="履历" title="与AI产品最相关的经历。" intro="这份简明履历集中呈现我的应用AI、研究、产品和领导力实践。" meta={["中文","代表经历","AI产品"]}/>
   <section class="section"><div class="shell resume-layout">
-    <aside class="resume-aside"><p class="eyebrow">简介</p><h2>AI产品与应用AI</h2><p>应用AI、模型工作流、用户研究、评估和组织采用。</p><div class="resume-pending"><strong>索取完整履历</strong><p>如需针对具体岗位的完整版本，请直接联系我。</p><a class="text-link" href={"mailto:"+site.email}>发送邮件 <span>→</span></a></div></aside>
+    <aside class="resume-aside"><p class="eyebrow">简介</p><h2>AI产品与应用AI</h2><p>应用AI、模型工作流、用户研究、评估和组织采用。</p><div class="resume-pending"><strong>索取完整履历</strong><p>如需针对具体岗位的完整版本，请直接联系我。</p><a class="text-link" href={"mailto:"+site.email}>发送邮件 <span>→</span></a></div><nav class="resume-index" aria-label="履历章节"><a href="#resume-experience">代表经历 <span aria-hidden="true">↘</span></a><a href="#resume-education">教育经历 <span aria-hidden="true">↘</span></a><a href="#resume-capabilities">能力 <span aria-hidden="true">↘</span></a></nav></aside>
     <div class="resume-main">
-      <section><h2>代表经历</h2><ol class="resume-list">{experience.map(item=><li><time>{item.period}</time><div><h3>{item.role}</h3><p class="resume-org">{item.organisation}</p><p>{item.summary.startsWith("Zhang, X.") ? <ResearchCitation /> : item.summary}</p></div></li>)}</ol></section>
-      <section><h2>教育经历</h2><ol class="resume-list compact">{education.map(item=><li><time>{item.period}</time><div><h3>{item.degree}</h3><p class="resume-org">{item.institution}</p></div></li>)}</ol></section>
-      <section><h2>能力</h2><div class="resume-capabilities">{capabilities.map(group=><article><h3>{group.group}</h3><p>{group.items.join(" · ")}</p></article>)}</div></section>
+      <section aria-labelledby="resume-experience"><h2 id="resume-experience">代表经历</h2><ol class="resume-list">{experience.map(item=><li><time>{item.period}</time><div><h3>{item.role}</h3><p class="resume-org">{item.organisation}</p><p>{item.summary.startsWith("Zhang, X.") ? <ResearchCitation /> : item.summary}</p></div></li>)}</ol></section>
+      <section aria-labelledby="resume-education"><h2 id="resume-education">教育经历</h2><ol class="resume-list compact">{education.map(item=><li><time>{item.period}</time><div><h3>{item.degree}</h3><p class="resume-org">{item.institution}</p></div></li>)}</ol></section>
+      <section aria-labelledby="resume-capabilities"><h2 id="resume-capabilities">能力</h2><div class="resume-capabilities">{capabilities.map(group=><article><h3>{group.group}</h3><p>{group.items.join(" · ")}</p></article>)}</div></section>
     </div>
   </div></section>
   <div class="shell section"><ContactPanel locale="zh-CN" title="需要针对岗位的完整履历？" copy="请在邮件中告诉我岗位或具体问题，我会分享相应版本。"/></div>
+</div>
 </BaseLayout>

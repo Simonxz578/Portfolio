@@ -1,44 +1,26 @@
 ---
-import type { CaseStudy } from "@data/en/projects";
-import { withBase } from "../utils/urls";
-
-interface Props {
-  project: CaseStudy;
-  index: number;
-  locale?: "en" | "zh";
-}
-
-const { project, index, locale = "en" } = Astro.props;
-const sequence = String(index + 1).padStart(2, "0");
-const covers: Record<string, string> = {
-  "industrial-ai-agent-rag-workflow": "hirain.jpeg",
-  "ai-policy-teacher-agency": "ai-policy-v2.webp",
-  "ai-enhanced-science-education": "ai-tpack.webp",
-  "formal-hall-networking-society-website": "caius-formal-fast.avif",
-};
+import type {CaseStudy} from '@data/en/projects';
+import {withBase} from '../utils/urls';
+import '../styles/scenes.css';
+interface Props {project:CaseStudy; index:number; locale?:'en'|'zh'}
+const {project,locale='en'}=Astro.props;
+const zh=locale==='zh';
+const type=project.slug==='ninefold'?'world':project.slug==='industrial-ai-agent-rag-workflow'?'system':project.slug==='ai-enhanced-science-education'?'research':project.slug==='ai-policy-teacher-agency'?'policy':'community';
+const href=withBase((zh?'/zh/work/':'/work/')+project.slug+'/');
 ---
-
-<article class={`project-card project-scene project-scene-${sequence}`} data-reveal>
-  {project.slug === "ninefold" && <span class="project-card-badge">{locale === "zh" ? "新项目 · 中文 / EN" : "New · 中文 / EN"}</span>}
-  <a href={withBase((locale === "zh" ? "/zh/work/" : "/work/") + project.slug + "/")} aria-label={(locale === "zh" ? "查看案例：" : "View case study: ") + project.title}>
-    <div class="project-card-topline">
-      <span>{sequence}</span>
-      <span>{project.period}</span>
-    </div>
-    <div class:list={["project-card-visual", { "project-photo": covers[project.slug], "project-logo": project.slug === "industrial-ai-agent-rag-workflow" }]} aria-hidden="true">
-      {covers[project.slug] && <img src={withBase("/images/v2/" + covers[project.slug])} alt="" loading="lazy" decoding="async" />}
-      {project.slug === "ninefold" && <img src={withBase("/images/ninefold-physics/characters.png")} width="1440" height="900" loading="lazy" decoding="async" fetchpriority="low" alt="" />}
-      <i></i><i></i><i></i><i></i>
-      <span>{project.capabilities.slice(0, 3).join(" · ")}</span>
-    </div>
-    <div class="project-card-copy">
-      <span class="project-scene-index" aria-hidden="true">{sequence}</span>
-      <p class="eyebrow">{project.kicker}</p>
-      <h3>{project.shortTitle}</h3>
-      <p>{project.summary}</p>
-      <span class="card-link">{locale === "zh" ? "查看案例" : "Read case study"} <span aria-hidden="true">↗</span></span>
-      {project.slug === "ninefold" && <span class="card-language-link">{locale === "zh" ? "English version available" : "中文案例可用"}</span>}
+<article class:list={['project-chapter',`chapter-${type}`]} id={'project-'+project.slug} data-reveal>
+  <a class="chapter-link" href={href} aria-label={(zh?'查看案例：':'View case study: ')+project.title}>
+    {type==='world' && <div class="chapter-world-scene" aria-hidden="true"><img class="chapter-sky" src={withBase('/images/ninefold/ninefold-sky.webp')} width="1672" height="941" alt="" loading="lazy"/><img class="chapter-clouds" src={withBase('/images/ninefold/ninefold-world-fast.avif')} width="1400" height="620" alt="" loading="lazy" data-depth="16"/><img class="chapter-canopy" src={withBase('/images/ninefold/ninefold-canopy.webp')} width="1200" height="720" alt="" loading="lazy"/><img class="chapter-ground" src={withBase('/images/ninefold/ninefold-tree.webp')} width="1600" height="500" alt="" loading="lazy"/></div>}
+    {type==='policy' && <img class="chapter-photo" src={withBase('/images/v2/river-cam-fast.avif')} width="1200" height="674" loading="lazy" decoding="async" alt="" aria-hidden="true"/>}
+    {type==='community' && <img class="chapter-photo" src={withBase('/images/v2/caius-formal-fast.avif')} width="1024" height="768" loading="lazy" decoding="async" alt="" aria-hidden="true"/>}
+    <div class="chapter-top"><span>{type==='world'?(zh?'旗舰产品 · 实时公开测试版':'Flagship · Live public beta'):project.organisation}</span><span>{project.period}</span></div>
+    {type==='system' && <div class="system-visual" aria-hidden="true"><div class="system-orbit"><span>RAG</span></div><div class="system-flow"><span>{zh?'检索':'Retrieve'}</span><i>→</i><span>{zh?'模型':'Model'}</span><i>→</i><span>{zh?'工程复核':'Review'}</span></div><div class="system-axis"></div></div>}
+    {type==='research' && <div class="research-visual" aria-hidden="true"><div>GenAI</div><div>Pedagogy</div><div>Science</div><span>GenAI–TPACK</span></div>}
+    <div class="chapter-copy">
+      <p class="eyebrow">{project.kicker}</p><h3>{project.shortTitle}</h3><p class="chapter-summary">{project.summary}</p>
+      <div class="chapter-bottom"><span class="chapter-cta">{zh?'探索案例':'Explore case study'}<span aria-hidden="true">↗</span></span><span class="chapter-domain">{project.capabilities.slice(0,type==='world'?3:2).join(' / ')}</span></div>
+      {type==='world' && <p class="chapter-language">{zh?'中文 / English · 独立产品':'English / 中文 · Independent product'}</p>}
     </div>
   </a>
-  {project.slug === "ai-enhanced-science-education" && <a class="project-paper-link text-link" href="https://doi.org/10.1080/09500693.2026.2733687">{locale === "zh" ? "阅读已发表论文" : "Read the published paper"} <span aria-hidden="true">↗</span></a>}
+  {type==='research' && <a class="chapter-paper" href="https://doi.org/10.1080/09500693.2026.2733687">{zh?'阅读已发表论文':'Read the published paper'} <span aria-hidden="true">↗</span></a>}
 </article>

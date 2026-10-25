@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
-import PageHero from "@components/PageHero.astro";
+import WorkIntro from "@components/WorkIntro.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 import SectionIntro from "@components/SectionIntro.astro";
 import { projects } from "@data/en/projects";
@@ -11,14 +11,9 @@ import { projects } from "@data/en/projects";
   title="Work"
   description="Selected applied AI, model-workflow, user-research and organisational-adoption case studies by Xiang Zhang."
 >
-  <PageHero
-    eyebrow="Work / Projects"
-    title="From model capability to working context."
-    intro="Each case shows the problem I found, the choices I made, the work I moved forward and what the project produced."
-    meta={["5 selected case studies", "Applied AI", "Research translated for product"]}
-  />
+  <WorkIntro projects={projects} locale="en" />
 
-  <section class="section">
+  <section class="section work-collection">
     <div class="shell">
       <div class="project-grid">
         {projects.map((project, index) => <ProjectCard project={project} index={index} />)}

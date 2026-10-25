@@ -45,7 +45,6 @@ const currentPath = Astro.url.pathname;
     {noIndex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="preload" as="image" href={withBase("/images/v2/cambridge-paper.webp")} fetchpriority="high" />
     {(Astro.url.pathname === withBase('/') || Astro.url.pathname === withBase('/zh/')) && <>
       <link rel="preload" as="image" href={withBase('/images/v2/simon-formal-fast.avif')} fetchpriority="high" />
       <link rel="preload" as="image" href={withBase('/images/v2/portrait-mask.svg?v=20261005-rounded')} />
@@ -88,21 +87,41 @@ const currentPath = Astro.url.pathname;
     <SiteFooter locale={locale} />
     <script>
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-      const revealTargets = document.querySelectorAll<HTMLElement>("main > section:not(.home-hero), [data-reveal], .section-intro, .experience-list > li, .research-preview-list > article");
-      revealTargets.forEach((element) => element.classList.add("reveal-ready"));
-
-      if (reducedMotion.matches) {
-        revealTargets.forEach((element) => element.classList.add("is-revealed"));
-      } else {
+      const revealTargets = document.querySelectorAll<HTMLElement>("[data-reveal]");
+      if (!reducedMotion.matches && "IntersectionObserver" in window) {
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-            (entry.target as HTMLElement).classList.add("is-revealed");
+            entry.target.classList.add("is-revealed");
             observer.unobserve(entry.target);
           });
-        }, { rootMargin: "400px 0px", threshold: 0.01 });
+        }, { rootMargin: "0px 0px -24px 0px", threshold: 0.05 });
         revealTargets.forEach((element) => observer.observe(element));
-
+      }
+      // Only the visible scene layers move, by at most 16px; all content scrolls normally.
+      const layers = Array.from(document.querySelectorAll<HTMLElement>("[data-depth]"));
+      const visible = new Set<HTMLElement>();
+      let pending = false;
+      const paintDepth = () => {
+        pending = false;
+        if (reducedMotion.matches) return;
+        visible.forEach((layer) => {
+          const rect = layer.parentElement?.getBoundingClientRect();
+          if (!rect) return;
+          const amount = Math.min(16, Number(layer.dataset.depth) || 12);
+          const progress = Math.max(-1, Math.min(1, (window.innerHeight / 2 - rect.top - rect.height / 2) / window.innerHeight));
+          layer.style.transform = `translate3d(0,${(progress * amount).toFixed(1)}px,0)`;
+        });
+      };
+      const queueDepth = () => { if (!pending && !reducedMotion.matches && visible.size) { pending = true; requestAnimationFrame(paintDepth); } };
+      if (layers.length && "IntersectionObserver" in window) {
+        const depthObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => entry.isIntersecting ? visible.add(entry.target as HTMLElement) : visible.delete(entry.target as HTMLElement));
+          queueDepth();
+        });
+        layers.forEach((layer) => depthObserver.observe(layer));
+        window.addEventListener("scroll", queueDepth, { passive: true });
+        reducedMotion.addEventListener("change", () => { layers.forEach((layer) => layer.style.removeProperty("transform")); queueDepth(); });
       }
     </script>
   </body>

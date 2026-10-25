@@ -1,5 +1,7 @@
 ---
 import ResearchCitation from "@components/ResearchCitation.astro";
+import CaseStudyVisual from "@components/CaseStudyVisual.astro";
+import "../../styles/cases.css";
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
@@ -42,12 +44,14 @@ const projectSchema = {
   pageType="article"
   structuredData={projectSchema}
 >
+  <article class={`case-study case-study-${project.slug}`}>
   <PageHero
     eyebrow={project.kicker}
     title={project.title}
     intro={project.summary}
     meta={[project.period, project.organisation, project.status]}
   />
+  <CaseStudyVisual project={project} />
 
   <section class="case-overview section">
     <div class="shell case-overview-grid">
@@ -183,4 +187,5 @@ const projectSchema = {
   <div class="shell section">
     <ContactPanel title="Interested in the decisions behind the work?" />
   </div>
+  </article>
 </BaseLayout>

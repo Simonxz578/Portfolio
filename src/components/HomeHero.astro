@@ -1,0 +1,29 @@
+---
+import {site} from '@data/site';
+import {withBase} from '../utils/urls';
+import '../styles/scenes.css';
+interface Props { locale?: 'en' | 'zh' }
+const {locale='en'}=Astro.props;
+const zh=locale==='zh';
+---
+<section class="home-hero scene-dark" aria-labelledby="home-title">
+  <div class="home-environment" aria-hidden="true">
+    <picture><source srcset={withBase('/images/v2/river-cam-fast.avif')} type="image/avif"/><img class="home-landscape" src={withBase('/images/v2/river-cam.webp')} width="1200" height="674" alt="" fetchpriority="high" decoding="async" data-depth="12"/></picture>
+    <div class="home-atmosphere"></div><div class="home-horizon"></div>
+  </div>
+  <div class="shell home-hero-grid">
+    <div class="home-hero-copy">
+      <p class="eyebrow">{zh?'张翔 Simon · 剑桥大学硕士 · AI产品与应用AI':'Xiang Zhang (Simon) · AI Product & Applied AI'}</p>
+      <h1 id="home-title">{zh?'我把模型能力、用户需求和真实工作流程连接成可用的AI产品。':'I design AI systems that connect model capability, user needs and real organisational workflows.'}</h1>
+      <p class="hero-lede">{zh?'我的经历横跨物理、LLM工作流、教育研究和组织领导。我关注技术能否落进具体场景，也负责把判断变成可以测试和交付的产品。':'With a background spanning physics, LLM workflows, education research and organisational leadership, I work across technical implementation, product judgement and AI adoption.'}</p>
+      <div class="button-row"><a class="button button-primary" href="#selected-work">{zh?'探索项目':'Explore work'}<span aria-hidden="true">↗</span></a><a class="button button-secondary" href={withBase(zh?'/zh/resume/':'/resume/')}>{zh?'查看履历':'View résumé'}</a></div>
+      <div class="hero-links" aria-label={zh?'直接联系与更多信息':'Direct links'}><a href={site.linkedin} rel="me">LinkedIn</a><a href={site.github} rel="me external">GitHub</a><a href={'mailto:'+site.email}>{zh?'邮件':'Email'}</a><a href={withBase(zh?'/zh/leadership/':'/leadership/')}>{zh?'领导力':'Leadership'}</a><a href={withBase(zh?'/zh/research/':'/research/')}>{zh?'研究':'Research'}</a></div>
+    </div>
+    <figure class="portrait-frame">
+      <div class="portrait-light" aria-hidden="true"></div>
+      <img src={withBase('/images/v2/simon-formal-fast.avif')} width="785" height="1100" alt={zh?'张翔 Simon 的正式肖像。':'Xiang Zhang (Simon) in formal business attire.'} fetchpriority="high" decoding="async"/>
+      <figcaption><span>{zh?'物理 → 应用AI':'Physics → Applied AI'}</span><strong>{zh?'产品、用户与组织采用':'Education, users and organisational adoption'}</strong></figcaption>
+    </figure>
+  </div>
+  <div class="shell hero-bottom"><div class="capability-rail" aria-label={zh?'专业方向':'Professional focus'}>{(zh?['模型能力','工作流设计','评估','信任','采用']:['Model capability','Workflow design','Evaluation','Trust','Adoption']).map(x=><span>{x}</span>)}</div><a class="hero-scroll" href="#selected-work" aria-label={zh?'向下浏览代表项目':'Scroll to selected work'}><span>{zh?'向下探索':'Scroll to explore'}</span><span aria-hidden="true">↓</span></a></div>
+</section>

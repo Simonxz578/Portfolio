@@ -1,0 +1,24 @@
+---
+import type { CaseStudy } from "@data/en/projects";
+import { withBase } from "../utils/urls";
+interface Props { project: CaseStudy; locale?: "en" | "zh"; }
+const { project, locale = "en" } = Astro.props;
+const zh = locale === "zh";
+const industrial = project.slug === "industrial-ai-agent-rag-workflow";
+const education = project.slug === "ai-enhanced-science-education";
+const formal = project.slug === "formal-hall-networking-society-website";
+const image = formal ? "/images/v2/caius-formal-fast.avif" : "/images/v2/river-cam-fast.avif";
+---
+<section class:list={["case-study-visual", industrial ? "case-visual-system" : education ? "case-visual-research" : "case-visual-photo"]} aria-label={zh ? "项目背景" : "Project context"}>
+  {industrial ? <div class="shell case-system-map">
+    <p class="eyebrow">{zh ? "从上下文到工程判断" : "From context to engineering judgement"}</p>
+    <ol>{project.workflow.map((step, i) => <li><span>{String(i + 1).padStart(2,"0")}</span><strong>{step.label}</strong><small>{step.detail}</small></li>)}</ol>
+    <p class="case-visual-caption">{project.status} · {project.organisation}</p>
+  </div> : education ? <div class="shell case-research-frontispiece">
+    <div class="research-model" aria-hidden="true"><span>GenAI</span><span>{zh ? "教学法" : "Pedagogy"}</span><span>{zh ? "学科知识" : "Content"}</span><strong>TPACK</strong></div>
+    <div><p class="eyebrow">GenAI–TPACK</p><blockquote>{project.question}</blockquote><p class="case-visual-caption">{project.organisation} · {project.period}</p></div>
+  </div> : <figure class="case-photo-frontispiece">
+    <img src={withBase(image)} width={formal ? "1024" : "1200"} height={formal ? "768" : "674"} alt={formal ? (zh ? "参与者在剑桥学院正式晚宴上的合影" : "Participants at a Cambridge college formal dinner") : (zh ? "剑桥康河与学院建筑" : "The River Cam and Cambridge college buildings")} loading="lazy" decoding="async" />
+    <figcaption><span>{project.organisation}</span><span>{project.period}</span></figcaption>
+  </figure>}
+</section>

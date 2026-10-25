@@ -1,4 +1,5 @@
 ---
+import "../styles/editorial.css";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
 import PageHero from "@components/PageHero.astro";
@@ -9,6 +10,7 @@ import { site } from "@data/site";
   title="Contact"
   description="Contact Xiang Zhang about applied AI, AI product, model evaluation, education technology, organisational adoption or startup collaboration."
 >
+<div class="editorial-page editorial-contact">
   <PageHero
     eyebrow="Contact"
     title="Start with the problem, the users and the decision."
@@ -39,4 +41,5 @@ import { site } from "@data/site";
   </section>
 
   <div class="shell section"><ContactPanel title="Ready when the problem is." /></div>
+</div>
 </BaseLayout>

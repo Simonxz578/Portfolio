@@ -33,19 +33,20 @@ const isZh = locale === "zh-CN";
 </section>
 
 <script>
-  const copyButton = document.querySelector<HTMLButtonElement>("[data-copy-email]");
-  const copyStatus = document.querySelector<HTMLElement>("[data-copy-status]");
-
-  copyButton?.addEventListener("click", async () => {
-    const email = copyButton.dataset.email;
-    if (!email) return;
-
-    try {
-      await navigator.clipboard.writeText(email);
-      if (copyStatus) copyStatus.textContent = "Email copied.";
-      copyButton.textContent = "Copied";
-    } catch {
-      if (copyStatus) copyStatus.textContent = "Copy was unavailable. Use the email link instead.";
-    }
+  document.querySelectorAll<HTMLButtonElement>("[data-copy-email]").forEach((copyButton) => {
+    const panel = copyButton.closest(".contact-panel");
+    const copyStatus = panel?.querySelector<HTMLElement>("[data-copy-status]");
+    const isZh = document.documentElement.lang === "zh-CN";
+    copyButton.addEventListener("click", async () => {
+      const email = copyButton.dataset.email;
+      if (!email) return;
+      try {
+        await navigator.clipboard.writeText(email);
+        if (copyStatus) copyStatus.textContent = isZh ? "邮箱已复制。" : "Email copied.";
+        copyButton.textContent = isZh ? "已复制 ✓" : "Copied ✓";
+      } catch {
+        if (copyStatus) copyStatus.textContent = isZh ? "暂时无法复制，请使用邮件链接。" : "Copy was unavailable. Use the email link instead.";
+      }
+    });
   });
 </script>

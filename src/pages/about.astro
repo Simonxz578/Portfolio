@@ -1,4 +1,5 @@
 ---
+import "../styles/editorial.css";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
 import PageHero from "@components/PageHero.astro";
@@ -11,6 +12,7 @@ import { withBase } from "../utils/urls";
   title="About"
   description="About Xiang Zhang: from physics and systems thinking to applied AI, education research, product judgement and organisational adoption."
 >
+<div class="editorial-page editorial-about">
   <PageHero
     variant="about"
     eyebrow="About"
@@ -19,10 +21,11 @@ import { withBase } from "../utils/urls";
     meta={["Cambridge", "London", "Beijing"]}
   />
 
-  <section class="section">
+  <section class="section editorial-reading">
     <div class="shell about-story">
       <figure>
-        <img src={withBase("/images/v2/simon-cambridge-seated.jpg")} width="724" height="1086" loading="lazy" decoding="async" alt={site.portrait.alt} />
+        <img src={withBase("/images/v2/simon-cambridge-seated.jpg")} width="800" height="1200" loading="lazy" decoding="async" alt={site.portrait.alt} />
+        <figcaption>Cambridge · A place to think, build and connect.</figcaption>
       </figure>
       <div class="prose">
         <p class="lede">
@@ -68,4 +71,5 @@ import { withBase } from "../utils/urls";
   </section>
 
   <div class="shell section"><ContactPanel /></div>
+</div>
 </BaseLayout>

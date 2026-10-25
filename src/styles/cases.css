@@ -1,0 +1,240 @@
+/* Case studies: an atmospheric opening, then a quiet, solid reading surface. */
+.physics-case, .case-study {
+  --case-border: rgba(24,36,52,.15);
+  --case-muted: #526275;
+  --case-accent: #326fa4;
+  color: var(--text-on-light, #182434);
+  background: var(--paper-50, #f7f8f7);
+}
+.physics-case :where(section[id]), .case-study :where(section[id]) { scroll-margin-top: 110px; }
+.physics-case :where(figure, blockquote, dl), .case-study :where(figure, blockquote, dl) { margin: 0; }
+.physics-case .case-section, .case-study .case-section { padding-block: clamp(4rem, 7.5vw, 8rem); border-bottom: 1px solid var(--case-border); }
+.physics-case .case-section-tinted, .case-study .case-section-tinted { background: #eef1f7; }
+.physics-case .case-section-dark, .case-study .case-section-dark { color: var(--text-on-dark, #f5f8fd); background: var(--ink-950, #071427); border-color: rgba(255,255,255,.14); }
+.case-section-grid { display: grid; grid-template-columns: minmax(180px, .5fr) minmax(0, 1fr); gap: clamp(2.5rem, 7vw, 7rem); align-items: start; }
+.case-section-grid header { position: sticky; top: 120px; }
+.case-section-grid header h2 { max-width: 13ch; font-size: clamp(1.9rem, 3vw, 3.3rem); line-height: 1.2; }
+.case-wide-heading { display: grid; grid-template-columns: minmax(100px, .25fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); margin-bottom: clamp(2.5rem, 4vw, 4.5rem); }
+.case-wide-heading h2 { max-width: 23ch; font-size: clamp(2rem, 3.8vw, 4rem); line-height: 1.15; }
+.case-wide-heading p:not(.section-number) { max-width: 72ch; color: var(--case-muted); line-height: 1.85; }
+.case-section-dark .case-wide-heading p:not(.section-number) { color: #bfccdb; }
+.section-number { margin: .25rem 0 1.2rem; color: var(--case-accent); font: 600 .68rem/1.6 var(--mono, monospace); letter-spacing: .12em; }
+.case-section-dark .section-number { color: var(--mist-300, #b4cde3); }
+.ninefold-prose { max-width: 73ch; }
+.ninefold-prose > p { font-size: 1.075rem; line-height: 1.9; }
+.physics-case .case-section blockquote, .case-study .case-section blockquote { padding: clamp(1.5rem, 3vw, 2.75rem); margin-top: 2rem; border-left: 2px solid #839bc3; background: #e8edf5; }
+.physics-case .case-section blockquote p, .case-study .case-section blockquote p { margin: 0; font-family: var(--serif, Georgia, serif); font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.6; }
+/* Ninefold's source environment is layered, never simulated by expensive shaders. */
+.physics-case .ninefold-hero { isolation: isolate; position: relative; min-height: min(100svh, 1050px); padding-top: 108px; overflow: hidden; display: grid; align-items: center; background: var(--ink-950, #071427); color: var(--text-on-dark, #f5f8fd); }
+.ninefold-environment { position: absolute; inset: 0; z-index: -2; pointer-events: none; }
+.ninefold-environment img { position: absolute; max-width: none; }
+.ninefold-sky { width: 100%; height: 100%; object-fit: cover; filter: saturate(.62) brightness(.48); }
+.ninefold-clouds { width: 78%; right: -5%; top: 0; opacity: .32; }
+.ninefold-ground { width: 100%; bottom: -1px; height: 41%; object-fit: cover; object-position: center top; filter: saturate(.5) brightness(.5); }
+.ninefold-canopy { width: min(76vw, 1150px); height: auto; right: -13%; bottom: 8%; opacity: .86; filter: saturate(.5) drop-shadow(0 0 40px rgba(190,195,239,.14)); }
+.physics-case .ninefold-hero::after { content: ""; z-index: -1; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,20,39,.96), rgba(7,20,39,.7) 39%, rgba(7,20,39,.08) 78%), linear-gradient(0deg, #071427, transparent 25%); pointer-events: none; }
+.physics-case .ninefold-hero-content { position: relative; padding-block: .5rem 3rem; }
+.case-back-link { display: inline-flex; align-items: center; gap: .75rem; margin-bottom: 1rem; min-height: 44px; font-size: .8rem; color: #c8d6e6; text-decoration: none; }
+.physics-case .ninefold-hero .eyebrow { color: #b4cde3; }
+.physics-case .ninefold-hero h1 { margin: 1.1rem 0 1.5rem; max-width: 7ch; color: #f5f8fd; font-size: clamp(4rem, 7vw, 7.5rem); font-weight: 400; line-height: .88; letter-spacing: -.065em; }
+.physics-case .ninefold-hero h1 em { color: #c4b8ec; font-weight: 400; }
+.physics-case .ninefold-hero h2 { max-width: 25ch; margin-bottom: 1rem; color: #f5f8fd; font-family: var(--sans, sans-serif); font-size: clamp(1.3rem, 2vw, 1.9rem); font-weight: 500; line-height: 1.4; }
+.ninefold-intro { max-width: 60ch; width: 55%; color: #c3d1e1; line-height: 1.85; font-size: .99rem; }
+.physics-hero-flow { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.65rem 0; width: 60%; color: #b4cde3; font-size: .7rem; }
+.physics-hero-flow i { font-style: normal; margin-left: .4rem; color: #7c8ca5; }
+.physics-case .ninefold-hero .button-primary { color: #071427; background: #edf3fc; border-color: #edf3fc; }
+.physics-case .ninefold-hero .button-secondary { color: #f5f8fd; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.3); }
+.physics-case .ninefold-language { display: inline-flex; position: absolute; right: 0; top: .5rem; margin-top: 0; color: #b4cde3; font-size: .78rem; }
+.ninefold-scene-caption { position: absolute; bottom: 3rem; right: 5vw; color: #b4cde3; font: .65rem/1.5 var(--mono, monospace); letter-spacing: .22em; }
+.ninefold-ledger { background: #10253e; color: #f5f8fd; border-block: 1px solid rgba(255,255,255,.12); }
+.ninefold-ledger dl { display: grid; grid-template-columns: .8fr 1.2fr 1fr 1fr; gap: 2rem; padding-block: 2.2rem; }
+.ninefold-ledger dt { margin-bottom: .6rem; color: #b4cde3; font: .65rem/1.5 var(--mono, monospace); letter-spacing: .1em; text-transform: uppercase; }
+.ninefold-ledger dd { margin: 0; font-size: .88rem; line-height: 1.6; }
+.case-chapter-nav { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; padding-block: 1.3rem; border-bottom: 1px solid var(--case-border); }
+.case-chapter-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: .76rem; color: #40566e; text-decoration: none; }
+.case-chapter-nav a:hover { color: #143b65; text-decoration: underline; text-underline-offset: .4em; }
+.learning-loop-map { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); }
+.learning-loop-map li { margin: 0; position: relative; padding: 1.3rem 1rem 0 0; border-top: 1px solid #9aafc5; }
+.learning-loop-map li::before { content: ""; position: absolute; width: 7px; height: 7px; border-radius: 50%; top: -4px; background: #326fa4; }
+.loop-step { color: #657d98; font: .65rem/1.5 var(--mono, monospace); }
+.learning-loop-map h3 { margin: 1.5rem 0 .6rem; font-size: 1.2rem; }
+.learning-loop-map p { margin: 0; color: #526275; font-size: .8rem; line-height: 1.7; }
+.physics-product-shot img { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--case-border); }
+.physics-product-shot figcaption { margin-top: 1rem; color: #526275; font-size: .8rem; line-height: 1.7; }
+.physics-paths, .physics-tracks, .question-types { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1.1rem; }
+.physics-paths article { padding: 1.6rem; border: 1px solid #30455e; border-radius: 16px; background: #10253e; }
+.physics-paths h3 { color: #f5f8fd; font-size: 1.1rem; line-height: 1.5; }
+.physics-paths p { margin: 0; color: #bfccdb; font-size: .9rem; line-height: 1.75; }
+.physics-boundary { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2rem; }
+.physics-boundary article { position: relative; padding: 2rem; border: 1px solid #c9d4e2; border-radius: 20px; background: #e9edf7; }
+.physics-boundary article:last-child { background: #10253e; color: #f5f8fd; border-color: #10253e; }
+.physics-boundary article:first-child::after { content: "↔"; position: absolute; right: -2.1rem; top: 50%; transform: translateY(-50%); width: 2.1rem; text-align: center; color: #657d98; }
+.physics-boundary article > span { display: block; padding-bottom: 1.5rem; border-bottom: 1px solid currentColor; font: .7rem/1.5 var(--mono,monospace); letter-spacing: .15em; }
+.physics-boundary ul { margin: 1.5rem 0 0; padding-left: 1.1rem; }
+.physics-boundary li { margin: .65rem 0; line-height: 1.6; }
+.physics-toolkit-section { background: #e9edf7; }
+.toolkit-flow { display: flex; flex-wrap: wrap; gap: .75rem; margin: 0 0 2rem; font-size: .76rem; color: #40566e; }
+.toolkit-flow span { padding: .8rem 1rem; background: #f7f8f7; border: 1px solid #c8d3e3; border-radius: 10px; }
+.formula-card { display: grid; gap: .8rem; max-width: 620px; padding: 2rem; border-radius: 18px; background: #10253e; color: #f5f8fd; }
+.formula-card small { color: #b4cde3; font: .7rem/1.5 var(--mono,monospace); }
+.formula-card strong { padding: 1rem; margin-top: .4rem; background: #213e55; border: 1px solid #71b4c4; border-radius: 8px; font-size: 1.2rem; }
+.formula-card > span { padding: .5rem 1rem; color: #c0ccdb; }
+.physics-tracks, .question-types { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.physics-tracks article, .question-types article { border-top: 1px solid #9cacc2; padding: 1.6rem 1.5rem 0 0; }
+.physics-tracks h3, .question-types h3 { margin-bottom: .7rem; font-size: 1.3rem; }
+.physics-tracks p, .question-types p { color: #526275; font-size: .9rem; line-height: 1.7; }
+.question-types b { display: block; color: #326fa4; margin-bottom: 2rem; font: .65rem/1.5 var(--mono,monospace); letter-spacing: .12em; }
+.integration-note { margin: 2rem 0 0; padding-top: 2rem; max-width: 80ch; color: #526275; font-size: .85rem; line-height: 1.85; }
+.mark-card { display: grid; gap: .85rem; padding: 2rem; max-width: 800px; border: 1px solid #41566e; border-radius: 18px; background: #10253e; }
+.practice-example-label { color: #b4cde3; font: .65rem/1.7 var(--mono,monospace); }
+.mark-card strong { margin-bottom: .5rem; color: #f5f8fd; font-size: 1.2rem; }
+.mark-card span { color: #c8d6e6; font-size: .95rem; line-height: 1.7; }
+.practice-disclaimer { margin: 2rem 0 0; max-width: 80ch; color: #bfccdb; font-size: .82rem; line-height: 1.85; }
+/* The example contains no model call and is labelled as an illustration. */
+.physics-walkthrough-section { background: #e9edf7; }
+.physics-walkthrough { border: 1px solid #c8d3e3; border-radius: 20px; background: #f7f8f7; overflow: hidden; }
+.walkthrough-question { padding: 1.75rem 2rem; margin: 0; border-bottom: 1px solid #d5dce7; font-size: clamp(1.1rem,2vw,1.5rem); }
+.walkthrough-question > span { display: block; margin-bottom: .6rem; color: #526275; font: .65rem/1.5 var(--mono,monospace); letter-spacing: .1em; text-transform: uppercase; }
+.walkthrough-controls { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0; padding: 1.5rem 2rem; border: 0; }
+.walkthrough-controls[hidden], .walkthrough-panel[hidden] { display: none; }
+.walkthrough-controls legend { float: left; width: 100%; padding-bottom: .75rem; color: #526275; font-size: .75rem; }
+.walkthrough-controls label { position: relative; display: inline-flex; cursor: pointer; }
+.walkthrough-controls input { appearance: none; position: absolute; inset: 0; margin: 0; width: 100%; height: 100%; border: 1px solid #b0bfd1; border-radius: 999px; background: transparent; cursor: pointer; }
+.walkthrough-controls input:checked { background: #10253e; border-color: #10253e; }
+.walkthrough-controls input:focus-visible { outline: 3px solid #326fa4; outline-offset: 4px; }
+.walkthrough-controls label > span { position: relative; display: flex; align-items: center; min-height: 44px; padding: .65rem 1rem; font-size: .8rem; pointer-events: none; }
+.walkthrough-controls input:checked + span { color: #f5f8fd; }
+.walkthrough-panel { padding: 0 2rem 2rem; }
+.physics-case .walkthrough-panel blockquote { padding: 1.5rem; margin: 0 0 2rem; background: #e9edf7; border: 0; border-radius: 12px; }
+.walkthrough-panel blockquote > span { display: block; color: #526275; margin-bottom: .8rem; font-size: .7rem; }
+.physics-case .walkthrough-panel blockquote p { font-size: 1.1rem; line-height: 1.8; }
+.walkthrough-trace { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 2rem; padding: 0; margin: 0; list-style: none; }
+.walkthrough-trace li { margin: 0; border-top: 1px solid #b7c5d5; padding-top: 1rem; }
+.walkthrough-trace li > span { color: #326fa4; font: .65rem/1.5 var(--mono,monospace); letter-spacing: .07em; }
+.walkthrough-trace h3 { margin: 1rem 0 .6rem; font-size: 1rem; line-height: 1.5; }
+.walkthrough-trace p { color: #526275; font-size: .85rem; line-height: 1.8; margin: 0; }
+/* Shared case-study pages. Every project retains its full evidence and limits. */
+.case-study-visual { position: relative; overflow: hidden; }
+.case-system-map { padding-block: 3.5rem; }
+.case-visual-system { background: #10253e; color: #f5f8fd; }
+.case-system-map .eyebrow { color: #b4cde3; }
+.case-system-map ol { list-style: none; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 1.5rem; margin: 2rem 0; padding: 0; }
+.case-system-map li { margin: 0; position: relative; border-top: 1px solid #6b85a2; padding-top: 1.3rem; }
+.case-system-map li:not(:last-child)::after { content: "→"; position: absolute; right: -.7rem; top: -.9rem; color: #b4cde3; }
+.case-system-map li > span { display: block; color: #a6bbd5; font: .65rem/1.5 var(--mono,monospace); margin-bottom: 2rem; }
+.case-system-map strong { display: block; font-size: 1.1rem; margin-bottom: .75rem; font-weight: 500; }
+.case-system-map small { display: block; color: #bfccdb; font-size: .8rem; line-height: 1.75; }
+.case-visual-caption { margin: 1.7rem 0 0; font: .7rem/1.7 var(--mono,monospace); color: inherit; opacity: .8; }
+.case-visual-research { background: #e8e5f2; }
+.case-research-frontispiece { display: grid; grid-template-columns: .8fr 1.2fr; gap: 5vw; align-items: center; padding-block: 3.5rem; }
+.research-model { position: relative; min-height: 240px; max-width: 380px; width: 100%; }
+.research-model > span { position: absolute; display: grid; align-items: start; justify-items: center; padding-top: 28px; width: 160px; height: 160px; border: 1px solid #9b9ab9; border-radius: 50%; font: .7rem/1.5 var(--mono,monospace); color: #4b4f70; }
+.research-model > span:nth-child(1) { top: 0; left: 30%; }
+.research-model > span:nth-child(2) { bottom: 0; left: 9%; padding-top: 95px; }
+.research-model > span:nth-child(3) { bottom: 0; right: 0; padding-top: 95px; }
+.research-model > strong { position: absolute; left: 35%; top: 50%; color: #384b70; font: italic 1.5rem/1 var(--serif,Georgia,serif); }
+.case-research-frontispiece blockquote { margin: 0; max-width: 40ch; font: 400 clamp(1.3rem,2.4vw,2.2rem)/1.5 var(--serif,Georgia,serif); }
+.case-photo-frontispiece { position: relative; margin: 0; aspect-ratio: 3.6; overflow: hidden; background: #10253e; }
+.case-photo-frontispiece::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg,rgba(7,20,39,.85),transparent 70%); }
+.case-photo-frontispiece img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 53%; }
+.case-study-formal-hall-networking-society-website .case-photo-frontispiece { aspect-ratio: 2.4; }
+.case-photo-frontispiece figcaption { position: absolute; bottom: 2rem; left: 5%; right: 5%; z-index: 1; display: flex; justify-content: space-between; gap: 1rem; color: #f5f8fd; font-size: .8rem; }
+.case-study .case-overview { border-bottom: 1px solid var(--case-border); }
+.case-overview-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(260px,.55fr); gap: clamp(2rem,7vw,7rem); }
+.case-overview h2 { max-width: 24ch; font-size: clamp(2rem,3.8vw,4rem); line-height: 1.2; }
+.case-ledger { border-top: 1px solid var(--case-border); }
+.case-ledger > div { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--case-border); }
+.case-ledger dt { color: #526275; font: .65rem/1.6 var(--mono,monospace); text-transform: uppercase; }
+.case-ledger dd { margin: 0; font-size: .85rem; line-height: 1.7; }
+.case-columns { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(2rem,4vw,4rem); }
+.case-columns-single { grid-template-columns: minmax(0,1fr); }
+.case-columns article { min-width: 0; }
+.case-columns h3 { padding-bottom: 1rem; border-bottom: 1px solid var(--case-border); font-size: 1.2rem; }
+.plain-list, .limitation-list { padding: 0; margin: 0; list-style: none; }
+.plain-list li, .limitation-list li { padding: .85rem 0; border-bottom: 1px solid var(--case-border); color: #526275; line-height: 1.85; font-size: .95rem; }
+.case-section-dark .plain-list li { border-color: #30455e; color: #bfccdb; }
+.case-section-dark .case-columns h3 { border-color: #30455e; }
+.case-lead { max-width: 70ch; margin-bottom: 2rem; font-size: clamp(1.15rem,1.8vw,1.4rem); line-height: 1.85; }
+.decision-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--case-border); }
+.decision-list li { display: grid; grid-template-columns: 30px minmax(0,1fr); gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--case-border); }
+.decision-list span { color: #326fa4; font: .65rem/1.7 var(--mono,monospace); }
+.decision-list p { margin: 0; line-height: 1.85; }
+.flow-figure { border: 1px solid var(--case-border); border-radius: 16px; overflow: hidden; background: white; }
+.flow-figure figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; padding: 1.2rem; border-bottom: 1px solid var(--case-border); color: #526275; font: .65rem/1.6 var(--mono,monospace); }
+.flow-figure figcaption span { color: #326fa4; }
+.flow-diagram { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); }
+.flow-diagram li { margin: 0; position: relative; padding: 1.5rem; border-right: 1px solid var(--case-border); min-width: 0; }
+.flow-diagram li:last-child { border-right: 0; }
+.flow-index { display: block; margin-bottom: 2.5rem; color: #326fa4; font: .65rem/1.6 var(--mono,monospace); }
+.flow-diagram strong { display: block; margin-bottom: 1rem; font-size: 1rem; line-height: 1.4; }
+.flow-diagram p { color: #526275; margin: 0; font-size: .8rem; line-height: 1.8; }
+.comparison-flows { display: grid; gap: 2rem; margin-top: 3rem; }
+.comparison-flows > div > p { max-width: 70ch; color: #526275; }
+.related-line { margin-top: 2rem; color: #526275; font-size: .9rem; line-height: 1.9; }
+.case-links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-block: 2rem; }
+.tag-list { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
+.tag-list span { padding: .55rem .8rem; border: 1px solid var(--case-border); border-radius: 999px; color: #526275; font-size: .7rem; }
+.case-nav { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-block: 2rem; border-bottom: 1px solid var(--case-border); }
+.case-nav a { min-height: 44px; display: inline-flex; align-items: center; font-size: .9rem; }
+@media (min-width: 1600px) { .ninefold-canopy { right: -4%; } }
+@media (max-width: 1100px) {
+  .physics-paths { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .ninefold-intro { width: 62%; }
+  .ninefold-canopy { right: -24%; width: 91vw; }
+  .learning-loop-map { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 2rem 0; }
+  .case-section-grid { grid-template-columns: minmax(160px,.4fr) minmax(0,1fr); gap: 3rem; }
+  .case-columns { grid-template-columns: 1fr; }
+}
+@media (max-width: 767px) {
+  .physics-case .ninefold-hero { min-height: auto; padding-top: 90px; }
+  .physics-case .ninefold-hero-content { padding-block: 1rem 4rem; }
+  .physics-case .ninefold-hero::after { background: linear-gradient(0deg,#071427 0%,rgba(7,20,39,.86) 42%,rgba(7,20,39,.4) 100%); }
+  .ninefold-canopy { width: 115%; right: -30%; bottom: 42%; opacity: .3; }
+  .ninefold-clouds { top: 1%; width: 120%; }
+  .ninefold-ground { height: 20%; opacity: .6; }
+  .case-back-link { margin-bottom: 1.5rem; }
+  .physics-case .ninefold-hero h1 { font-size: clamp(4rem,15vw,6.2rem); }
+  .physics-case .ninefold-hero h2 { max-width: 23ch; font-size: 1.4rem; }
+  .ninefold-intro, .physics-hero-flow { width: 100%; max-width: 55ch; }
+  .ninefold-intro { font-size: .92rem; }
+  .physics-hero-flow { font-size: .64rem; }
+  .physics-case .ninefold-language { position: static; margin-top: 1.3rem; }
+  .ninefold-scene-caption { display: none; }
+  .ninefold-ledger dl { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.5rem; }
+  .case-chapter-nav { gap: .3rem 1rem; }
+  .case-chapter-nav a { font-size: .7rem; }
+  .case-section-grid, .case-overview-grid, .case-wide-heading { grid-template-columns: minmax(0,1fr); gap: 1.2rem; }
+  .case-section-grid header { position: static; }
+  .case-section-grid header h2 { max-width: 24ch; }
+  .case-wide-heading h2 { font-size: clamp(1.9rem,7vw,2.6rem); }
+  .case-wide-heading { margin-bottom: 2rem; }
+  .section-number { margin-bottom: .3rem; }
+  .learning-loop-map { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .physics-paths, .physics-tracks, .question-types, .physics-boundary, .walkthrough-trace { grid-template-columns: minmax(0,1fr); }
+  .physics-boundary { gap: 1rem; }
+  .physics-boundary article:first-child::after { display: none; }
+  .physics-paths article { padding: 1.5rem; }
+  .physics-tracks article, .question-types article { padding-top: 1.2rem; }
+  .question-types b { margin-bottom: 1rem; }
+  .walkthrough-question, .walkthrough-controls { padding: 1.25rem; }
+  .walkthrough-panel { padding: 0 1.25rem 1.5rem; }
+  .walkthrough-controls { gap: .5rem; }
+  .walkthrough-controls label > span { padding: .55rem .8rem; font-size: .74rem; }
+  .walkthrough-trace { gap: 1.5rem; }
+  .case-system-map ol, .flow-diagram { grid-template-columns: minmax(0,1fr); }
+  .case-system-map ol { gap: 1.5rem; }
+  .case-system-map li > span { margin-bottom: .75rem; }
+  .case-system-map li:not(:last-child)::after { content: none; }
+  .case-research-frontispiece { grid-template-columns: minmax(0,1fr); gap: 2rem; }
+  .research-model { max-width: 340px; justify-self: center; }
+  .research-model > span { width: 145px; height: 145px; }
+  .case-photo-frontispiece { aspect-ratio: 1.5; }
+  .case-photo-frontispiece figcaption { bottom: 1.5rem; }
+  .flow-diagram li { margin: 0; border-right: 0; border-bottom: 1px solid var(--case-border); }
+  .flow-diagram li:last-child { border-bottom: 0; }
+  .flow-index { margin-bottom: 1rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .walkthrough-panel { animation: walkthrough-enter .35s cubic-bezier(.2,0,0,1) both; }
+  @keyframes walkthrough-enter { from { opacity: .3; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+}

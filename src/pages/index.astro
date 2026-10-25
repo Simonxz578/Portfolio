@@ -3,6 +3,7 @@ import ResearchCitation from "@components/ResearchCitation.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactPanel from "@components/ContactPanel.astro";
 import ProjectCard from "@components/ProjectCard.astro";
+import HomeHero from "@components/HomeHero.astro";
 import SectionIntro from "@components/SectionIntro.astro";
 import { capabilities, selectedExperience } from "@data/en/experience";
 import { featuredProjects } from "@data/en/projects";
@@ -42,54 +43,7 @@ const personSchema = {
   description="Xiang Zhang (Simon) works across applied AI, product judgement, model evaluation, workflow engineering and organisational adoption."
   structuredData={personSchema}
 >
-  <section class="home-hero">
-    <img class="home-hero-background" src={withBase("/images/v2/cambridge-paper.webp")} width="1086" height="725" alt="" aria-hidden="true" fetchpriority="high" />
-    <div class="shell home-hero-grid">
-      <div class="home-hero-copy">
-        <p class="eyebrow">Xiang Zhang (Simon) · AI Product & Applied AI</p>
-        <h1>I design AI systems that connect model capability, user needs and real organisational workflows.</h1>
-        <p class="hero-lede">
-          With a background spanning physics, LLM workflows, education research and organisational leadership,
-          I work across technical implementation, product judgement and AI adoption.
-        </p>
-        <div class="button-row">
-          <a class="button button-primary" href="#selected-work">View selected work</a>
-          <a class="button button-secondary" href={withBase("/resume/")}>View résumé</a>
-        </div>
-        <div class="hero-links" aria-label="Direct links">
-          <a href={site.linkedin} rel="me">LinkedIn</a>
-          <span aria-hidden="true">·</span>
-          <a href={site.github} rel="me external">GitHub</a>
-          <span aria-hidden="true">·</span>
-          <a href={"mailto:" + site.email}>Email</a>
-          <span aria-hidden="true">·</span>
-          <a href={withBase("/leadership/")}>Leadership</a>
-          <span aria-hidden="true">·</span>
-          <a href={withBase("/research/")}>Research</a>
-        </div>
-      </div>
-
-      <figure class="portrait-frame">
-        <img src={withBase("/images/v2/simon-formal-fast.avif")} width="786" height="1100" alt="Xiang Zhang (Simon) in formal business attire." fetchpriority="high" decoding="async" />
-        <figcaption>
-          <span>Physics → Applied AI</span>
-          <strong>Education, users and organisational adoption</strong>
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="shell capability-rail" aria-label="Professional focus">
-      <span>Model capability</span>
-      <i aria-hidden="true"></i>
-      <span>Workflow design</span>
-      <i aria-hidden="true"></i>
-      <span>Evaluation</span>
-      <i aria-hidden="true"></i>
-      <span>Trust</span>
-      <i aria-hidden="true"></i>
-      <span>Adoption</span>
-    </div>
-  </section>
+  <HomeHero locale="en" />
 
   <section class="section" id="selected-work">
     <div class="shell">
