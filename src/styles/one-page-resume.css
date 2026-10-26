@@ -109,8 +109,10 @@
 .opr-project-world .opr-project-status { grid-column: 1; margin-top: .3rem; }
 .opr-project-world .opr-project-meta { grid-column: 2; grid-row: 2/span 2; justify-content: end; text-align: right; max-width: 280px; margin: 0; }
 .opr-world-scene { height: clamp(340px,39vw,520px); background: #9ec7ed; }
+.opr-world-scene.opr-screenshot-frame { height: auto; aspect-ratio: 1920 / 1106; }
 .opr-world-layers { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .opr-world-layers img { position: absolute; display: block; max-width: none; pointer-events: none; }
+.opr-world-layers .opr-scene-showcase { inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .opr-world-layers .opr-scene-sky { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; }
 .opr-world-layers .opr-scene-clouds { inset: -10% 0 0; width: 100%; height: 90%; object-fit: cover; opacity: .85; }
 .opr-world-layers .opr-scene-canopy { left: 15%; bottom: 5%; width: 70%; height: 94%; object-fit: contain; object-position: center bottom; }

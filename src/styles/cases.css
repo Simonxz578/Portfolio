@@ -38,6 +38,8 @@
 .physics-case .ninefold-hero .button-secondary{color:var(--case-accent);background:#fff;border-color:#cad8f1}
 .ninefold-environment{position:relative;isolation:isolate;min-height:570px;overflow:hidden;border:1px solid #d5e3f1;border-radius:28px;background:#abd7f5;pointer-events:none}
 .ninefold-environment img{position:absolute;max-width:none}
+.ninefold-environment.ninefold-screenshot-frame{align-self:center;min-height:0;aspect-ratio:1920/1106}
+.ninefold-showcase{inset:0;width:100%;height:100%;object-fit:contain;object-position:center}
 .ninefold-sky{inset:0;width:100%;height:100%;object-fit:cover}
 .ninefold-clouds{width:130%;left:-13%;top:0;height:85%;object-fit:contain;opacity:.85}
 .ninefold-ground{width:150%;left:-20%;bottom:-1px;height:34%;object-fit:cover;object-position:center top}

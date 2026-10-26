@@ -120,3 +120,15 @@ Root should append the final build timestamp, asset inventory refresh, current b
 - The final selected entry remains a literal approved-source head/upper-body composition with inferred body extension. Motion remains a finite8-pose2.5D interpretation; repeated poses and limited arm alternation remain disclosed.
 
 This is a pre-release snapshot. Final commit SHA, GitHub Actions result, measured live loading and HTTP checks are recorded with the delivered release evidence after publication; this build-time document does not assert a future deployment.
+
+
+## Scoped cutout, Ninefold and footer patch — 26 October 2026
+
+This patch follows release c562893. Only the full-body native silhouette/alpha joins, the primary Ninefold screenshot, its image-frame aspect ratios and the user-requested footer wording changed. The face, pose, clothing, scene placement, copy, links and factual data otherwise remain unchanged.
+
+- Final entry SVG: 1,044,420 bytes, SHA-256 `df28c37b71e05d5bc0d8c109df7787efa316a39c3a87278f512c4aeb150f927b`. All four embedded photographic payloads are byte-identical to c562893, independently checked. The two protected lossless crops remain untouched.
+- Source-resolution native SVG renders on sky, white and dark backgrounds were inspected. The old beige jaw/neck wedges, traced hair spikes, under-sleeve background wedges, broad trouser-side slabs and shoe-bottom matte were cleaned. A final shoulder check confirmed continuous opaque cloth after removing a translucent join triangle. These checks assess the contour; they do not claim new identity generation or new motion validation.
+- Ninefold uses the complete supplied application screenshot (1920 × 1106 WebP, 320,426 bytes) in the homepage, Work card and case hero. Image frames follow the screenshot aspect, avoiding bars/cropping while retaining surrounding layout/copy/links.
+- Latest production build: 54 Astro files, zero errors/warnings/hints, 25 routes. Post-build asset/route check, Cosmic integration/privacy check and preservation auditor passed. The seven original data hashes remain unchanged. Footer-removal assertions passed across every generated HTML file.
+- IAB Chromium preview: Chinese homepage and its Ninefold figure at 1440px and 390px; Chinese Work and Ninefold case at 390px; English Ninefold case at 1440px; both-language footer text. All inspected routes had zero horizontal overflow and no broken loaded images. The screenshot's full composition is visible. Existing responsive/motion checks from the prior release are not represented as newly repeated here.
+- Evidence lives outside the public repo at `output/edge-ninefold-20261026/`, including desktop/mobile captures and four-payload integrity JSON. Final publication SHA, Actions result and live-asset verification are recorded in that release evidence after publication.

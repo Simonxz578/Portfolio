@@ -107,9 +107,9 @@ const capabilityContext = isZh
         {projects.map((project) => <article class:list={["opr-project", `opr-project-${projectTheme(project.slug)}`, { "opr-project-featured": project.slug === "ninefold" }]}>
           <div class="opr-project-lead">
             <header class="opr-project-header"><p class="opr-kicker">{project.kicker}</p><h3><a href={casePath(project.slug)}>{project.shortTitle}<span aria-hidden="true">↗</span></a></h3><p class="opr-project-status">{project.status}</p><div class="opr-project-meta"><time>{project.period}</time><span>{project.organisation}</span></div></header>
-            {project.slug === "ninefold" && <figure class="opr-project-media opr-world-scene" aria-labelledby="resume-ninefold-scene-caption">
+            {project.slug === "ninefold" && <figure class="opr-project-media opr-world-scene opr-screenshot-frame" aria-labelledby="resume-ninefold-scene-caption">
               <a href={project.links?.[0]?.href ?? casePath(project.slug)} aria-label={isZh ? "体验 Ninefold Physics" : "Experience Ninefold Physics"}>
-                <div class="opr-world-layers" aria-hidden="true"><img class="opr-scene-sky" src={withBase("/images/ninefold/ninefold-sky.webp")} width="1672" height="941" alt="" loading="lazy" decoding="async"/><img class="opr-scene-clouds" src={withBase("/images/ninefold/ninefold-world-fast.avif")} width="1400" height="620" alt="" loading="lazy" decoding="async"/><img class="opr-scene-canopy" src={withBase("/images/ninefold/ninefold-canopy.webp")} width="1200" height="720" alt="" loading="lazy" decoding="async"/><img class="opr-scene-ground" src={withBase("/images/ninefold/ninefold-tree.webp")} width="1600" height="500" alt="" loading="lazy" decoding="async"/></div>
+                <div class="opr-world-layers" aria-hidden="true"><img class="opr-scene-showcase" src={withBase("/images/ninefold/ninefold-showcase.webp")} width="1920" height="1106" alt="" loading="lazy" decoding="async"/></div>
                 <span class="opr-media-action" aria-hidden="true">{isZh ? "进入学习世界" : "Enter the learning world"}<span>↗</span></span>
               </a><figcaption id="resume-ninefold-scene-caption">{isZh ? "Ninefold Physics · 天空、白树与原野构成的物理学习世界" : "Ninefold Physics · A physics-learning world of sky, white tree and open landscape"}</figcaption>
             </figure>}

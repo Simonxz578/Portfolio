@@ -32,11 +32,8 @@ const tracks = zh ? [["IGCSE Physics","Pearson Edexcel International GCSE Physic
       <h2>{c.headline}</h2><p class="ninefold-intro">{c.intro}</p>
       <div class="button-row"><a class="button button-primary" href={live} target="_blank" rel="noopener noreferrer">{c.liveLabel} <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="#learning-loop">{zh ? "探索产品设计" : "Explore the design"} <span aria-hidden="true">↓</span></a></div>
       </div>
-      <div class="ninefold-environment" aria-hidden="true">
-        <img class="ninefold-sky" src={withBase("/images/ninefold/ninefold-sky.webp")} width="1672" height="941" alt="" fetchpriority="high" />
-        <img class="ninefold-clouds" data-depth="12" src={withBase("/images/ninefold/ninefold-world-fast.avif")} width="1400" height="620" alt="" />
-        <img class="ninefold-ground" src={withBase("/images/ninefold/ninefold-tree.webp")} width="1600" height="500" alt="" />
-        <img class="ninefold-canopy" src={withBase("/images/ninefold/ninefold-canopy.webp")} width="1200" height="720" alt="" />
+      <div class="ninefold-environment ninefold-screenshot-frame" aria-hidden="true">
+        <img class="ninefold-showcase" src={withBase("/images/ninefold/ninefold-showcase.webp")} width="1920" height="1106" alt="" fetchpriority="high" decoding="async" />
         <p class="ninefold-scene-caption">A WORLD TO THINK IN.</p>
       </div>
       </div>

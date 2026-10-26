@@ -39,12 +39,19 @@ See `COSMIC_RUN_QA.md` for actual browser evidence, current build/deployment sta
 
 ## Final delivery inventory
 
-Frozen on 26 October 2026 after the foundation-edge edit. The five selected files total approximately 1.55 MiB. The entry/crop proof applies to the listed unchanged entry hash.
+Updated on 26 October 2026 after the full-body silhouette cleanup. The five selected files total approximately 1.54 MiB. The four embedded photographic payloads remain byte-identical to release c562893; only native silhouette paths, antialiasing masks and the shoulder alpha join changed.
 
 | Selected file | Delivered dimensions | Bytes | SHA-256 |
 | --- | --- | ---: | --- |
 | `public/media/cosmic-run/cosmic-depth.webp` | 1280 × 720 RGB | 148,306 | `7ba42d015e9cff437539f8ebab819a7486f89f3f1bd78b965095bcf665c7bd32` |
 | `public/media/cosmic-run/kings-architecture.svg` | 1600 × 900 SVG; embedded 1024 × 238 JPEG | 172,971 | `569ec35a4a1515d8f321b5236421ea9ec517210cb2dbaea5b5f147b323606c58` |
 | `public/media/cosmic-run/runner-cycle.webp` | 1280 × 960 RGBA | 195,650 | `77f3ebbbf3993414a1ae5c6823e0fa2c1191696a70af09ad1728653e8df90fbd` |
-| `public/media/cosmic-run/simon-entry.svg` | 512 × 768; 1024 × 1536 viewBox | 1,053,927 | `392ef16d6bd706939f5fc9504f4891ec170bde3a70e0959cadbf64b761e060c0` |
+| `public/media/cosmic-run/simon-entry.svg` | 512 × 768; 1024 × 1536 viewBox | 1,044,420 | `df28c37b71e05d5bc0d8c109df7787efa316a39c3a87278f512c4aeb150f927b` |
 | `public/media/identity/simon-portrait.jpg` | 640 × 800 RGB | 54,297 | `10d41fd6072b350a1b8ab7be1fea7daf9659bce2ad6378e4412f4264b1d0d0aa` |
+
+
+## Full-body edge cleanup and Ninefold screenshot — 26 October 2026
+
+The user requested cleaning the entire person, explicitly including the body rather than only the face. The continuation contour now follows the largest original alpha component from the same selected generated body, simplified at 1.2 source pixels. It restores the transparent under-sleeve openings and removes retained background slabs beside the trousers and shoes. A 0.8-source-pixel inward alpha cleanup and 0.6-pixel feather smooth the complete body edge. The approved portrait receives a smooth dense-hair/true skin/garment silhouette with a 0.65-source-pixel feather; its uniform placement, facial RGB, expression and attire are unchanged. A short continuation-only shoulder alpha join avoids the crop ledge. All four embedded photographic payload SHA-256 values are unchanged from c562893.
+
+`public/images/ninefold/ninefold-showcase.webp` is the exact user-supplied Ninefold application screenshot, resized to 1920 × 1106 with FFmpeg Lanczos and encoded as quality-92 WebP (320,426 bytes). Its supplied Display-P3 ICC profile is retained; EXIF/XMP/DPI are stripped. The complete screenshot is shown in the homepage, Work card and case hero with frames fitted to its native aspect ratio. Copy, links, factual data and surrounding layout are preserved. The former public photo-source disclosure and Astro implementation sentence were removed in both languages at the user's request; this internal provenance record remains.
