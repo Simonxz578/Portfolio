@@ -2,12 +2,89 @@ import type { CaseStudy } from "@data/en/projects";
 
 export const projects: CaseStudy[] = [
   {
-    slug: "ninefold", title: "Ninefold Physics｜AI 交互式物理学习世界", shortTitle: "Ninefold Physics", kicker: "旗舰项目 · AI辅导 · 物理教育", period: "2026年6月至今", organisation: "独立产品", status: "已上线的中英文公开 Beta",
-    summary: "Ninefold 是面向国际课程中学生和物理爱好者的沉浸式物理学习 Agent。学生选择二次元主角进入世界，在雨滴、落叶等情境中通过 AI 语音交互与自适应苏格拉底式引导，观察、推理、建模并解决物理问题。",
-    question: "学生究竟是从哪一步开始没想明白？", users: ["国际课程中学生和物理爱好者", "以学习模式准备 ESAT Physics 的学生"], constraints: ["让 AI 处理开放式表达，让确定性规则守住物理事实", "原创练习必须与课程范围一致，并明确区别于官方题目和官方评分"],
-    role: "独立负责问题定义、教学路径、课程映射、AI边界、交互设计、开发协作与发布验收。", decisions: ["先让学生观察现象，再引入公式", "根据完整、部分、误区和信息不足四种状态选择教学路径", "用 Physics Toolkit 记录公式、重排、代入和单位，而不是只收最终数字"],
-    workflow: [{label:"观察",detail:"从 Rain 或 Leaf 开始"},{label:"解释",detail:"用语音或文字说出理解"},{label:"诊断",detail:"找到第一个偏差"},{label:"引导",detail:"只补缺失概念"},{label:"构建",detail:"完成公式、代入与单位"},{label:"迁移",detail:"进入课程对齐原创练习"}],
-    evaluation: ["自动化回归覆盖中英文教学、题组、Toolkit 与回退流程。", "Ninefold 早期用户测试塑造了交互基础；下一步将验证真实学生的完成、诊断与迁移表现。"], outcomes: ["中英文移动端 Beta 已部署至 Cloudflare，包含 GLM 推理、结构化出题与确定性回退。"], limitations: ["当前内容集中在 Rain 与 Leaf 的力和运动。", "Board-informed practice marking 用于学习反馈，不等同于官方阅卷或成绩预测。"], learning: "真正改变的不是界面，而是问题本身：持续生长的世界变成了学生表达和构建物理思路的学习界面。", capabilities: ["AI辅导","自适应学习","物理教育","结构化LLM输出","Cloudflare Workers AI","双语产品"], links: [{href:"https://ninefold-65f.pages.dev/#/zh/world?physics=rain",label:"体验 Ninefold Physics"}], featured: true
+    "slug": "ninefold",
+    "organisation": "独立产品",
+    "featured": true,
+    "title": "Ninefold 九境生息｜角色陪伴的物理、数学与实验学习世界",
+    "shortTitle": "Ninefold 九境生息",
+    "kicker": "旗舰项目 · AI学习产品 · 物理与数学",
+    "period": "2026年6月至今",
+    "status": "已上线的中英文公开 Beta",
+    "summary": "把物理、数学、原创练习与交互实验连接在同一个角色陪伴的学习世界。学习者用语音或文字说出思路，通过操控模型、分层提示与自主练习，把问题一步步想明白。",
+    "question": "怎样让 AI 角色帮助学习者持续推理，从一个问题走到证据与自主练习？",
+    "users": [
+      "学习物理与数学的国际课程中学生",
+      "沿 IGCSE、A-Level、ESAT/BPhO 或 UKMT/AMC 路径探索的学习者"
+    ],
+    "constraints": [
+      "让确定性系统控制科学模型、数值答案与课程范围",
+      "让 AI 在经过核对的策略与提示中作出受约束的选择，并保留回退路径"
+    ],
+    "role": "独立负责学习者问题定义、课程路径、角色交互、模型路由、语音输入、教学边界、评估与发布验收。",
+    "decisions": [
+      "把物理、数学与实验探索放进同一个持续存在的角色世界",
+      "采用 DeepSeek 主路由与 GLM 受约束回退，不按学科硬拆模型",
+      "把 Whisper ASR 接成可编辑、由学习者确认提交的输入",
+      "在本地学习记忆中区分独立完成与使用提示后的完成"
+    ],
+    "workflow": [
+      {
+        "label": "选择",
+        "detail": "选择学科、知识点或实验"
+      },
+      {
+        "label": "表达",
+        "detail": "用语音或文字提出问题"
+      },
+      {
+        "label": "引导",
+        "detail": "取得经过核对的方法提示"
+      },
+      {
+        "label": "探索",
+        "detail": "操作模型或尝试解题方法"
+      },
+      {
+        "label": "练习",
+        "detail": "在原创题中应用理解"
+      },
+      {
+        "label": "回看",
+        "detail": "记录完成情况与提示使用"
+      }
+    ],
+    "evaluation": [
+      "已核对当前物理、数学、实验与逐题角色辅导的代码和线上界面。",
+      "下一步重点验证提示后的独立重做、实验解释和再次进入学习的体验，不将功能上线等同于学习或留存效果提升。"
+    ],
+    "outcomes": [
+      "已上线物理、数学与交互实验，连接课程学习、逐题辅导与原创练习。",
+      "DeepSeek 主路由、GLM 回退与 Whisper 语音识别，将自然语言提问接入角色引导。",
+      "用本地完成记录、提示使用情况与每日三题目标，支持学习者继续学习。"
+    ],
+    "limitations": [
+      "课程按专题覆盖；虚拟实验与原创练习反馈不能替代真实实验或官方考核。",
+      "学习效果与持续使用价值仍需真实学习者验证。"
+    ],
+    "learning": "角色的价值在于让下一步学习行动更清楚：帮助学习者表达问题、取得证据和自主尝试，同时把学科事实与数值答案留在受控系统中。",
+    "capabilities": [
+      "AI产品策略",
+      "角色陪伴学习",
+      "物理与数学",
+      "DeepSeek / GLM",
+      "Whisper ASR",
+      "受约束教学"
+    ],
+    "links": [
+      {
+        "href": "https://ninefold-65f.pages.dev/#/zh/world",
+        "label": "进入 Ninefold"
+      },
+      {
+        "href": "https://ninefold-65f.pages.dev/#/zh/experiments",
+        "label": "探索交互实验"
+      }
+    ]
   },
   {
     slug: "industrial-ai-agent-rag-workflow", title: "工业AI Agent与RAG工作流", shortTitle: "工业AI Agent与RAG", kicker: "应用AI · 工业工作流", period: "2024", organisation: "北京经纬恒润", status: "公开版项目案例",

@@ -7,89 +7,130 @@ const { locale = "en" } = Astro.props;
 const zh = locale === "zh";
 const alternate = zh ? "/work/ninefold/" : "/zh/work/ninefold/";
 const live = zh ? ninefoldLinks.zh : ninefoldLinks.en;
-const shot = withBase("/images/ninefold-physics/characters.png");
-const c = zh ? {
-  pageTitle:"Ninefold Physics｜沉浸式物理学习 Agent｜张翔 Simon", description:"Ninefold 是面向国际课程中学生和物理爱好者的沉浸式物理学习 Agent。", switchLabel:"English case", liveLabel:"体验 Ninefold Physics", eyebrow:"旗舰项目 · 沉浸式物理学习 Agent", headline:"和主角一起进入世界，把物理问题想明白", intro:"学生选择二次元主角，在真实情境中观察雨滴、落叶等现象；通过 AI 语音交互与自适应苏格拉底式引导，说出思路、建立模型，再自己解决问题。", flow:["角色入境","观察现象","说出理解","分层引导","构建模型","练习迁移"], meta:[["角色","独立产品负责人"],["对象","国际课程中学生 · 物理爱好者"],["课程","IGCSE · A-Level · ESAT"],["状态","已上线的中英文公开 Beta"]]
-} : {
-  pageTitle:"Ninefold Physics — Immersive physics-learning agent | Simon Zhang", description:"An immersive physics-learning agent for international-curriculum secondary students and physics enthusiasts.", switchLabel:"中文案例", liveLabel:"Experience Ninefold Physics", eyebrow:"Flagship · Immersive Physics Learning Agent", headline:"Enter a living world. Build the physics yourself.", intro:"Learners choose an anime protagonist and explore rain, falling leaves and other phenomena. AI voice interaction and adaptive Socratic guidance help them observe, reason, model and solve physics problems themselves.", flow:["Choose a role","Observe","Explain","Scaffold","Model","Transfer"], meta:[["Role","Independent product owner"],["Audience","International-curriculum students · enthusiasts"],["Tracks","IGCSE · A-Level · ESAT"],["Status","Live bilingual public beta"]]
+const productRoute = (route: string) => `https://ninefold-65f.pages.dev/#/${zh ? "zh" : "en"}/${route}`;
+const media = {
+  hero: withBase("/images/ninefold/ninefold-showcase.webp"),
+  experiments: withBase("/images/ninefold/ninefold-experiments.webp"),
+  maths: withBase("/images/ninefold/ninefold-maths.webp"),
+  physics: withBase("/images/ninefold/ninefold-physics.webp"),
+  dialogue: withBase("/images/ninefold/ninefold-dialogue.webp")
 };
-const paths = zh ? [["理解完整","跳过不必要的提示，直接进入计算或迁移"],["方向正确，缺少一步","只追问缺失的概念"],["存在明确误区","从第一个偏差开始引导"],["信息不足","先澄清，不替学生猜"]] : [["Secure understanding","Skip unnecessary support and move to calculation or transfer"],["Partially complete","Target only the missing concept"],["Clear misconception","Scaffold from the first point of divergence"],["Insufficient evidence","Clarify rather than guess"]];
-const toolkit = zh ? ["选择物理领域","选择公式","判断正确重排","代入数值","得到结果","检查单位"] : ["Choose a domain","Choose a relationship","Select the rearrangement","Substitute values","Calculate","Check the unit"];
-const tracks = zh ? [["IGCSE Physics","Pearson Edexcel International GCSE Physics 4PH1"],["A-Level Physics","Cambridge International AS & A Level Physics 9702"],["ESAT Physics","UAT-UK ESAT Physics · 学习模式"]] : [["IGCSE Physics","Pearson Edexcel International GCSE Physics 4PH1"],["A-Level Physics","Cambridge International AS & A Level Physics 9702"],["ESAT Physics","UAT-UK ESAT Physics · learning mode"]];
+const c = zh ? {
+  pageTitle: "九境生息 Ninefold｜角色互动与学习探索｜张翔 Simon",
+  description: "Ninefold 将角色对话、语音输入、实验探索和物理与数学学习地图连接起来，形成一个可进入、可探索的学习世界。",
+  eyebrow: "旗舰项目 · AI 学习产品",
+  headline: "从一句话开始，让好奇心找到下一步。",
+  intro: "九境生息把角色互动、语音输入、实验探索，以及物理与数学学习地图放进同一个世界。我关注的产品问题是：怎样让学习者愿意开始，又能从一次对话走向可以观察、练习和验证的理解。",
+  liveLabel: "体验 Ninefold",
+  switchLabel: "English case",
+  meta: [["我的角色", "独立产品负责人"], ["学习对象", "国际课程学习者与自主探索者"], ["产品范围", "角色对话 · 实验 · 物理与数学"], ["当前状态", "已上线的中英文公开 Beta"]],
+  surfaces: ["和角色交流", "进入实验", "沿学科地图学习"],
+  chapters: [["learning-loop", "产品问题"], ["teaching-paths", "角色与语音"], ["experiments", "实验探索"], ["physics-toolkit", "学科地图"], ["ai-boundaries", "产品编排"], ["case-status", "交付与验证"]]
+} : {
+  pageTitle: "Ninefold — A character-led learning world | Simon Zhang",
+  description: "Ninefold connects character conversation, voice input, experiment exploration and structured physics and mathematics learning maps in one world.",
+  eyebrow: "Flagship · AI learning product",
+  headline: "Start a conversation. Give curiosity a next step.",
+  intro: "Ninefold brings character interaction, voice input, experiments, and physics and mathematics learning maps into one world. My product question is how to make learning inviting to begin, then turn a conversation into understanding a learner can observe, practise and check.",
+  liveLabel: "Experience Ninefold",
+  switchLabel: "中文案例",
+  meta: [["My role", "Independent product owner"], ["Audience", "International-curriculum and self-directed learners"], ["Product scope", "Characters · Experiments · Physics & Maths"], ["Status", "Live bilingual public beta"]],
+  surfaces: ["Talk with a character", "Enter an experiment", "Follow a subject map"],
+  chapters: [["learning-loop", "Product question"], ["teaching-paths", "Character & voice"], ["experiments", "Experiments"], ["physics-toolkit", "Subject maps"], ["ai-boundaries", "Orchestration"], ["case-status", "Delivery & validation"]]
+};
+const voiceSteps = zh ? [
+  ["录音", "学习者用语音提出问题或说明思路。"],
+  ["检查文字", "Whisper 转写后，学习者可以修改识别结果。"],
+  ["确认提交", "学习场景按确认后的文字继续，而不是把识别结果直接当作答案。"],
+  ["角色反馈", "通过角色文字气泡、状态和提示，把注意力带回当前问题。"]
+] : [
+  ["Record", "Ask a question or explain a line of reasoning by voice."],
+  ["Review the text", "Whisper transcribes the recording into editable text."],
+  ["Submit", "Learning flows continue from the confirmed text, rather than treating a recognition result as an answer."],
+  ["Character feedback", "Text bubbles, character states and hints return attention to the current question."]
+];
+const labSteps = zh ? [
+  ["预测", "先说出预期会发生什么。"], ["搭建", "选用仪器，并控制变量。"], ["测量", "改变一个量，观察模型读数。"], ["分析", "记录数据、调整坐标或进行线性拟合。"], ["评价", "检查方法、误差和结论。"]
+] : [
+  ["Predict", "State what you expect to happen."], ["Set up", "Choose apparatus and control variables."], ["Measure", "Change one variable and read the model."], ["Analyse", "Record data, transform axes or fit a line."], ["Evaluate", "Examine the method, uncertainty and conclusion."]
+];
+const orchestration = zh ? [
+  ["学习情境", "把当前题目、已验证的方法与学习者确认后的问题一起送入受约束的流程。"],
+  ["共享模型路由", "DeepSeek deepseek-flash 为主，GLM 4.7 Flash 提供受限回退；各类学习任务共用这一编排。"],
+  ["限定模型权限", "题目辅导选择规范策略 ID；实验引导选择目录 ID 或提示卡；练习生成选择受约束的配方与种子。"],
+  ["规则与内容交付", "系统组装经过编写的提示；计算、答案、分值和解答由确定性逻辑与内容定义负责。"]
+] : [
+  ["Learning context", "Bring the current question, verified method and learner’s confirmed question into a bounded flow."],
+  ["Shared model routing", "DeepSeek deepseek-flash is primary; GLM 4.7 Flash is a bounded fallback. Learning features share this routing."],
+  ["Limited model authority", "Question coaching selects canonical strategy IDs; lab guidance selects catalogue IDs or hint cards; practice generation selects bounded recipes and seeds."],
+  ["Rules and authored delivery", "The system assembles authored hints. Deterministic logic and content definitions own calculations, answers, marks and solutions."]
+];
 ---
 <BaseLayout title={c.pageTitle} description={c.description} locale={zh ? "zh-CN" : "en-GB"}>
-<article class="ninefold-case physics-case">
-  <section class="ninefold-hero physics-hero" aria-labelledby="physics-title" data-header-tone="light">
+<article class="ninefold-case physics-case ninefold-current">
+  <section class="ninefold-hero" aria-labelledby="physics-title" data-header-tone="light">
     <div class="shell">
       <nav class="case-hero-toolbar" aria-label={zh ? "案例导航" : "Case navigation"}>
         <a class="case-back-link" href={withBase(zh ? "/zh/work/" : "/work/")}><span aria-hidden="true">←</span> {zh ? "全部项目" : "All work"}</a>
         <a class="ninefold-language text-link" href={withBase(alternate)}>{c.switchLabel} <span aria-hidden="true">↗</span></a>
       </nav>
       <div class="ninefold-hero-layout">
-      <div class="ninefold-hero-content">
-      <p class="eyebrow">{c.eyebrow}</p>
-      <h1 id="physics-title">Ninefold<br /><em>Physics</em></h1>
-      <h2>{c.headline}</h2><p class="ninefold-intro">{c.intro}</p>
-      <div class="button-row"><a class="button button-primary" href={live} target="_blank" rel="noopener noreferrer">{c.liveLabel} <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="#learning-loop">{zh ? "探索产品设计" : "Explore the design"} <span aria-hidden="true">↓</span></a></div>
+        <div class="ninefold-hero-content">
+          <p class="eyebrow">{c.eyebrow}</p>
+          <h1 id="physics-title">Ninefold<span class="nf-chinese-name" lang="zh-CN">九境生息</span></h1>
+          <h2>{c.headline}</h2>
+          <p class="ninefold-intro">{c.intro}</p>
+          <div class="button-row"><a class="button button-primary" href={live} target="_blank" rel="noopener noreferrer">{c.liveLabel} <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="#learning-loop">{zh ? "阅读产品案例" : "Read the product case"} <span aria-hidden="true">↓</span></a></div>
+        </div>
+        <div class="ninefold-environment ninefold-screenshot-frame" aria-hidden="true"><img class="ninefold-showcase" src={media.hero} width="1920" height="1106" alt="" fetchpriority="high" decoding="async" /></div>
       </div>
-      <div class="ninefold-environment ninefold-screenshot-frame" aria-hidden="true">
-        <img class="ninefold-showcase" src={withBase("/images/ninefold/ninefold-showcase.webp")} width="1920" height="1106" alt="" fetchpriority="high" decoding="async" />
-        <p class="ninefold-scene-caption">A WORLD TO THINK IN.</p>
-      </div>
-      </div>
-      <div class="physics-hero-flow" aria-label={zh ? "产品体验" : "Product experience"}>{c.flow.map((x,i)=><span><b aria-hidden="true">{String(i+1).padStart(2,"0")}</b>{x}{i !== c.flow.length - 1 ? <i aria-hidden="true"> →</i> : ""}</span>)}</div>
+      <ul class="nf-surface-list" aria-label={zh ? "三个产品入口" : "Three product entry points"}>{c.surfaces.map(x=><li>{x}</li>)}</ul>
     </div>
   </section>
   <section class="ninefold-ledger"><div class="shell"><dl>{c.meta.map(([k,v])=><div><dt>{k}</dt><dd>{v}</dd></div>)}</dl></div></section>
-  <nav class="case-chapter-nav shell" aria-label={zh ? "案例章节" : "Case chapters"}>
-    <a href="#learning-loop">{zh ? "学习闭环" : "Learning loop"}</a><a href="#teaching-paths">{zh ? "教学路径" : "Teaching paths"}</a><a href="#ai-boundaries">{zh ? "AI 边界" : "AI boundaries"}</a><a href="#physics-toolkit">Physics Toolkit</a><a href="#case-status">{zh ? "当前状态" : "Current status"}</a>
-  </nav>
-  <section class="learning-loop case-section" id="learning-loop"><div class="shell"><div class="case-wide-heading"><p class="section-number">THE LEARNING LOOP</p><div><h2>{zh ? "让思考的过程，成为学习的路径。" : "Make the reasoning visible. Then make the next step useful."}</h2><p>{zh ? "从一个可观察的现象开始，以能独立迁移的理解结束。" : "Begin with an observable phenomenon. End with understanding the learner can transfer."}</p></div></div>
-    <ol class="learning-loop-map">{(zh ? [["观察","从 Rain 或 Leaf 的现象开始"],["表达","用语音或文字说出思路"],["诊断","找到理解的第一个偏差"],["引导","只补上当前缺失的一步"],["构建","建立公式、代入与单位"],["迁移","在原创练习中应用理解"]] : [["Observe","Begin with Rain or Leaf"],["Explain","Reason through voice or text"],["Diagnose","Find the first divergence"],["Scaffold","Target only what is missing"],["Construct","Build formula, substitution and unit"],["Transfer","Apply the idea in original practice"]]).map(([label,detail],i)=><li><span class="loop-step">{String(i+1).padStart(2,"0")}</span><h3>{label}</h3><p>{detail}</p></li>)}</ol>
+  <nav class="case-chapter-nav shell" aria-label={zh ? "案例章节" : "Case chapters"}>{c.chapters.map(([id,label])=><a href={'#'+id}>{label}</a>)}</nav>
+
+  <section class="case-section" id="learning-loop"><div class="shell nf-intent-grid">
+    <header><p class="eyebrow">{zh ? "产品问题" : "The product question"}</p><h2>{zh ? "有了 AI 回答之后，学习为什么还需要一个产品？" : "When AI can answer, what should a learning product do?"}</h2></header>
+    <div class="nf-reading"><p class="nf-lead">{zh ? "我把重点放在开始、下一步和证据：先降低表达的门槛，再让学习者看见自己正在理解什么。" : "I focused on the beginning, the next step and the evidence: make it easier to express a thought, then help learners see what they understand."}</p><p>{zh ? "角色和世界承担进入体验；对话承接好奇心；实验和学科路径把兴趣连接到可操作的学习任务。学习者可以从不同入口开始，产品则需要把这些入口连接到当前的学习情境。" : "The character and world provide an inviting entrance. Conversation carries curiosity; experiments and subject paths connect it to a concrete task. Learners can begin at different entry points, while the product connects those entrances to the current learning context."}</p><p>{zh ? "作为独立产品负责人，我把问题定义、交互设计、AI 权限、课程与实验规则、实现和上线验收放在同一条决策链上。物理与数学是当前结构化学习的落点；开放角色聊天与经过课程约束的教学功能分开呈现。" : "As the independent product owner, I connected problem framing, interaction design, AI authority, curriculum and experiment rules, implementation and release acceptance. Physics and mathematics are the current structured learning areas; open character conversation is distinct from curriculum-bounded teaching."}</p></div>
   </div></section>
-  <section class="case-section"><div class="shell case-section-grid"><header><p class="section-number">01</p><h2>{zh?"从 Ninefold 到 Ninefold Physics":"From Ninefold to Ninefold Physics"}</h2></header><div class="ninefold-prose"><p>{zh?"Ninefold 最初是一个关于人与动态世界如何持续互动的产品实验。我做了世界塑造、树木生长、语音入境和情境变化，再通过早期用户测试调整入口与交互。":"Ninefold began as an experiment in how people might interact with a persistent living world. I built world construction, tree growth, voice entry and responsive scenes, then refined the entry through early user testing."}</p><p>{zh?"最值得保留的是一套交互语言：用户可以塑造自己的世界，直接说一句话让世界回应，而世界会持续存在。GLM 的 Voice-to-World 也为后来让学生说出完整物理思路打下了基础。":"Its strongest result was an interaction language: users could shape a world, speak naturally to it and see that persistent world respond. The GLM Voice-to-World path also became the foundation for spoken physics reasoning."}</p><blockquote><p>{zh?"真正改变的不是界面，而是问题本身。":"The interface did not need a complete reinvention. The problem did."}</p></blockquote></div></div></section>
-  <section class="case-section case-section-tinted"><div class="shell"><div class="case-wide-heading"><p class="section-number">02</p><div><h2>{zh?"答案对不对，并不能告诉我们学生哪里不会":"A final answer does not show where understanding broke down"}</h2><p>{zh?"学生可能画错受力图却碰巧算对，也可能知道 F = ma，却不知道什么时候该用。Ninefold Physics 观察的是理解如何一步步形成。":"A learner may start with the wrong force model and still land on the right number, or know F = ma without knowing when it applies. Ninefold Physics observes how the reasoning is constructed."}</p></div></div><figure class="physics-product-shot"><img src={shot} width="1440" height="900" loading="lazy" decoding="async" alt={zh?"Ninefold 当前版本的女孩与男孩主角选择画面":"Current Ninefold character selection showing girl and boy protagonists"}/><figcaption>{zh?"先选主角进入世界，再从真实情境里的运动提出物理问题。":"Choose a protagonist, enter the world, then begin with a physical question grounded in the scene."}</figcaption></figure></div></section>
-  <section class="case-section case-section-dark" id="teaching-paths"><div class="shell"><div class="case-wide-heading"><p class="section-number">03</p><div><h2>{zh?"同一个问题，不同的思路走不同的教学路径":"Different reasoning should lead to different teaching paths"}</h2><p>{zh?"学生可以打字，也可以通过语音完整说出理解。GLM 处理开放式表达，教学状态机决定下一步。":"Students can type or speak their reasoning. GLM interprets the open response; the tutoring state machine decides what happens next."}</p></div></div><div class="physics-paths">{paths.map(([s,a])=><article><h3>{s}</h3><p>{a}</p></article>)}</div></div></section>
-  <section class="case-section physics-walkthrough-section" aria-labelledby="walkthrough-title"><div class="shell">
-    <div class="case-wide-heading"><p class="section-number">ILLUSTRATIVE WALKTHROUGH</p><div><h2 id="walkthrough-title">{zh ? "同一滴雨，四条学习路径。" : "One falling raindrop. Four paths through the reasoning."}</h2><p>{zh ? "以下为教学逻辑的示意案例，不是实时模型演示，也不是真实学生记录。选择一种回答，查看诊断、引导和再次验证如何衔接。" : "An illustration of the tutoring logic, not a live model demonstration or a record of a real learner. Choose a response to trace the diagnosis, scaffold and recheck."}</p></div></div>
-    <div class="physics-walkthrough" data-walkthrough>
-      <p class="walkthrough-question"><span>{zh ? "情境问题" : "The question"}</span>{zh ? "雨滴达到终端速度后，为什么仍在下落？" : "Why does a raindrop keep falling after reaching terminal velocity?"}</p>
-      <fieldset class="walkthrough-controls" hidden><legend>{zh ? "选择一种学生回答" : "Choose a learner response"}</legend>{paths.map(([label],i)=><label><input type="radio" name="reasoning-path" value={i} checked={i===0}/><span>{label}</span></label>)}</fieldset>
-      {(zh ? [
-        ["阻力等于重力，合力为零，所以加速度为零，但速度可以不为零。","理解完整","已区分零合力、零加速度和非零速度。","跳过基础提示，进入计算或迁移。","如果雨滴质量改变，你会先检查哪些力？"],
-        ["速度越大，阻力越大，最后阻力会等于重力。","方向正确，缺少一步","还需说明力平衡对加速度的意义。","力平衡后，雨滴的加速度会怎样变化？","加速度为零时，速度一定是零吗？"],
-        ["阻力等于重力，所以雨滴就停下来了。","存在明确误区","把零加速度误解成了零速度。","若物体以某个速度运动，速度不再变化意味着什么？","重新解释雨滴为何继续以恒定速度下落。"],
-        ["雨滴受到重力。","信息不足","还不能判断学生是否考虑了阻力或力平衡。","除了重力，还需要考虑什么力？","这两个力平衡时，运动状态如何变化？"]
-      ] : [
-        ["Drag equals weight, so the resultant force and acceleration are zero. The velocity can still be non-zero.","Secure understanding","Distinguishes zero resultant force and acceleration from non-zero velocity.","Skip unnecessary support; move to calculation or transfer.","If the raindrop’s mass changes, which forces would you examine first?"],
-        ["Drag increases with speed until it balances the weight.","Partially complete","The effect of balanced forces on acceleration is still unstated.","When the forces balance, what happens to acceleration?","Does zero acceleration necessarily mean zero velocity?"],
-        ["Drag equals weight, so the raindrop stops.","Clear misconception","Confuses zero acceleration with zero velocity.","If an object is already moving, what does it mean for its velocity to stop changing?","Explain again why the raindrop continues at a constant velocity."],
-        ["Gravity acts on the raindrop.","Insufficient evidence","There is not yet evidence about drag or force balance.","Which other force should we consider?","When the two forces balance, how does the motion change?"]
-      ]).map(([response,state,diagnosis,scaffold,recheck],i)=><div class="walkthrough-panel" data-walkthrough-panel={i}>
-        <blockquote><span>{zh ? "首次回答 · 示意" : "First response · illustration"}</span><p>“{response}”</p></blockquote>
-        <ol class="walkthrough-trace"><li><span>{zh ? "诊断" : "Diagnose"}</span><h3>{state}</h3><p>{diagnosis}</p></li><li><span>{zh ? "教学路径" : "Scaffold"}</span><h3>{zh ? "下一步" : "The next step"}</h3><p>{scaffold}</p></li><li><span>{zh ? "再次验证" : "Recheck"}</span><h3>{zh ? "让学生重新表达" : "Return the reasoning to the learner"}</h3><p>{recheck}</p></li></ol>
-      </div>)}
+
+  <section class="case-section case-section-tinted" id="teaching-paths"><div class="shell">
+    <div class="case-wide-heading"><p class="section-number">{zh ? "角色与语音" : "CHARACTER & VOICE"}</p><div><h2>{zh ? "让学习者先说出思路，再决定需要什么帮助。" : "Let learners express their thinking before deciding what help they need."}</h2><p>{zh ? "Lyra 与 Elio 通过角色动画、文字对话与题目提示参与学习。语音在这里是输入方式：它帮助学习者提出问题、描述方法，也保留检查和修改的机会。" : "Lyra and Elio participate through character animation, text conversation and question-specific hints. Voice is an input method: it helps learners ask a question or describe a method while retaining a chance to review and edit."}</p></div></div>
+    <ol class="nf-voice-flow">{voiceSteps.map(([label,detail],i)=><li><span>{String(i+1).padStart(2,'0')}</span><h3>{label}</h3><p>{detail}</p></li>)}</ol>
+    <figure class="nf-evidence"><a href={media.dialogue} target="_blank" rel="noopener noreferrer" aria-label={zh ? "打开角色辅导与语音转写完整截图" : "Open the full character coaching and speech-to-text screenshot"}><img src={media.dialogue} width="1600" height="1000" loading="lazy" decoding="async" alt={zh ? "数学题中的艾里奥角色提示、可编辑提问区和语音转文字按钮" : "Elio's question-specific hint, editable question field and speech-to-text control in a mathematics lesson"}/><span class="nf-image-open" aria-hidden="true">↗</span></a><figcaption><span>{zh ? "逐题角色辅导 · 语音转文字后确认提交" : "Question-specific character coaching · Review speech-to-text before submitting"}</span><span>{zh ? "点击查看完整图片" : "Open the full image"}</span></figcaption></figure>
+    <div class="nf-coach-decision"><div><p class="eyebrow">{zh ? "关键产品决策" : "A key product decision"}</p><h3>{zh ? "让角色的提示服务于下一步思考。" : "Make character hints serve the next step in thinking."}</h3></div><div class="nf-reading"><p>{zh ? "在题目辅导中，模型读取题目、已验证答案与方法，以及学习者确认后的提问，只选择规范的策略 ID。界面展示经过编写、不含答案的提示，并记录这次是否获得了支持。" : "In question coaching, the model receives the question, verified answer and method, and the learner’s confirmed question. It selects a canonical strategy ID; the interface returns an authored, answer-free hint and records whether support was used."}</p><details class="nf-detail"><summary>{zh ? "为什么把模型权限限制在策略选择？" : "Why limit the model to strategy selection?"}</summary><p>{zh ? "提示可以适应当前疑问，答案与判分则由题目定义和确定性检查负责。对话负责承接问题，经过编写的提示负责引导思考，反馈通过文字和角色状态呈现。" : "Hints can respond to the learner’s question while answer definitions and deterministic checks retain control of correctness and marking. Conversation carries the question; authored hints guide the reasoning, with feedback delivered through text and character states."}</p></details></div></div>
+  </div></section>
+
+  <section class="case-section" id="experiments"><div class="shell">
+    <div class="case-wide-heading"><p class="section-number">{zh ? "实验探索" : "EXPERIMENT EXPLORATION"}</p><div><h2>{zh ? "把“我觉得”变成“我观察到了什么”。" : "Turn “I think” into “what did I observe?”"}</h2><p>{zh ? "实验库覆盖弹簧、伏安特性、自由落体、衰变、棱镜、干涉和光电效应等情境。学习者可以进入相应实验、调整变量、读取结果，并用数据检查自己的预测。" : "The library spans settings such as springs, I–V characteristics, free fall, decay, prisms, interference and the photoelectric effect. Learners enter an experiment, vary a quantity, read the result and compare it with their prediction."}</p></div></div>
+    <figure class="nf-evidence"><a href={media.experiments} target="_blank" rel="noopener noreferrer" aria-label={zh ? "打开实验探索完整截图" : "Open the full experiment exploration screenshot"}><img src={media.experiments} width="1600" height="1000" loading="lazy" decoding="async" alt={zh ? "Ninefold 当前实验探索界面" : "The current Ninefold experiment exploration interface"}/><span class="nf-image-open" aria-hidden="true">↗</span></a><figcaption><span>{zh ? "实验探索 · 当前产品界面" : "Experiment exploration · Current product interface"}</span><span>{zh ? "点击查看完整图片" : "Open the full image"}</span></figcaption></figure>
+    <div class="button-row"><a class="button button-secondary" href={productRoute("experiments")} target="_blank" rel="noopener noreferrer">{zh ? "进入实验探索" : "Explore the experiments"} <span aria-hidden="true">↗</span></a></div>
+    <ol class="nf-lab-flow">{labSteps.map(([label,detail],i)=><li><span>{String(i+1).padStart(2,'0')}</span><h3>{label}</h3><p>{detail}</p></li>)}</ol>
+    <div class="nf-boundary-note"><h3>{zh ? "AI 引导过程，模型计算读数。" : "AI guides the process; deterministic models calculate the readings."}</h3><p>{zh ? "实验助手选择目录条目与规范提示卡，由系统组装有依据的解释。数值来自确定性实验模型。记录表与实验计划目前保留在当前会话状态中，不把它们描述为跨会话保存的实验笔记。" : "The assistant selects catalogue entries and canonical hint cards, and the system assembles a grounded explanation. Readings come from deterministic experiment models. Observation tables and plans currently live in session state, rather than a laboratory notebook saved across sessions."}</p></div>
+  </div></section>
+
+  <section class="case-section case-section-tinted" id="physics-toolkit"><div class="shell">
+    <div class="case-wide-heading"><p class="section-number">{zh ? "物理与数学" : "PHYSICS & MATHEMATICS"}</p><div><h2>{zh ? "世界负责吸引人，学科路径负责让学习继续。" : "The world invites exploration. Subject paths give it structure."}</h2><p>{zh ? "课程与竞赛路径提供进入知识点、题目和方法的入口。地图呈现学习结构，不把目录覆盖等同于已经拥有穷尽的题库。" : "Curriculum and competition paths provide entry points into concepts, questions and methods. A map makes that structure visible; catalogue coverage does not imply an exhaustive question bank."}</p></div></div>
+    <div class="nf-subject-grid">
+      <article class="nf-subject"><figure class="nf-evidence"><a href={media.physics} target="_blank" rel="noopener noreferrer" aria-label={zh ? "打开物理学习完整截图" : "Open the full physics learning screenshot"}><img src={media.physics} width="1600" height="1000" loading="lazy" decoding="async" alt={zh ? "Ninefold 当前物理学习地图与课程入口" : "Current Ninefold physics learning map and course entry points"}/><span class="nf-image-open" aria-hidden="true">↗</span></a><figcaption>{zh ? "物理天穹 · 当前产品界面" : "Physics learning · Current product interface"}</figcaption></figure><div class="nf-subject-copy"><h3>{zh ? "物理：从入门，到课程与挑战。" : "Physics: from a first encounter to curriculum and challenge."}</h3><p>{zh ? "Beginner、IGCSE、A-Level 与 BPhO / ESAT 四条入口，连接入门探索、4PH1、0625、9702 和进阶挑战；物理史内容属于入门探索。Physics Toolkit 将公式选择、重排、代入和单位拆开，让计算过程可以被检查。" : "The four entry points are Beginner, IGCSE, A-Level and BPhO / ESAT, connecting introductory exploration with 4PH1, 0625, 9702 and advanced challenges. History content sits within the beginner path. The Physics Toolkit separates formula choice, rearrangement, substitution and units so the calculation process can be checked."}</p><a class="text-link" href={productRoute("physics")} target="_blank" rel="noopener noreferrer">{zh ? "进入物理天穹" : "Explore Physics"} <span aria-hidden="true">↗</span></a></div></article>
+      <article class="nf-subject"><figure class="nf-evidence"><a href={media.maths} target="_blank" rel="noopener noreferrer" aria-label={zh ? "打开数学学习完整截图" : "Open the full mathematics learning screenshot"}><img src={media.maths} width="1600" height="1000" loading="lazy" decoding="async" alt={zh ? "Ninefold 当前数学课程与竞赛学习入口" : "Current Ninefold mathematics course and competition learning entry points"}/><span class="nf-image-open" aria-hidden="true">↗</span></a><figcaption>{zh ? "数学看板 · 当前产品界面" : "Mathematics learning · Current product interface"}</figcaption></figure><div class="nf-subject-copy"><h3>{zh ? "数学：课程知识、策略课程与题目辅导。" : "Mathematics: curriculum, strategy lessons and question coaching."}</h3><p>{zh ? "IGCSE 0580、0607、0606，Cambridge 9709、9231，以及 UKMT JMC / IMC / SMC 和 AMC 8 / 10 / 12 六条竞赛路径。题目辅导围绕已编写题目运行，并结合确定性的答案与形式检查。" : "IGCSE 0580, 0607 and 0606; Cambridge 9709 and 9231; and six UKMT JMC / IMC / SMC and AMC 8 / 10 / 12 competition profiles. Question coaching works around authored questions, alongside deterministic answer and form checks."}</p><a class="text-link" href={productRoute("maths")} target="_blank" rel="noopener noreferrer">{zh ? "进入数学看板" : "Explore Maths"} <span aria-hidden="true">↗</span></a></div></article>
     </div>
+    <div class="nf-practice-note"><h3>{zh ? "练习可以离开屏幕。" : "Practice can leave the screen."}</h3><p>{zh ? "共享练习生成支持 1–10 道题，并分别导出 Questions 与 Answers PDF。系统用受约束的题目配方生成练习，保留数值、解答和分值的一致性。练习用于学习，不是官方考试评分或等级预测。" : "Shared practice generation supports 1–10 questions with separate Questions and Answers PDFs. Bounded question recipes keep numerical values, solutions and marks consistent. This supports learning rather than official examination marking or grade prediction."}</p></div>
   </div></section>
-  <section class="case-section" id="ai-boundaries"><div class="shell"><div class="case-wide-heading"><p class="section-number">04</p><div><h2>{zh?"AI 处理模糊的问题，规则守住确定的答案":"Use AI for ambiguity; use rules for truth"}</h2><p>{zh?"模型理解自然语言、识别概念缺口、生成受课程约束的原创练习，并判断解释题中的语义证据。可验证的物理事实不会交给模型猜。":"The model interprets natural language, identifies concept gaps, composes bounded original practice and reads semantic evidence in explanations. Verifiable physics is not left to model judgement."}</p></div></div><div class="physics-boundary"><article><span>AI</span><ul>{(zh?["开放式学生表达","概念缺口与误区","原创题结构","解释题语义证据"]:["Open-ended reasoning","Concept gaps and misconceptions","Original question structures","Semantic evidence in explanations"]).map(x=><li>{x}</li>)}</ul></article><article><span>{zh?"确定性系统":"DETERMINISTIC"}</span><ul>{(zh?["课程范围与公式库","教学状态机","重排、数值与单位","答案与评分边界"]:["Curriculum scope and formula registry","Tutoring state transitions","Rearrangement, values and units","Answer keys and marking boundaries"]).map(x=><li>{x}</li>)}</ul></article></div></div></section>
-  <section class="case-section physics-toolkit-section" id="physics-toolkit"><div class="shell"><div class="case-wide-heading"><p class="section-number">05</p><div><h2>{zh?"不是只交一个答案，而是把物理一步一步搭出来":"Do not submit only the answer. Build the physics."}</h2><p>{zh?"Physics Toolkit 把计算变成可观察的构建过程。系统能区分规律选择、代数、代入与单位错误，再从真正出现偏差的位置继续。":"The Physics Toolkit makes calculation an observable construction process. It separates principle selection, algebra, substitution and unit errors, then scaffolds the first real divergence."}</p></div></div><div class="toolkit-flow">{toolkit.map((x,i)=><span>{x}{i !== toolkit.length - 1 ? " →" : ""}</span>)}</div><div class="formula-card"><small>F = ma · {zh?"求 a":"solve for a"}</small><strong>A. a = F / m</strong><span>B. a = Fm</span><span>C. a = m / F</span></div></div></section>
-  <section class="case-section case-section-tinted"><div class="shell"><div class="case-wide-heading"><p class="section-number">06</p><div><h2>{zh?"从理解一个现象，到证明自己真的会用":"Move from understanding a phenomenon to proving it transfers"}</h2><p>{zh?"完成 Rain 或 Leaf 的概念探索后，学生进入四道课程对齐原创练习：核心概念、应用、易错点与新情境迁移。":"After Rain or Leaf, learners continue into four original curriculum-aware questions: core concept, application, misconception check and transfer."}</p></div></div><div class="physics-tracks">{tracks.map(([n,d])=><article><h3>{n}</h3><p>{d}</p></article>)}</div><p class="integration-note">{zh?"课程对齐与原创出题层沿用了我此前 Personalised Practice Generator 中的 curriculum resolver、题目蓝图与确定性校验思路，并改造成适合实时交互的学习流程。":"The curriculum and question-generation layer evolved from my earlier Personalised Practice Generator, reusing its curriculum resolver, question-blueprint and deterministic-validation ideas in a real-time tutoring flow."}</p></div></section>
-  <section class="case-section"><div class="shell"><div class="case-wide-heading"><p class="section-number">07</p><div><h2>{zh?"不同的题，看到不同的思考过程":"Different question types reveal different forms of thinking"}</h2><p>{zh?"选择题用干扰项定位典型误区；解释题支持语音转写、编辑和确认后评分；计算题记录 Toolkit 的完整构建过程。":"MCQ distractors point to common misconceptions; spoken explanations are transcribed, edited and confirmed before marking; calculations preserve the complete Toolkit trace."}</p></div></div><div class="question-types"><article><b>MCQ</b><h3>{zh?"选择题":"Multiple choice"}</h3><p>{zh?"干扰项也成为下一步教学的证据。":"Distractors become evidence for the next scaffold."}</p></article><article><b>VOICE + TEXT</b><h3>{zh?"解释题":"Explanation"}</h3><p>{zh?"学生确认可编辑文字后再评分。":"Learners confirm editable text before assessment."}</p></article><article><b>TOOLKIT</b><h3>{zh?"计算题":"Calculation"}</h3><p>{zh?"记录公式、重排、代入、结果和单位。":"Capture formula, rearrangement, substitution, result and unit."}</p></article></div></div></section>
-  <section class="case-section case-section-dark"><div class="shell"><div class="case-wide-heading"><p class="section-number">08</p><div><h2>{zh?"给分和教学，是两件不同的事":"Marking and teaching serve different purposes"}</h2><p>{zh?"系统保留第一次独立作答，再根据失分位置继续教学。计算题尽量用确定性规则检查过程；解释题按预先生成并校验的 marking points 判断已确认文本。":"The system preserves the first independent attempt, then teaches from the lost mark. Calculation traces are checked deterministically where possible; explanations use pre-generated, validated marking points."}</p></div></div><div class="mark-card"><small class="practice-example-label">{zh ? "评分反馈示意 · 非真实学生记录" : "Illustrative marking feedback · not a real learner record"}</small><strong>{zh?"首次作答：2 / 3":"First attempt: 2 / 3"}</strong><span>✓ {zh?"阻力随速度增大":"Drag increases with speed"}</span><span>✓ {zh?"阻力最终可与重力平衡":"Drag can eventually balance weight"}</span><span>△ {zh?"仍需区分加速度为零与速度为零":"Distinguish zero acceleration from zero velocity"}</span></div><p class="practice-disclaimer">{zh?"Board-informed practice marking 用于学习反馈，不是 Pearson、Cambridge International 或 UAT-UK 的官方评分，也不换算正式等级或 ESAT scaled score。":"Board-informed practice marking supports learning. It is not official Pearson, Cambridge International or UAT-UK assessment and is not converted into grades or an ESAT scaled score."}</p></div></section>
-  <section class="case-section" id="case-status"><div class="shell case-section-grid"><header><p class="section-number">09</p><h2>{zh?"当前状态与边界":"Current status and boundaries"}</h2></header><div class="ninefold-prose"><p>{zh?"公开 Beta 已包含 Rain / Leaf、三条课程路径、语音与文字推理、自适应 Socratic scaffold、原创练习、Physics Toolkit、过程化评分、AI 回退，以及中英文移动端适配。":"The public beta includes Rain and Leaf, three learning tracks, voice and text reasoning, adaptive Socratic scaffolding, original practice, the Physics Toolkit, process-aware assessment, AI fallback and bilingual mobile support."}</p><p>{zh?"当前仍是早期产品。开放式判断具有概率性；动画用于教学表达，不是完整仿真；练习是原创 exam-style practice，不是官方真题。下一步将用真实学生验证完成率、诊断质量、提示有效性和知识迁移。":"This remains an early product. Open-ended interpretation is probabilistic; animation is pedagogical rather than a full simulation; practice is original, not official past-paper content. The next milestone is evidence from real learners on completion, diagnosis, scaffold usefulness and transfer."}</p><div class="button-row"><a class="button button-primary" href={live} target="_blank" rel="noopener noreferrer">{c.liveLabel} ↗</a></div></div></div></section>
+
+  <section class="case-section" id="ai-boundaries"><div class="shell">
+    <div class="case-wide-heading"><p class="section-number">{zh ? "AI 产品编排" : "AI PRODUCT ORCHESTRATION"}</p><div><h2>{zh ? "把模型权限变成明确的产品决策。" : "Make model authority an explicit product decision."}</h2><p>{zh ? "我把语言理解与策略选择交给模型，把可验证的教学内容、数值和判分交给明确的结构与规则。DeepSeek 与 GLM 在这套共享编排中服务于不同学习任务。" : "I assign language interpretation and strategy selection to models, while explicit structures and rules retain verifiable teaching content, numerical truth and marking. DeepSeek and GLM serve different learning tasks within this shared orchestration."}</p></div></div>
+    <ol class="nf-orchestration">{orchestration.map(([label,detail],i)=><li><span>{String(i+1).padStart(2,'0')}</span><h3>{label}</h3><p>{detail}</p></li>)}</ol>
+    <div class="nf-memory-grid"><article><h3>{zh ? "记住学习证据，少保留原始对话。" : "Keep learning evidence distinct from raw conversation."}</h3><p>{zh ? "数学学习证据与最小题目完成记录在本地保存，例如题目标识、日期、学科、首次作答、是否通过和是否使用支持。角色聊天是暂存对话，不描述成长久记忆。" : "Mathematics evidence and minimal question-completion records are stored locally, including question identifiers, date, subject, first attempt, pass and support state. Character chat is transient conversation, rather than long-term memory."}</p></article><article><h3>{zh ? "可回退，也需要继续验收。" : "Fallback still needs acceptance testing."}</h3><p>{zh ? "规范提示和本地回退让模型失败时仍有受约束的下一步。我把 GLM 可用性、语义质量与响应时间列为持续验收项，并保留故障场景下的明确反馈。" : "Canonical hints and local fallback provide a bounded next step when a model fails. GLM availability, semantic quality and response time remain acceptance criteria, together with clear feedback in failure states."}</p></article></div>
+  </div></section>
+
+  <section class="case-section case-section-tinted" id="case-status"><div class="shell">
+    <div class="case-wide-heading"><p class="section-number">{zh ? "交付与下一步验证" : "DELIVERY & VALIDATION"}</p><div><h2>{zh ? "已上线的是学习机制，下一步要验证的是学习效果。" : "The learning mechanisms are shipped. Their effect still needs evidence."}</h2><p>{zh ? "公开 Beta 已把角色、语音输入、实验、物理与数学路径，以及原创练习放进同一个双语产品。上线功能与真实学习效果是两种不同的证据。" : "The public beta brings characters, voice input, experiments, physics and mathematics paths, and original practice into one bilingual product. Shipping a feature and demonstrating a learning effect require different evidence."}</p></div></div>
+    <div class="nf-status-grid"><article><p class="eyebrow">{zh ? "当前已交付" : "Currently shipped"}</p><ul>{(zh ? ["角色动画、文字对话与学习场景语音输入", "实验目录、确定性实验模型与五阶段引导", "物理与数学课程入口、题目提示与练习 PDF", "本地学习进度、每日目标与最小完成记录"] : ["Character animation, text conversation and voice input in learning flows", "Experiment catalogue, deterministic models and five-stage guidance", "Physics and mathematics paths, question hints and practice PDFs", "Local learning progress, daily goals and minimal completion records"]).map(x=><li>{x}</li>)}</ul></article><article><p class="eyebrow">{zh ? "应继续验证的问题" : "Questions for further validation"}</p><ul>{(zh ? ["语音转写的修改与确认是否足够清楚？", "学习者能否从角色交流进入具体学习任务？", "提示是否帮助理解，而不是代替独立作答？", "实验后的解释和新题迁移，是否体现了真正理解？"] : ["Is the voice-transcript review and confirmation clear enough?", "Can learners move from character conversation into a concrete learning task?", "Do hints support understanding rather than replace an independent attempt?", "Do post-experiment explanations and new questions demonstrate transfer?"]).map(x=><li>{x}</li>)}</ul></article></div>
+    <p class="nf-evidence-limit">{zh ? "日历、每日目标和进度机制用于支持持续学习；目前不据此声称留存率、活跃用户或学习成绩已经提升。" : "Calendars, daily goals and progress mechanisms are designed to support continued learning. They do not establish an improvement in retention, active users or learning outcomes."}</p>
+    <div class="button-row"><a class="button button-primary" href={live} target="_blank" rel="noopener noreferrer">{c.liveLabel} <span aria-hidden="true">↗</span></a><a class="button button-secondary" href={withBase(zh ? "/zh/contact/" : "/contact/")}>{zh ? "聊聊产品与 AI" : "Talk product & AI"} <span aria-hidden="true">↗</span></a></div>
+  </div></section>
+  <nav class="case-nav shell" aria-label={zh ? "更多内容" : "More to explore"}><a href={withBase(zh ? "/zh/work/" : "/work/")}>← {zh ? "全部项目" : "All work"}</a><a href={withBase(zh ? "/zh/contact/" : "/contact/")}>{zh ? "联系我" : "Get in touch"} →</a></nav>
 </article>
 </BaseLayout>
-
-<script>
-  document.querySelectorAll<HTMLElement>("[data-walkthrough]").forEach((walkthrough) => {
-    const controls = walkthrough.querySelector<HTMLFieldSetElement>(".walkthrough-controls");
-    const panels = walkthrough.querySelectorAll<HTMLElement>("[data-walkthrough-panel]");
-    if (!controls) return;
-    const show = (value: string) => panels.forEach(panel => { panel.hidden = panel.dataset.walkthroughPanel !== value; });
-    show("0");
-    controls.hidden = false;
-    controls.addEventListener("change", event => {
-      if (event.target instanceof HTMLInputElement) show(event.target.value);
-    });
-  });
-</script>

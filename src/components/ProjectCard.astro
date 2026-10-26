@@ -11,7 +11,7 @@ const href=withBase((zh?'/zh/work/':'/work/')+project.slug+'/');
 <article class:list={['project-chapter',`chapter-${type}`]} id={'project-'+project.slug}>
   <a class="chapter-link" href={href} aria-label={(zh?'查看案例：':'View case study: ')+project.title}>
     <div class:list={["chapter-media",type==='world' && "chapter-screenshot-frame"]} aria-hidden="true">
-      {type==='world' && <div class="chapter-world-scene"><img class="chapter-showcase" src={withBase('/images/ninefold/ninefold-showcase.webp')} width="1920" height="1106" alt="" loading="lazy" decoding="async"/><span class="chapter-scene-label">Ninefold Physics</span></div>}
+      {type==='world' && <div class="chapter-world-scene"><img class="chapter-showcase" src={withBase('/images/ninefold/ninefold-showcase.webp')} width="1920" height="1106" alt="" loading="lazy" decoding="async"/><span class="chapter-scene-label">Ninefold · Physics & Maths</span></div>}
       {type==='system' && <div class="system-visual"><span class="system-visual-label">{zh?'从情境到工程判断':'From context to engineering judgement'}</span><ol>{project.workflow.map((step,i)=><li><span>{String(i+1).padStart(2,'0')}</span><strong>{step.label}</strong></li>)}</ol><span class="system-visual-note">{project.status}</span></div>}
       {type==='research' && <div class="research-visual"><div>GenAI</div><div>Pedagogy</div><div>Science</div><span>GenAI–TPACK</span></div>}
       {type==='policy' && <img class="chapter-photo" src={withBase('/images/v2/river-cam-fast.avif')} width="1200" height="674" loading="lazy" decoding="async" alt=""/>}

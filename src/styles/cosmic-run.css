@@ -1,6 +1,7 @@
-/* The prologue is a framed daylight scene; native scroll owns its six reversible beats. */
+/* Original photographic depth stays intact. Only translucent sky tints crossfade. */
 .cosmic-run {
   --cosmic-bg:#dceafb; --cosmic-progress:0; --cosmic-white:0; --cosmic-intro:1;
+  --cosmic-night:1; --cosmic-dawn:0; --cosmic-sunset:0; --cosmic-day:0;
   --cosmic-depth-scale:1; --cosmic-depth-opacity:.76; --cosmic-depth-shade:1;
   --cosmic-entry-x:73%; --cosmic-entry-bottom:8%; --cosmic-entry-shift:0%; --cosmic-entry-lift:0%;
   --cosmic-building-scale:.34; --cosmic-building-bottom:37%; --cosmic-building-opacity:.9; --cosmic-building-brightness:1.04;
@@ -15,7 +16,15 @@
 [data-cosmic-enhanced] .cosmic-viewport { position:sticky; top:0; height:100svh; }
 .cosmic-environment { position:absolute; inset:12px; overflow:hidden; border-radius:28px; pointer-events:none; isolation:isolate; background:var(--cosmic-bg); }
 .cosmic-depth-plate { position:absolute; z-index:0; inset:0; width:100%; height:100%; max-width:none; object-fit:cover; object-position:52% 62%; filter:saturate(.72) brightness(1.08); opacity:var(--cosmic-depth-opacity); transform:scale(var(--cosmic-depth-scale)); transform-origin:52% 62%; }
-.cosmic-morning-light { position:absolute; z-index:1; inset:0; background:linear-gradient(165deg,#c5e3ff9c 0%,#ded4fc70 47%,#eff3ff15 79%); opacity:var(--cosmic-morning-light); }
+/* The photo, cloud detail and ground remain visible beneath every tint. */
+.cosmic-sky { position:absolute; z-index:0; inset:0; mask-image:linear-gradient(#000 0%,#000 45%,transparent 65%); }
+.cosmic-sky-night { background:linear-gradient(180deg,#07348e66 0%,#123f9d5c 43%,#3679c829 65%); opacity:var(--cosmic-night); }
+.cosmic-sky-dawn { background:linear-gradient(180deg,#edc4d138 0%,#ffc9a84a 43%,#f9d6bf00 65%); opacity:var(--cosmic-dawn); }
+.cosmic-sky-sunset { background:linear-gradient(180deg,#aaa3e947 0%,#eeb9d64d 38%,#f5c1a733 65%); opacity:var(--cosmic-sunset); }
+.cosmic-sky-day { background:linear-gradient(180deg,#70c9f226 0%,#b4e8ff1f 45%,#c9edff00 65%); opacity:var(--cosmic-day); }
+[data-cosmic-enhanced] .cosmic-sky { will-change:opacity; }
+.cosmic-run:not([data-cosmic-enhanced]) { --cosmic-night:1!important; --cosmic-dawn:0!important; --cosmic-sunset:0!important; --cosmic-day:0!important; }
+
 .cosmic-depth-shade { position:absolute; z-index:2; inset:0; background:linear-gradient(90deg,#f6faffef 0%,#f4f8ffba 29%,#eef5ff3b 54%,transparent 75%); opacity:var(--cosmic-depth-shade); }
 .cosmic-architecture { position:absolute; z-index:1; left:52%; bottom:var(--cosmic-building-bottom); width:clamp(880px,112vw,1760px); max-width:none; height:auto; object-fit:contain; transform:translateX(-50%) scale(var(--cosmic-building-scale)); transform-origin:center bottom; opacity:var(--cosmic-building-opacity); filter:brightness(var(--cosmic-building-brightness)) saturate(.82); }
 [data-cosmic-building=missing] .cosmic-architecture { display:none; }
@@ -81,5 +90,6 @@ html[lang=zh-CN] .cosmic-introduction h1 > em { margin-left:.25em; font-size:.82
 @media(max-width:700px) and (max-height:700px) { .cosmic-introduction { top:104px; }.cosmic-alternate { margin-bottom:.5rem; }.cosmic-introduction h1 { font-size:38px; margin-bottom:.75rem; }.cosmic-role { font-size:17px; margin-bottom:1rem; }.cosmic-summary { display:none; }.cosmic-run { --cosmic-person-width:clamp(145px,38vw,168px); --cosmic-entry-bottom:5%; } }
 @media(prefers-reduced-motion:reduce) {
   .cosmic-run,.cosmic-run[data-cosmic-enhanced] { height:94svh; --cosmic-bg:#dceafb!important; --cosmic-depth-scale:1!important; --cosmic-depth-opacity:.76!important; --cosmic-depth-shade:1!important; --cosmic-morning-light:.65!important; --cosmic-entry-opacity:1!important; --cosmic-entry-shift:0%!important; --cosmic-entry-lift:0%!important; --cosmic-building-opacity:.9!important; --cosmic-building-scale:.34!important; --cosmic-building-bottom:37%!important; --cosmic-building-brightness:1.04!important; --cosmic-white:0!important; --cosmic-intro:1!important; --cosmic-runner-opacity:0!important; --cosmic-labels:0!important; }
+  .cosmic-run { --cosmic-night:1!important; --cosmic-dawn:0!important; --cosmic-sunset:0!important; --cosmic-day:0!important; }.cosmic-run .cosmic-sky { will-change:auto; }
   .cosmic-run .cosmic-viewport { position:relative; height:100%; }.cosmic-scroll-note,.cosmic-destination,.cosmic-loading-note { display:none!important; }.cosmic-reduced-note { display:block; }.cosmic-skip,.cosmic-action-secondary,.cosmic-action-secondary span { transition:none; }
 }

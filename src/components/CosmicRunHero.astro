@@ -44,7 +44,9 @@ const sprite = withBase("/media/cosmic-run/runner-cycle.webp?v=gown-contact-6");
   class="cosmic-run"
   id="cosmic-run"
   data-cosmic-run
-  data-cosmic-theme="morning"
+  data-cosmic-theme="sky-cycle"
+  data-cosmic-sky="night"
+  data-cosmic-tone="dark"
   data-cosmic-progress="0"
   data-cosmic-stage="0"
   data-sprite-src={sprite}
@@ -74,9 +76,12 @@ const sprite = withBase("/media/cosmic-run/runner-cycle.webp?v=gown-contact-6");
   <div class="cosmic-viewport" data-cosmic-viewport>
     <div class="cosmic-environment" aria-hidden="true">
       <img class="cosmic-depth-plate" src={withBase("/media/cosmic-run/cosmic-depth.webp?v=morning-3")} width="1280" height="720" alt="" fetchpriority="high" decoding="async" />
+      <div class="cosmic-sky cosmic-sky-night"></div>
+      <div class="cosmic-sky cosmic-sky-dawn"></div>
+      <div class="cosmic-sky cosmic-sky-sunset"></div>
+      <div class="cosmic-sky cosmic-sky-day"></div>
       <div class="cosmic-depth-shade"></div>
-      <div class="cosmic-morning-light"></div>
-      <img class="cosmic-architecture" data-cosmic-architecture src={withBase("/media/cosmic-run/kings-architecture.svg?v=user-campus-6")} width="1600" height="900" alt="" decoding="async" />
+      <img class="cosmic-architecture" data-cosmic-architecture src={withBase("/media/cosmic-run/kings-architecture.svg?v=complete-campus-7")} width="1600" height="900" alt="" decoding="async" />
       <div class="cosmic-entry-shadow"></div>
       <div class="cosmic-foot-shadow" data-cosmic-shadow></div>
       <div class="cosmic-runner" data-cosmic-runner></div>

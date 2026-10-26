@@ -44,7 +44,7 @@ Updated on 26 October 2026 after the full-body silhouette cleanup. The five sele
 | Selected file | Delivered dimensions | Bytes | SHA-256 |
 | --- | --- | ---: | --- |
 | `public/media/cosmic-run/cosmic-depth.webp` | 1280 × 720 RGB | 148,306 | `7ba42d015e9cff437539f8ebab819a7486f89f3f1bd78b965095bcf665c7bd32` |
-| `public/media/cosmic-run/kings-architecture.svg` | 1600 × 900 SVG; embedded 1024 × 238 JPEG | 172,971 | `569ec35a4a1515d8f321b5236421ea9ec517210cb2dbaea5b5f147b323606c58` |
+| `public/media/cosmic-run/kings-architecture.svg` | 1600 × 900 SVG; embedded 1024 × 238 JPEG | 174,294 | `03263429a1a65e8ca23d54b27d9430c8baf3b8fc36f0df0b345ddbac98a567bb` |
 | `public/media/cosmic-run/runner-cycle.webp` | 1280 × 960 RGBA | 195,650 | `77f3ebbbf3993414a1ae5c6823e0fa2c1191696a70af09ad1728653e8df90fbd` |
 | `public/media/cosmic-run/simon-entry.svg` | 512 × 768; 1024 × 1536 viewBox | 1,044,420 | `df28c37b71e05d5bc0d8c109df7787efa316a39c3a87278f512c4aeb150f927b` |
 | `public/media/identity/simon-portrait.jpg` | 640 × 800 RGB | 54,297 | `10d41fd6072b350a1b8ab7be1fea7daf9659bce2ad6378e4412f4264b1d0d0aa` |
@@ -55,3 +55,10 @@ Updated on 26 October 2026 after the full-body silhouette cleanup. The five sele
 The user requested cleaning the entire person, explicitly including the body rather than only the face. The continuation contour now follows the largest original alpha component from the same selected generated body, simplified at 1.2 source pixels. It restores the transparent under-sleeve openings and removes retained background slabs beside the trousers and shoes. A 0.8-source-pixel inward alpha cleanup and 0.6-pixel feather smooth the complete body edge. The approved portrait receives a smooth dense-hair/true skin/garment silhouette with a 0.65-source-pixel feather; its uniform placement, facial RGB, expression and attire are unchanged. A short continuation-only shoulder alpha join avoids the crop ledge. All four embedded photographic payload SHA-256 values are unchanged from c562893.
 
 `public/images/ninefold/ninefold-showcase.webp` is the exact user-supplied Ninefold application screenshot, resized to 1920 × 1106 with FFmpeg Lanczos and encoded as quality-92 WebP (320,426 bytes). Its supplied Display-P3 ICC profile is retained; EXIF/XMP/DPI are stripped. The complete screenshot is shown in the homepage, Work card and case hero with frames fitted to its native aspect ratio. Copy, links, factual data and surrounding layout are preserved. The former public photo-source disclosure and Astro implementation sentence were removed in both languages at the user's request; this internal provenance record remains.
+
+
+## Complete campus silhouette — later 26 October refinement
+
+The user requested the complete visible King's College architecture from the same supplied photo. The revised native SVG restores the left low wall and complete foundation/floor rows, both real flags/flagpoles and the far-right visible architecture. The broad bottom blur is removed. Alpha-only 1.4-source-pixel rim cleanup suppresses the source JPEG's blue sky fringe while retaining the roof/finial outline. The embedded 1024 × 238 photographic crop and its RGB payload remain byte-identical. Scale1.5/x32 and viewBox1600 × 900 remain; the group is lifted4.5 viewBox units to y555.5 so the complete left low wall fits. Native render alpha bounds are [32,578,1567,899]. No architecture is synthesized. The cache key is complete-campus-7.
+
+The sky refinement preserves the original full background photograph, perspective, ground/path and parallax. Four transparent sky-only veils vary with native scroll; flat opaque sky replacement was rejected and is not part of the final delivery. UI tabs use transparent surfaces and fine outlines. See NINEFOLD_PRODUCT_UPDATE.md and the latest scoped QA for current content and browser evidence.

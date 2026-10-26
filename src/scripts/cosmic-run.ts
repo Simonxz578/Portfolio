@@ -6,19 +6,21 @@ export const smoothstep = (start: number, end: number, value: number): number =>
   return t * t * (3 - 2 * t);
 };
 
-const colourStops: [number, number, number, number][] = [
-  [0, 213, 229, 247], [.18, 221, 230, 249], [.36, 229, 225, 246],
-  [.55, 234, 237, 249], [.74, 243, 248, 254], [.88, 250, 252, 255], [.96, 255, 255, 255],
-];
 const stageEdges = [.12, .3, .58, .82, .96];
-export function cosmicColour(progress: number): string {
+/** Static gradients are painted once; scroll only composites their opacity. */
+export function cosmicSkyState(progress: number) {
   const p = clamp(progress);
-  if (p >= .96) return "rgb(255, 255, 255)";
-  const next = colourStops.findIndex(stop => stop[0] > p);
-  const a = colourStops[Math.max(0, next - 1)]!;
-  const b = colourStops[Math.max(1, next)]!;
-  const t = smoothstep(a[0], b[0], p);
-  return `rgb(${Math.round(mix(a[1], b[1], t))}, ${Math.round(mix(a[2], b[2], t))}, ${Math.round(mix(a[3], b[3], t))})`;
+  const dawn = smoothstep(.06, .25, p);
+  const sunset = smoothstep(.30, .50, p);
+  const day = smoothstep(.55, .75, p);
+  return {
+    phase: p >= .96 ? "white" : p >= .64 ? "day" : p >= .38 ? "sunset" : p >= .16 ? "dawn" : "night",
+    night: 1 - dawn,
+    dawn: dawn * (1 - sunset),
+    sunset: sunset * (1 - day),
+    day,
+    tone: "dark",
+  };
 }
 
 export function groundedFrame(frame: number, frameCount = 8, contacts: number[] = [1, 5]): number {
@@ -35,10 +37,11 @@ export function cosmicRunState(progress: number, frameCount = 8) {
   const frame = Math.floor(cycle * frameCount) % frameCount;
   const departure = smoothstep(.08, .18, p);
   const approach = smoothstep(.12, .86, p);
+  const sky = cosmicSkyState(p);
   return {
     progress: p,
     stage: stageEdges.filter(edge => p >= edge).length,
-    background: cosmicColour(p),
+    sky,
     frame,
     entryOpacity: 1 - departure,
     runnerOpacity: smoothstep(.11, .18, p) * (1 - smoothstep(.83, .95, p)),
@@ -54,12 +57,10 @@ export function cosmicRunState(progress: number, frameCount = 8) {
     depthScale: mix(1, 1.35, smoothstep(0, .94, p)),
     depthOpacity: p <= .65 ? mix(.76, .34, smoothstep(0, .65, p)) : .34 * (1 - smoothstep(.65, .94, p)),
     depthShadeOpacity: 1 - .55 * smoothstep(.08, .68, p),
-    morningLightOpacity: .65 * (1 - smoothstep(.7, .94, p)),
     whiteOpacity: smoothstep(.8, .96, p),
     introOpacity: 1 - smoothstep(.035, .14, p),
     labelsOpacity: smoothstep(.12, .22, p) * (1 - smoothstep(.85, .94, p)),
     shadowOpacity: .3 * smoothstep(.11, .18, p) * (1 - smoothstep(.81, .93, p)),
-    sceneInk: "#1e344f",
   };
 }
 
@@ -189,6 +190,8 @@ export function initialiseCosmicRuns(): void {
       enabled = false;
       section.removeAttribute("data-cosmic-enhanced");
       section.dataset.cosmicMotion = "static";
+      section.dataset.cosmicSky = "night";
+      section.dataset.cosmicTone = "dark";
       section.dataset.cosmicProgress = "0";
       section.style.cssText += ";--cosmic-progress:0;--cosmic-white:0;--cosmic-intro:1";
       introduction?.removeAttribute("inert");
@@ -219,7 +222,10 @@ export function initialiseCosmicRuns(): void {
       const state = cosmicRunState((window.scrollY - start) / distance, frameCount);
       const style = section.style;
       style.setProperty("--cosmic-progress", String(state.progress));
-      style.setProperty("--cosmic-bg", state.background);
+      style.setProperty("--cosmic-night", String(state.sky.night));
+      style.setProperty("--cosmic-dawn", String(state.sky.dawn));
+      style.setProperty("--cosmic-sunset", String(state.sky.sunset));
+      style.setProperty("--cosmic-day", String(state.sky.day));
       style.setProperty("--cosmic-building-scale", String(state.architectureScale));
       style.setProperty("--cosmic-building-bottom", `${state.architectureBottom}%`);
       style.setProperty("--cosmic-building-opacity", String(state.architectureOpacity));
@@ -234,12 +240,12 @@ export function initialiseCosmicRuns(): void {
       style.setProperty("--cosmic-depth-scale", String(state.depthScale));
       style.setProperty("--cosmic-depth-opacity", String(state.depthOpacity));
       style.setProperty("--cosmic-depth-shade", String(state.depthShadeOpacity));
-      style.setProperty("--cosmic-morning-light", String(state.morningLightOpacity));
       style.setProperty("--cosmic-white", String(state.whiteOpacity));
       style.setProperty("--cosmic-intro", String(state.introOpacity));
       style.setProperty("--cosmic-labels", String(state.labelsOpacity));
       style.setProperty("--cosmic-shadow", String(spriteReady ? state.shadowOpacity : 0));
-      style.setProperty("--cosmic-scene-ink", state.sceneInk);
+      if (section.dataset.cosmicSky !== state.sky.phase) section.dataset.cosmicSky = state.sky.phase;
+      if (section.dataset.cosmicTone !== state.sky.tone) section.dataset.cosmicTone = state.sky.tone;
       section.dataset.cosmicProgress = state.progress.toFixed(5);
       section.dataset.cosmicStage = String(state.stage);
       if (count && state.stage !== lastStage) count.textContent = `${String(state.stage + 1).padStart(2, "0")} / 06`;
@@ -278,7 +284,11 @@ export function initialiseCosmicRuns(): void {
       enabled = !reduced.matches && !failed;
       section.toggleAttribute("data-cosmic-enhanced", enabled);
       section.dataset.cosmicMotion = reduced.matches ? "reduced" : failed ? "static" : spriteReady ? "ready" : "loading";
-      if (!enabled) { introduction?.removeAttribute("inert"); clearTimeout(settleTimer); }
+      if (!enabled) {
+        section.dataset.cosmicSky = "night";
+        section.dataset.cosmicTone = "dark";
+        introduction?.removeAttribute("inert"); clearTimeout(settleTimer);
+      }
       measure();
       if (enabled) { loadSprite(); requestRender(); }
     };

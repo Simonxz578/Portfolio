@@ -31,27 +31,89 @@ export type CaseStudy = {
 
 export const projects: CaseStudy[] = [
   {
-    slug: "ninefold",
-    title: "Ninefold Physics | An AI-native world for learning physics",
-    shortTitle: "Ninefold Physics",
-    kicker: "Flagship · AI Tutoring · Physics Education",
-    period: "Jun 2026 – Present",
-    organisation: "Independent product",
-    status: "Live public beta",
-    summary: "An immersive physics-learning agent for international-curriculum secondary students and physics enthusiasts. Learners choose an anime protagonist, enter a living world, and use AI voice interaction and adaptive Socratic guidance to observe, reason, model and solve physics problems.",
-    question: "Where did the learner's reasoning first begin to diverge?",
-    users: ["International-curriculum secondary students and physics enthusiasts", "Students preparing for ESAT Physics in learning mode"],
-    constraints: ["Use AI for semantic ambiguity and deterministic rules for physics truth", "Keep generated practice original, curriculum-aware and clearly separate from official assessment"],
-    role: "Independent product owner across problem framing, tutoring design, curriculum mapping, AI boundaries, interaction design, implementation and release acceptance.",
-    decisions: ["Begin with an observable phenomenon before introducing equations", "Adapt support to secure, partial, misconception and unclear reasoning states", "Capture the calculation path through the Physics Toolkit instead of accepting only a final number"],
-    workflow: [{ label: "Observe", detail: "Start with Rain or Leaf" }, { label: "Explain", detail: "Reason by voice or text" }, { label: "Diagnose", detail: "Find the first divergence" }, { label: "Scaffold", detail: "Target only what is missing" }, { label: "Construct", detail: "Build formula, substitution and unit" }, { label: "Transfer", detail: "Apply the idea in original practice" }],
-    evaluation: ["Automated regression covers the bilingual tutoring, quiz, Toolkit and fallback flows.", "Early Ninefold user testing informed the interaction foundation; the next milestone is evidence from real physics learners."],
-    outcomes: ["Bilingual mobile beta deployed on Cloudflare with runtime GLM reasoning, structured question generation and deterministic fallback."],
-    limitations: ["The current scope centres on Rain and Leaf forces and motion.", "Board-informed practice marking is learning feedback, not official examination marking or grade prediction."],
-    learning: "The interface did not need a complete reinvention. The problem did: a persistent world became a surface for learners to externalise and build physics reasoning.",
-    capabilities: ["AI Tutoring", "Adaptive Learning", "Physics Education", "Structured LLM Outputs", "Cloudflare Workers AI", "Bilingual Product"],
-    links: [{ href: "https://ninefold-65f.pages.dev/#/en/world?physics=rain", label: "Experience Ninefold Physics" }],
-    featured: true
+    "slug": "ninefold",
+    "organisation": "Independent product",
+    "featured": true,
+    "title": "Ninefold | Character-guided physics, mathematics and experiments",
+    "shortTitle": "Ninefold",
+    "kicker": "Flagship · AI learning product · Physics & Maths",
+    "period": "Jun 2026 – Present",
+    "status": "Live bilingual public beta",
+    "summary": "A character-guided learning world connecting physics, mathematics, original practice and interactive experiments. Learners explain their thinking by voice or text, explore a model and use bounded hints to work through the next step themselves.",
+    "question": "How can an AI companion help a learner keep reasoning, from a question to evidence and independent practice?",
+    "users": [
+      "International-curriculum secondary students exploring physics and mathematics",
+      "Learners following IGCSE, A-Level, ESAT/BPhO or UKMT/AMC learning paths"
+    ],
+    "constraints": [
+      "Keep scientific models, numerical answers and curriculum scope under deterministic control",
+      "Give AI a bounded role in selecting reviewed strategies and hints; retain usable fallback paths"
+    ],
+    "role": "Independent AI product owner across learner problem definition, curriculum journeys, character interaction, model routing, voice input, teaching boundaries, evaluation and release acceptance.",
+    "decisions": [
+      "Unify physics, maths and experiments inside one persistent companion world",
+      "Use DeepSeek as the primary model and GLM as a bounded fallback rather than assigning one provider to each subject",
+      "Turn Whisper ASR into editable input that learners explicitly submit",
+      "Separate independent completion from supported attempts in compact local learning memory"
+    ],
+    "workflow": [
+      {
+        "label": "Choose",
+        "detail": "Select a subject or experiment"
+      },
+      {
+        "label": "Ask",
+        "detail": "Explain by voice or text"
+      },
+      {
+        "label": "Scaffold",
+        "detail": "Receive a reviewed strategy"
+      },
+      {
+        "label": "Explore",
+        "detail": "Manipulate a model or work a method"
+      },
+      {
+        "label": "Practise",
+        "detail": "Apply the idea in original questions"
+      },
+      {
+        "label": "Reflect",
+        "detail": "Record completion and support used"
+      }
+    ],
+    "evaluation": [
+      "Source and live-interface review cover current Physics, Maths, experiment and question-coach flows.",
+      "Next validation focuses on independent reattempts after support, experiment explanations and return-to-learning journeys; no measured learning or retention uplift is claimed."
+    ],
+    "outcomes": [
+      "A live bilingual beta connects Physics, Maths and interactive experiments.",
+      "DeepSeek primary routing, GLM fallback and Whisper speech recognition support character-guided learning.",
+      "Compact local completion/support history and a daily three-question goal support returning learners."
+    ],
+    "limitations": [
+      "Curriculum coverage is topic-specific. Virtual experiments and original practice feedback do not replace physical laboratory work or official assessment.",
+      "Learning effectiveness and repeat-use value still require validation with real learners."
+    ],
+    "learning": "A companion earns its place by making the next learning action useful: help learners express a question, gather evidence and attempt a method while keeping subject truth outside unconstrained generation.",
+    "capabilities": [
+      "AI product strategy",
+      "Character-guided learning",
+      "Physics & Mathematics",
+      "DeepSeek / GLM",
+      "Whisper ASR",
+      "Bounded tutoring"
+    ],
+    "links": [
+      {
+        "href": "https://ninefold-65f.pages.dev/#/en/world",
+        "label": "Enter Ninefold"
+      },
+      {
+        "href": "https://ninefold-65f.pages.dev/#/en/experiments",
+        "label": "Explore experiments"
+      }
+    ]
   },
   {
     slug: "industrial-ai-agent-rag-workflow",
