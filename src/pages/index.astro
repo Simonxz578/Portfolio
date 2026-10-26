@@ -1,16 +1,9 @@
 ---
-import ResearchCitation from "@components/ResearchCitation.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import ContactPanel from "@components/ContactPanel.astro";
-import ProjectCard from "@components/ProjectCard.astro";
-import HomeHero from "@components/HomeHero.astro";
-import SectionIntro from "@components/SectionIntro.astro";
-import { capabilities, selectedExperience } from "@data/en/experience";
-import { featuredProjects } from "@data/en/projects";
-import { researchItems } from "@data/en/research";
-import { site } from "@data/site";
-import { withBase } from "../utils/urls";
-
+import CosmicRunHero from "@components/CosmicRunHero.astro";
+import OnePageResume from "@components/OnePageResume.astro";
+import {site} from "@data/site";
+import {withBase} from "../utils/urls";
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -37,116 +30,7 @@ const personSchema = {
   sameAs: [site.linkedin, site.github]
 };
 ---
-
-<BaseLayout
-  title={site.displayName}
-  description="Xiang Zhang (Simon) works across applied AI, product judgement, model evaluation, workflow engineering and organisational adoption."
-  structuredData={personSchema}
->
-  <HomeHero locale="en" />
-
-  <section class="section" id="selected-work">
-    <div class="shell">
-      <SectionIntro
-        eyebrow="Selected work"
-        title="Ninefold Physics leads the work."
-        description="The flagship case asks how AI can understand a learner without doing the learning for them. The remaining projects show the technical, research and organisational work behind that judgement."
-        align="split"
-      />
-      <div class="project-grid">
-        {featuredProjects.map((project, index) => <ProjectCard project={project} index={index} />)}
-      </div>
-      <p class="section-link"><a class="text-link" href={withBase("/work/")}>View all project context <span aria-hidden="true">→</span></a></p>
-    </div>
-  </section>
-
-  <section class="section section-ink">
-    <div class="shell">
-      <SectionIntro
-        eyebrow="Capabilities"
-        title="One system, four lenses."
-        description="The strongest work sits where technical choices, user evidence, product judgement and organisational context meet."
-        align="split"
-      />
-      <div class="capability-grid">
-        {
-          capabilities.map((capability, index) => (
-            <article>
-              <span class="capability-number">{String(index + 1).padStart(2, "0")}</span>
-              <h3>{capability.group}</h3>
-              <ul>
-                {capability.items.map((item) => <li>{item}</li>)}
-              </ul>
-            </article>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="shell experience-layout">
-      <SectionIntro
-        eyebrow="Selected experience"
-        title="Technical work informed by real users."
-        description="A concise view of the experiences most relevant to applied AI and product adoption."
-      />
-      <ol class="experience-list">
-        {
-          selectedExperience.map((item) => (
-            <li>
-              <time>{item.period}</time>
-              <div>
-                <p>{item.organisation}</p>
-                <h3>{item.role}</h3>
-                <span>{item.summary.startsWith("Zhang, X.") ? <ResearchCitation /> : item.summary}</span>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
-
-  <section class="section section-warm">
-    <div class="shell research-preview">
-      <SectionIntro
-        eyebrow="Research & writing"
-        title="Product questions grounded in evidence."
-        description="I turn research on policy, trust and professional practice into questions that product teams can act on."
-      />
-      <div class="research-preview-list">
-        {
-          researchItems.slice(0, 2).map((item) => (
-            <article>
-              <div>
-                <p class="status-label">{item.status}</p>
-                <h3>{item.title}</h3>
-                <p>{item.description.startsWith("Zhang, X.") ? <ResearchCitation /> : item.description}</p>
-              </div>
-              {"href" in item && item.href && <a class="text-link" href={withBase(item.href)}>Read the case study <span aria-hidden="true">→</span></a>}
-            </article>
-          ))
-        }
-      </div>
-      <p class="section-link"><a class="text-link" href={withBase("/research/")}>View research record <span aria-hidden="true">→</span></a></p>
-    </div>
-  </section>
-
-  <section class="section trajectory">
-    <div class="shell trajectory-grid">
-      <p class="eyebrow">Working thesis</p>
-      <div>
-        <h2>Useful AI connects model capability with a real workflow and the people responsible for it.</h2>
-        <p>
-          Physics taught me to model systems. Applied AI taught me to connect components. Education research and
-          leadership taught me to ask who must trust the system, how work changes and what evidence counts.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <div class="shell section">
-    <ContactPanel />
-  </div>
+<BaseLayout title={site.displayName} description="Xiang Zhang (Simon): AI product, applied AI, physics, education research and organisational leadership. Explore the work and complete résumé on one page." structuredData={personSchema} onePage>
+  <CosmicRunHero locale="en" />
+  <OnePageResume locale="en" />
 </BaseLayout>

@@ -1,6 +1,25 @@
 ---
 import type {CaseStudy} from '@data/en/projects';
-interface Props{locale?:'en'|'zh';projects:CaseStudy[]}
-const {locale='en',projects}=Astro.props;const zh=locale==='zh';
+import '../styles/scenes.css';
+interface Props {locale?:'en'|'zh';projects:CaseStudy[]}
+const {locale='en',projects}=Astro.props;
+const zh=locale==='zh';
 ---
-<section class="work-intro scene-dark" aria-labelledby="work-title"><div class="work-aurora" aria-hidden="true"></div><div class="shell"><div class="work-intro-top"><p class="eyebrow">{zh?'项目 / SELECTED WORK':'Selected work / Portfolio'}</p><span>{zh?'五个案例，一条主线。':'Five cases. One connected practice.'}</span></div><div class="work-intro-grid"><h1 id="work-title">{zh?<>把模型能力<br/><em>带进真实场景。</em></>:<>From capability.<br/><em>Into context.</em></>}</h1><div><p>{zh?'这些案例重点呈现问题、判断、行动和交付结果。':'Each case shows the problem I found, the choices I made, the work I moved forward and what the project produced.'}</p><p class="work-intro-note">{zh?'应用 AI · 产品与用户研究':'Applied AI · Research translated for product'}</p></div></div><nav class="work-project-index" aria-label={zh?'跳转到项目':'Jump to project'}>{projects.map(p=><a href={'#project-'+p.slug}>{p.shortTitle}<span aria-hidden="true">↘</span></a>)}</nav></div></section>
+<section class="work-intro" aria-labelledby="work-title" data-header-tone="light">
+  <div class="shell">
+    <div class="work-intro-top">
+      <p class="eyebrow">{zh?'项目 / SELECTED WORK':'Selected work / Portfolio'}</p>
+      <span>{zh?'五个案例，一条主线。':'Five cases. One connected practice.'}</span>
+    </div>
+    <div class="work-intro-grid">
+      <h1 id="work-title">{zh?<>把模型能力<br/><em>带进真实场景。</em></>:<>From capability.<br/><em>Into context.</em></>}</h1>
+      <div class="work-intro-copy">
+        <p>{zh?'这些案例重点呈现问题、判断、行动和交付结果。':'Each case shows the problem I found, the choices I made, the work I moved forward and what the project produced.'}</p>
+        <p class="work-intro-note">{zh?'应用 AI · 产品与用户研究':'Applied AI · Research translated for product'}</p>
+      </div>
+    </div>
+    <nav class="work-project-index" aria-label={zh?'跳转到项目':'Jump to project'}>
+      {projects.map((p,i)=><a href={'#project-'+p.slug}><span class="work-index-number" aria-hidden="true">{String(i+1).padStart(2,'0')}</span><span>{p.shortTitle}</span><span class="work-index-arrow" aria-hidden="true">↓</span></a>)}
+    </nav>
+  </div>
+</section>

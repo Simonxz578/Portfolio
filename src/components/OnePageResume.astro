@@ -1,0 +1,172 @@
+---
+import "../styles/one-page-resume.css";
+import ContactPanel from "@components/ContactPanel.astro";
+import ResearchCitation from "@components/ResearchCitation.astro";
+import { site } from "@data/site";
+import { education as enEducation, selectedExperience as enExperience, capabilities as enCapabilities } from "@data/en/experience";
+import { education as zhEducation, selectedExperience as zhExperience, capabilities as zhCapabilities } from "@data/zh/experience";
+import { projects as enProjects } from "@data/en/projects";
+import { projects as zhProjects } from "@data/zh/projects";
+import { researchItems as enResearch } from "@data/en/research";
+import { researchItems as zhResearch } from "@data/zh/research";
+import { leadershipItems as enLeadership } from "@data/en/leadership";
+import { leadershipItems as zhLeadership } from "@data/zh/leadership";
+import { withBase } from "../utils/urls";
+
+interface Props {
+  locale?: "en" | "zh";
+  standalone?: boolean;
+}
+const { locale = "en", standalone = false } = Astro.props;
+const isZh = locale === "zh";
+const IdentityHeading = standalone ? "h1" : "h2";
+const education = isZh ? zhEducation : enEducation;
+const experience = isZh ? zhExperience : enExperience;
+const projects = isZh ? zhProjects : enProjects;
+const research = isZh ? zhResearch : enResearch;
+const leadership = isZh ? zhLeadership : enLeadership;
+const capabilities = isZh ? zhCapabilities : enCapabilities;
+const sectionLabels = [
+  { id: "resume-education", label: isZh ? "教育" : "Education" },
+  { id: "resume-experience", label: isZh ? "经历" : "Experience" },
+  { id: "resume-projects", label: isZh ? "项目" : "Projects" },
+  { id: "resume-research", label: isZh ? "研究" : "Research" },
+  { id: "resume-leadership", label: isZh ? "领导力" : "Leadership" },
+  { id: "resume-capabilities", label: isZh ? "能力" : "Capabilities" },
+  { id: "resume-contact", label: isZh ? "联系" : "Contact" }
+];
+const casePath = (slug: string) => withBase(`${isZh ? "/zh" : ""}/work/${slug}/`);
+const languagePath = withBase(standalone ? (isZh ? "/resume/" : "/zh/resume/") : (isZh ? "/" : "/zh/"));
+
+const projectTheme = (slug: string) => slug === "ninefold" ? "world" : slug === "industrial-ai-agent-rag-workflow" ? "system" : slug === "ai-enhanced-science-education" ? "publication" : slug === "ai-policy-teacher-agency" ? "policy" : "community";
+const publishedResearch = research.find((item) => "doi" in item);
+const otherResearch = research.filter((item) => !("doi" in item));
+const capabilityContext = isZh
+  ? ["把模型能力接入工作流。", "从用户问题到产品取舍。", "把情境转化为可以检验的问题。", "让团队与组织持续运行。"]
+  : ["Connect model capability to a workflow.", "Turn user problems into product choices.", "Make contextual questions testable.", "Help teams and organisations continue."];
+---
+
+<div class:list={["one-page-resume", { "opr-standalone": standalone }]}>
+  <section class="opr-opening" id="resume-start" aria-labelledby="resume-identity-heading" tabindex="-1">
+    <div class="opr-shell opr-identity-grid">
+      <div class="opr-identity-copy">
+        <p class="opr-kicker">{isZh ? "张翔的履历与作品" : "Résumé & selected work"}</p>
+        <IdentityHeading id="resume-identity-heading">{isZh ? "张翔 Simon" : "Xiang Zhang"}{!isZh && <span class="opr-name-aside">(Simon)</span>}</IdentityHeading>
+        <p class="opr-role">{isZh ? "AI产品与应用AI" : site.role}</p>
+        <p class="opr-introduction">{isZh
+          ? "我的经历横跨物理、模型工作流、教育研究和组织领导。我把模型能力、用户需求和真实工作流程连接成可用的AI产品。"
+          : "My background spans physics, model workflows, education research and organisational leadership. I connect model capability, user needs and real workflows to build useful AI products."}</p>
+        <div class="opr-opening-actions">
+          <a class="button button-primary" href="#resume-projects">{isZh ? "探索代表项目" : "Explore the work"}<span aria-hidden="true">↗</span></a>
+          {site.resumePdfPath
+            ? <a class="button button-secondary" href={withBase(site.resumePdfPath)} download>{isZh ? "下载PDF履历" : "Download PDF résumé"}<span aria-hidden="true">↓</span></a>
+            : <a class="opr-inline-link" href="#resume-experience">{isZh ? "阅读专业经历" : "Read my experience"}<span aria-hidden="true">↓</span></a>}
+        </div>
+        <div class="opr-direct-links" role="group" aria-label={isZh ? "直接联系" : "Direct contact"}>
+          <a href={"mailto:" + site.email}>{site.email}<span aria-hidden="true">↗</span></a>
+          <a href={site.linkedin} rel="me">LinkedIn<span aria-hidden="true">↗</span></a>
+          <a href={site.github} rel="me external">GitHub<span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <figure class="opr-identity-portrait">
+        <div class="opr-portrait-mount"><img src={withBase("/media/identity/simon-portrait.jpg?canonical-lock-6")} width="640" height="800" alt={isZh ? "张翔 Simon 身着黑色学袍和蓝色西装的肖像。" : "Portrait of Xiang Zhang (Simon) in a black academic gown and blue suit."} loading={standalone ? "eager" : "lazy"} decoding="async" /></div>
+        <figcaption><span>{isZh ? "物理 · 教育 · AI产品" : "Physics · Education · AI product"}</span><span>{isZh ? "张翔 Simon" : "Xiang Zhang (Simon)"}</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="opr-index-sentinel" aria-hidden="true" data-opr-index-sentinel></div>
+  <nav class="opr-chapter-nav" aria-label={isZh ? "履历章节" : "Résumé chapters"} data-opr-chapter-nav>
+    <div class="opr-shell opr-chapter-links">
+      {sectionLabels.map((section) => <a href={`#${section.id}`}>{section.label}</a>)}
+    </div>
+  </nav>
+
+  <section class="opr-section opr-education-section" id="resume-education" aria-labelledby="resume-education-heading">
+    <div class="opr-shell">
+      <header class="opr-section-heading opr-heading-split"><div><p class="opr-kicker">{isZh ? "教育背景" : "Education"}</p><h2 id="resume-education-heading">{isZh ? "物理、教育与系统思维。" : "Physics. Education. Systems thinking."}</h2></div><p>{isZh ? "从建模与实验，到专业判断、政策和真实使用情境。" : "From modelling and measurement to professional judgement, policy and the point of use."}</p></header>
+      <ol class="opr-education-list">
+        {education.map((item) => <li><time>{item.period}</time><h3>{item.institution}</h3><p class="opr-degree">{item.degree}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="opr-section opr-experience-section" id="resume-experience" aria-labelledby="resume-experience-heading">
+    <div class="opr-shell">
+      <header class="opr-section-heading opr-heading-split"><div><p class="opr-kicker">{isZh ? "专业与工作经历" : "Experience"}</p><h2 id="resume-experience-heading">{isZh ? "把技术放进真实场景。" : "Technology, in its working context."}</h2></div><p>{isZh ? "工业AI、课堂实践、教育研究与工程分析，为产品判断提供不同视角。" : "Industrial AI, classroom practice, education research and engineering analysis inform the product decisions."}</p></header>
+      <ol class="opr-experience-list">
+        {experience.map((item) => <li><time>{item.period}</time><div class="opr-record-content"><div class="opr-record-identity"><p class="opr-organisation">{item.organisation}</p><h3>{item.role}</h3></div><p class="opr-record-summary">{item.summary.startsWith("Zhang, X.") ? <ResearchCitation /> : item.summary}</p></div></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="opr-section opr-project-section" id="resume-projects" aria-labelledby="resume-projects-heading">
+    <div class="opr-shell">
+      <header class="opr-section-heading opr-heading-split"><div><p class="opr-kicker">{isZh ? "代表作品" : "Selected projects"}</p><h2 id="resume-projects-heading">{isZh ? "每个项目，都从一个问题开始。" : "Every project starts with a question."}</h2></div><p>{isZh ? "五个项目，呈现技术判断、用户研究、产品边界与交付。" : "Five projects spanning technical judgement, user research, product boundaries and delivery."}</p></header>
+      <div class="opr-project-list">
+        {projects.map((project) => <article class:list={["opr-project", `opr-project-${projectTheme(project.slug)}`, { "opr-project-featured": project.slug === "ninefold" }]}>
+          <div class="opr-project-lead">
+            <header class="opr-project-header"><p class="opr-kicker">{project.kicker}</p><h3><a href={casePath(project.slug)}>{project.shortTitle}<span aria-hidden="true">↗</span></a></h3><p class="opr-project-status">{project.status}</p><div class="opr-project-meta"><time>{project.period}</time><span>{project.organisation}</span></div></header>
+            {project.slug === "ninefold" && <figure class="opr-project-media opr-world-scene" aria-labelledby="resume-ninefold-scene-caption">
+              <a href={project.links?.[0]?.href ?? casePath(project.slug)} aria-label={isZh ? "体验 Ninefold Physics" : "Experience Ninefold Physics"}>
+                <div class="opr-world-layers" aria-hidden="true"><img class="opr-scene-sky" src={withBase("/images/ninefold/ninefold-sky.webp")} width="1672" height="941" alt="" loading="lazy" decoding="async"/><img class="opr-scene-clouds" src={withBase("/images/ninefold/ninefold-world-fast.avif")} width="1400" height="620" alt="" loading="lazy" decoding="async"/><img class="opr-scene-canopy" src={withBase("/images/ninefold/ninefold-canopy.webp")} width="1200" height="720" alt="" loading="lazy" decoding="async"/><img class="opr-scene-ground" src={withBase("/images/ninefold/ninefold-tree.webp")} width="1600" height="500" alt="" loading="lazy" decoding="async"/></div>
+                <span class="opr-media-action" aria-hidden="true">{isZh ? "进入学习世界" : "Enter the learning world"}<span>↗</span></span>
+              </a><figcaption id="resume-ninefold-scene-caption">{isZh ? "Ninefold Physics · 天空、白树与原野构成的物理学习世界" : "Ninefold Physics · A physics-learning world of sky, white tree and open landscape"}</figcaption>
+            </figure>}
+            {project.slug === "industrial-ai-agent-rag-workflow" && <figure class="opr-project-media opr-system-visual" aria-labelledby="resume-industrial-flow-caption"><figcaption id="resume-industrial-flow-caption">{isZh ? "公开版工作流 · 从检测情境到人工复核" : "Public workflow · From inspection context to human review"}</figcaption><ol>{project.workflow.map((step) => <li><strong>{step.label}</strong><p>{step.detail}</p></li>)}</ol></figure>}
+            {project.slug === "ai-enhanced-science-education" && <figure class="opr-project-media opr-tpack-visual" aria-labelledby="resume-tpack-caption"><div class="opr-tpack-diagram" aria-hidden="true"><span class="opr-tpack-domain opr-domain-technology">{isZh ? "生成式AI" : "Generative AI"}</span><span class="opr-tpack-domain opr-domain-pedagogy">{isZh ? "教学法" : "Pedagogy"}</span><span class="opr-tpack-domain opr-domain-science">{isZh ? "学科知识" : "Subject knowledge"}</span></div><figcaption id="resume-tpack-caption">{isZh ? "GenAI–TPACK · 研究视角" : "GenAI–TPACK · The research lens"}</figcaption></figure>}
+            {project.slug === "ai-policy-teacher-agency" && <figure class="opr-project-media opr-policy-photo"><a href={casePath(project.slug)} aria-label={isZh ? "阅读AI政策与教师能动性案例" : "Read the AI policy and teacher agency case"}><img src={withBase("/images/v2/river-cam-fast.avif")} width="1200" height="674" alt={isZh ? "剑桥康河畔的学院建筑与校园环境" : "College architecture and the River Cam at Cambridge."} loading="lazy" decoding="async"/></a><figcaption>{isZh ? "剑桥大学 · 教育政策、领导力与改进" : "University of Cambridge · Education policy, leadership and improvement"}</figcaption></figure>}
+            {project.slug === "formal-hall-networking-society-website" && <figure class="opr-project-media opr-community-photo"><a href={casePath(project.slug)} aria-label={isZh ? "阅读FHNS网站案例" : "Read the FHNS website case study"}><img src={withBase("/images/v2/caius-formal-fast.avif")} width="1024" height="768" alt={isZh ? "学生们身着学位服在剑桥学院Formal Hall内合影" : "Students in academic dress gathered inside a Cambridge college Formal Hall."} loading="lazy" decoding="async"/></a><figcaption>{isZh ? "Formal Hall Networking Society · 从社群运营到公开产品" : "Formal Hall Networking Society · From community operations to a public product"}</figcaption></figure>}
+          </div>
+          {project.slug === "ninefold" && <ol class="opr-learning-flow" aria-label={isZh ? "六步物理学习流程" : "Six-step physics learning flow"}>{project.workflow.map((step) => <li>{step.label}</li>)}</ol>}
+          <div class="opr-project-detail"><div class="opr-project-question"><p class="opr-field-label">{isZh ? "核心问题" : "The question"}</p><p>{project.question}</p><p class="opr-project-summary">{project.summary}</p></div><div class="opr-project-delivery"><p class="opr-field-label">{isZh ? "我的角色" : "My role"}</p><p>{project.role}</p><ul>{project.outcomes.slice(0, 3).map((outcome) => <li>{outcome}</li>)}</ul></div></div>
+          {project.limitations.length > 0 && <aside class="opr-project-boundary" aria-label={isZh ? "范围与边界" : "Scope and boundaries"}><p class="opr-field-label">{isZh ? "范围与边界" : "Scope and boundaries"}</p><ul>{project.limitations.map((limitation) => <li>{limitation}</li>)}</ul></aside>}
+          <div class="opr-project-links"><a class="button button-secondary" href={casePath(project.slug)}>{isZh ? "阅读完整案例" : "Read full case study"}<span aria-hidden="true">↗</span></a>{project.links?.map((link) => <a class="opr-inline-link" href={link.href}>{link.label}<span aria-hidden="true">↗</span></a>)}</div>
+        </article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="opr-section opr-research-section" id="resume-research" aria-labelledby="resume-research-heading">
+    <div class="opr-shell">
+      <header class="opr-section-heading opr-heading-split"><div><p class="opr-kicker">{isZh ? "研究与发表" : "Research & publication"}</p><h2 id="resume-research-heading">{isZh ? "以证据支持判断。" : "Judgement, grounded in evidence."}</h2></div><a class="opr-inline-link" href={withBase(isZh ? "/zh/research/" : "/research/")}>{isZh ? "完整研究记录" : "Full research record"}<span aria-hidden="true">↗</span></a></header>
+      {publishedResearch && <article class="opr-paper-feature"><div class="opr-journal-face" aria-hidden="true"><p>International Journal<br/>of Science Education</p><strong>2026</strong><span>GenAI–TPACK</span></div><div class="opr-paper-content"><div class="opr-research-meta"><span>{publishedResearch.type}</span><time>{publishedResearch.period}</time></div><h3>{publishedResearch.title}</h3><p class="opr-organisation">{publishedResearch.institution}</p><p class="opr-publication-status">{publishedResearch.status}</p><p class="opr-full-citation"><ResearchCitation /></p><div class="opr-public-links">{"doi" in publishedResearch && publishedResearch.doi && <a class="button button-primary" href={publishedResearch.doi}>{isZh ? "阅读已发表论文" : "Read the published paper"}<span aria-hidden="true">↗</span></a>}{"href" in publishedResearch && publishedResearch.href && <a class="opr-inline-link" href={withBase(publishedResearch.href)}>{isZh ? "研究与产品案例" : "Research and product case"}<span aria-hidden="true">↗</span></a>}</div></div></article>}
+      <div class="opr-research-list">{otherResearch.map((item) => <article><div class="opr-research-meta"><span>{item.type}</span><time>{item.period}</time></div><h3>{item.title}</h3><p class="opr-organisation">{item.institution}</p><p class="opr-publication-status">{item.status}</p><p>{item.description.startsWith("Zhang, X.") ? <ResearchCitation /> : item.description}</p>{"href" in item && item.href && <a class="opr-inline-link" href={withBase(item.href)}>{isZh ? "研究与产品案例" : "Research and product case"}<span aria-hidden="true">↗</span></a>}</article>)}</div>
+    </div>
+  </section>
+
+  <section class="opr-section opr-leadership-section" id="resume-leadership" aria-labelledby="resume-leadership-heading">
+    <div class="opr-shell"><header class="opr-section-heading opr-heading-split"><div><p class="opr-kicker">{isZh ? "领导力" : "Leadership"}</p><h2 id="resume-leadership-heading">{isZh ? "为下一步留下结构。" : "Build something others can continue."}</h2></div><p>{isZh ? "组织搭建、项目运营与数字产品，都需要清楚的责任和可以延续的流程。" : "Organisation building, programme operations and digital products need clear responsibilities and continuity."}</p></header><div class="opr-leadership-list">{leadership.map((item) => <article><time>{item.period}</time><h3>{item.title}</h3><p class="opr-leadership-role">{item.role}</p><p>{item.summary}</p><ul>{item.contributions.map((point) => <li>{point}</li>)}</ul><div class="opr-public-links">{item.links.map((link) => <a class="opr-inline-link" href={link.href}>{link.label}<span aria-hidden="true">↗</span></a>)}</div></article>)}</div></div>
+  </section>
+
+  <section class="opr-section opr-capability-section" id="resume-capabilities" aria-labelledby="resume-capabilities-heading">
+    <div class="opr-shell"><header class="opr-section-heading opr-heading-split"><div><p class="opr-kicker">{isZh ? "能力图谱" : "Capabilities"}</p><h2 id="resume-capabilities-heading">{isZh ? "四种视角，一个系统。" : "Four lenses. One connected system."}</h2></div><p>{isZh ? "技术选择、用户证据、产品判断和组织情境共同作用。" : "Technical choices, user evidence, product judgement and organisational context work together."}</p></header><div class="opr-capability-grid">{capabilities.map((group, index) => <article><h3>{group.group}</h3><p>{capabilityContext[index]}</p><ul>{group.items.map((item) => <li>{item}</li>)}</ul></article>)}</div></div>
+  </section>
+
+  <section class="opr-section opr-contact-section" id="resume-contact" aria-label={isZh ? "联系" : "Contact"}>
+    <div class="opr-shell"><p class="opr-kicker">{isZh ? "联系" : "Contact"}</p><ContactPanel locale={isZh ? "zh-CN" : "en-GB"} title={isZh ? "一起做真正有用的AI产品。" : "Let’s make AI useful."} copy={isZh ? "欢迎讨论AI产品岗位、模型与工作流评估、教育科技、组织采用或创业合作。告诉我具体问题、涉及的用户，以及你希望一起推进的事。" : "I’m open to conversations about AI product roles, model and workflow evaluation, education technology, organisational adoption and startup collaboration. Tell me the problem, the people involved and what you want to move forward."}/><a class="opr-email" href={"mailto:" + site.email}>{site.email}<span aria-hidden="true">↗</span></a><nav class="opr-closing-links" aria-label={isZh ? "公开链接与语言" : "Public links and language"}><a href={site.linkedin} rel="me">LinkedIn<span aria-hidden="true">↗</span></a><a href={site.github} rel="me external">GitHub<span aria-hidden="true">↗</span></a><a href={withBase(isZh ? "/zh/work/" : "/work/")}>{isZh ? "所有项目" : "All projects"}<span aria-hidden="true">↗</span></a><a href={`${languagePath}#resume-contact`} lang={isZh ? "en" : "zh-CN"}>{isZh ? "Read in English" : "阅读中文版"}<span aria-hidden="true">↗</span></a><a href="#resume-start">{isZh ? "返回履历开头" : "Back to résumé"}<span aria-hidden="true">↑</span></a></nav></div>
+  </section>
+</div>
+
+<script>
+  const chapterNav = document.querySelector<HTMLElement>("[data-opr-chapter-nav]");
+  const sentinel = document.querySelector<HTMLElement>("[data-opr-index-sentinel]");
+  const chapterLinks = chapterNav?.querySelectorAll<HTMLAnchorElement>("a[href^='#']");
+  const chapters = Array.from(document.querySelectorAll<HTMLElement>(".one-page-resume > section[id]"));
+  if (chapterNav && sentinel && "IntersectionObserver" in window) {
+    const stickyObserver = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry) chapterNav.classList.toggle("is-stuck", !entry.isIntersecting && entry.boundingClientRect.top < 100);
+    }, {rootMargin: "-96px 0px 0px 0px"});
+    stickyObserver.observe(sentinel);
+    const locationObserver = new IntersectionObserver(() => {
+      let current = "";
+      for (const chapter of chapters) if (chapter.getBoundingClientRect().top <= 200) current = chapter.id;
+      chapterLinks?.forEach((link) => {
+        if (link.hash === "#" + current) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    }, {rootMargin: "-160px 0px -60% 0px", threshold: 0});
+    chapters.forEach((chapter) => locationObserver.observe(chapter));
+  }
+</script>

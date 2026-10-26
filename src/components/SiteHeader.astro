@@ -22,19 +22,19 @@ const isZh = locale === "zh-CN";
 const switchablePath = /(?:^|\/)404(?:\.html)?\/?$/.test(logicalPath) ? "/" : logicalPath;
 const englishPath = switchablePath.startsWith("/zh/") ? switchablePath.slice(3) || "/" : switchablePath;
 const chinesePath = switchablePath.startsWith("/zh/") ? switchablePath : `/zh${switchablePath}`;
-const navigation = isZh
-  ? [
-      { label: "项目", href: "/zh/work/" },
-      { label: "研究", href: "/zh/research/" },
-      { label: "领导力", href: "/zh/leadership/" },
-      { label: "关于我", href: "/zh/about/" },
-      { label: "履历", href: "/zh/resume/" },
-      { label: "联系", href: "/zh/contact/" }
-    ]
-  : site.navigation;
+const onePage = ["/", "/zh/", "/resume/", "/zh/resume/"].includes(logicalPath);
+const navigation = onePage ? [
+  {label:isZh?"项目":"Projects",href:"#resume-projects"},
+  {label:isZh?"研究":"Research",href:"#resume-research"},
+  {label:isZh?"履历":"Résumé",href:"#resume-start"},
+  {label:isZh?"联系":"Contact",href:"#resume-contact"}
+] : isZh ? [
+  {label:"项目",href:"/zh/work/"},{label:"研究",href:"/zh/research/"},{label:"领导力",href:"/zh/leadership/"},
+  {label:"关于我",href:"/zh/about/"},{label:"履历",href:"/zh/resume/"},{label:"联系",href:"/zh/contact/"}
+] : site.navigation;
 ---
 
-<header class="site-header" data-site-header>
+<header class="site-header is-light" data-site-header data-onepage-nav={onePage ? "true" : undefined}>
   <div class="shell header-inner">
     <a class="identity" href={withBase(isZh ? "/zh/" : "/")} aria-label={isZh ? "张翔—首页" : "Xiang Zhang — home"}>
       <span class="identity-mark" aria-hidden="true">XZ</span>
@@ -58,15 +58,15 @@ const navigation = isZh
     <nav id="primary-navigation" class="primary-nav" aria-label={isZh ? "主导航" : "Primary navigation"} data-nav-panel>
       {
         navigation.map((item) => (
-          <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
+          <a href={item.href.startsWith("#") ? item.href : withBase(item.href)} aria-current={isCurrent(item.href) ? "page" : undefined}>
             {item.label}
           </a>
         ))
       }
       <div class="language-switch" aria-label={isZh ? "语言选择" : "Language selection"}>
-        <a href={withBase(chinesePath)} lang="zh-CN" aria-current={isZh ? "page" : undefined}>中文</a>
+        <a href={withBase(chinesePath)} data-language-link data-language-base={withBase(chinesePath)} lang="zh-CN" aria-current={isZh ? "page" : undefined}>中文</a>
         <span aria-hidden="true">/</span>
-        <a href={withBase(englishPath)} lang="en-GB" aria-current={!isZh ? "page" : undefined}>EN</a>
+        <a href={withBase(englishPath)} data-language-link data-language-base={withBase(englishPath)} lang="en-GB" aria-current={!isZh ? "page" : undefined}>EN</a>
       </div>
     </nav>
   </div>
@@ -122,13 +122,73 @@ const navigation = isZh
     }
   });
 
-  const desktop = window.matchMedia("(min-width: 960px)");
+  const desktop = window.matchMedia("(min-width: 1101px)");
   desktop.addEventListener("change", () => setOpen(false));
 
+  const onePage = header?.dataset.onepageNav === "true";
+  const darkScene = document.querySelector<HTMLElement>(".cosmic-run, .work-intro, .ninefold-hero");
+  const readingSections = Array.from(document.querySelectorAll<HTMLElement>(".one-page-resume > section[id]"));
+  const languageLinks = document.querySelectorAll<HTMLAnchorElement>("[data-language-link]");
+  let currentSection: HTMLElement | undefined;
+  let readingFraction = 0;
+  let headerFrame = 0;
   function updateHeader(): void {
+    headerFrame = 0;
     header?.classList.toggle("is-scrolled", window.scrollY > 8);
+    const sceneRect = darkScene?.getBoundingClientRect();
+    const scenePassed = !sceneRect || sceneRect.bottom < 100;
+    const cosmic = darkScene?.matches(".cosmic-run[data-cosmic-enhanced]");
+    const stageHeight = darkScene?.querySelector<HTMLElement>("[data-cosmic-viewport]")?.offsetHeight || window.innerHeight;
+    const progress = cosmic && sceneRect && darkScene ? Math.max(0,Math.min(1,-sceneRect.top / Math.max(1,darkScene.offsetHeight-stageHeight))) : 0;
+    const paleScene = cosmic && progress > .61;
+    const whitening = cosmic && sceneRect && sceneRect.bottom >= stageHeight - 1;
+    const headerOpacity = whitening ? 1 - Math.max(0,Math.min(1,(progress-.91)/.05)) : 1;
+    if (header) { header.style.opacity = String(headerOpacity); header.inert = headerOpacity < .01; }
+    const morningScene = darkScene?.dataset.cosmicTheme === "morning" || darkScene?.dataset.headerTone === "light";
+    header?.classList.toggle("is-light", scenePassed || !!paleScene || morningScene);
+    if (!onePage) return;
+    currentSection = undefined;
+    for (const section of readingSections) {
+      if (section.getBoundingClientRect().top <= 190) currentSection = section;
+    }
+    if (currentSection) readingFraction = Math.max(0, Math.min(1, (190 - currentSection.getBoundingClientRect().top) / Math.max(1, currentSection.offsetHeight)));
+    panel?.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+      if (link.hash === "#" + currentSection?.id) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+    languageLinks.forEach(link => { link.href = (link.dataset.languageBase || "") + (currentSection ? "#" + currentSection.id : ""); });
   }
-
+  const scheduleHeader = () => { if (!headerFrame) headerFrame = requestAnimationFrame(updateHeader); };
+  const restoreReadingAfterResize = () => {
+    if (onePage && currentSection) {
+      const target = currentSection.getBoundingClientRect().top + window.scrollY + readingFraction * currentSection.offsetHeight - 190;
+      window.scrollTo({top:Math.max(0,target),behavior:"instant"});
+    }
+    scheduleHeader();
+  };
+  languageLinks.forEach(link => link.addEventListener("click", () => {
+    if (!onePage || !currentSection) return;
+    const top = currentSection.getBoundingClientRect().top + window.scrollY;
+    const readingInset = 190;
+    const fraction = Math.max(0, Math.min(1, (window.scrollY + readingInset - top) / Math.max(1, currentSection.offsetHeight)));
+    try { sessionStorage.setItem("portfolio-reading-position", JSON.stringify({path:new URL(link.href).pathname,id:currentSection.id,fraction})); } catch { /* Anchors remain the fallback. */ }
+  }));
+  try {
+    const raw = sessionStorage.getItem("portfolio-reading-position");
+    if (raw) {
+      const saved = JSON.parse(raw) as {path:string;id:string;fraction:number};
+      sessionStorage.removeItem("portfolio-reading-position");
+      if (onePage && saved.path === window.location.pathname && window.location.hash === "#" + saved.id) {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          const section = document.getElementById(saved.id);
+          if (section) window.scrollTo({top:Math.max(0,section.getBoundingClientRect().top + window.scrollY + Math.max(0,Math.min(1,saved.fraction))*section.offsetHeight - 190),behavior:"instant"});
+          scheduleHeader();
+        }));
+      }
+    }
+  } catch { /* A disabled storage API does not prevent navigation. */ }
   updateHeader();
-  window.addEventListener("scroll", updateHeader, { passive: true });
+  window.addEventListener("scroll", scheduleHeader, {passive:true});
+  window.addEventListener("resize", restoreReadingAfterResize, {passive:true});
+  window.addEventListener("pageshow", scheduleHeader);
 </script>

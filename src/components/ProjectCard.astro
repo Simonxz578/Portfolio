@@ -3,24 +3,30 @@ import type {CaseStudy} from '@data/en/projects';
 import {withBase} from '../utils/urls';
 import '../styles/scenes.css';
 interface Props {project:CaseStudy; index:number; locale?:'en'|'zh'}
-const {project,locale='en'}=Astro.props;
+const {project,index,locale='en'}=Astro.props;
 const zh=locale==='zh';
 const type=project.slug==='ninefold'?'world':project.slug==='industrial-ai-agent-rag-workflow'?'system':project.slug==='ai-enhanced-science-education'?'research':project.slug==='ai-policy-teacher-agency'?'policy':'community';
 const href=withBase((zh?'/zh/work/':'/work/')+project.slug+'/');
 ---
-<article class:list={['project-chapter',`chapter-${type}`]} id={'project-'+project.slug} data-reveal>
+<article class:list={['project-chapter',`chapter-${type}`]} id={'project-'+project.slug}>
   <a class="chapter-link" href={href} aria-label={(zh?'查看案例：':'View case study: ')+project.title}>
-    {type==='world' && <div class="chapter-world-scene" aria-hidden="true"><img class="chapter-sky" src={withBase('/images/ninefold/ninefold-sky.webp')} width="1672" height="941" alt="" loading="lazy"/><img class="chapter-clouds" src={withBase('/images/ninefold/ninefold-world-fast.avif')} width="1400" height="620" alt="" loading="lazy" data-depth="16"/><img class="chapter-canopy" src={withBase('/images/ninefold/ninefold-canopy.webp')} width="1200" height="720" alt="" loading="lazy"/><img class="chapter-ground" src={withBase('/images/ninefold/ninefold-tree.webp')} width="1600" height="500" alt="" loading="lazy"/></div>}
-    {type==='policy' && <img class="chapter-photo" src={withBase('/images/v2/river-cam-fast.avif')} width="1200" height="674" loading="lazy" decoding="async" alt="" aria-hidden="true"/>}
-    {type==='community' && <img class="chapter-photo" src={withBase('/images/v2/caius-formal-fast.avif')} width="1024" height="768" loading="lazy" decoding="async" alt="" aria-hidden="true"/>}
-    <div class="chapter-top"><span>{type==='world'?(zh?'旗舰产品 · 实时公开测试版':'Flagship · Live public beta'):project.organisation}</span><span>{project.period}</span></div>
-    {type==='system' && <div class="system-visual" aria-hidden="true"><div class="system-orbit"><span>RAG</span></div><div class="system-flow"><span>{zh?'检索':'Retrieve'}</span><i>→</i><span>{zh?'模型':'Model'}</span><i>→</i><span>{zh?'工程复核':'Review'}</span></div><div class="system-axis"></div></div>}
-    {type==='research' && <div class="research-visual" aria-hidden="true"><div>GenAI</div><div>Pedagogy</div><div>Science</div><span>GenAI–TPACK</span></div>}
-    <div class="chapter-copy">
-      <p class="eyebrow">{project.kicker}</p><h3>{project.shortTitle}</h3><p class="chapter-summary">{project.summary}</p>
-      <div class="chapter-bottom"><span class="chapter-cta">{zh?'探索案例':'Explore case study'}<span aria-hidden="true">↗</span></span><span class="chapter-domain">{project.capabilities.slice(0,type==='world'?3:2).join(' / ')}</span></div>
+    <div class="chapter-media" aria-hidden="true">
+      {type==='world' && <div class="chapter-world-scene"><img class="chapter-sky" src={withBase('/images/ninefold/ninefold-sky.webp')} width="1672" height="941" alt="" loading="lazy" decoding="async"/><img class="chapter-clouds" src={withBase('/images/ninefold/ninefold-world-fast.avif')} width="1400" height="620" alt="" loading="lazy" decoding="async" data-depth="16"/><img class="chapter-canopy" src={withBase('/images/ninefold/ninefold-canopy.webp')} width="1200" height="720" alt="" loading="lazy" decoding="async"/><img class="chapter-ground" src={withBase('/images/ninefold/ninefold-tree.webp')} width="1600" height="500" alt="" loading="lazy" decoding="async"/><span class="chapter-scene-label">Ninefold Physics</span></div>}
+      {type==='system' && <div class="system-visual"><span class="system-visual-label">{zh?'从情境到工程判断':'From context to engineering judgement'}</span><ol>{project.workflow.map((step,i)=><li><span>{String(i+1).padStart(2,'0')}</span><strong>{step.label}</strong></li>)}</ol><span class="system-visual-note">{project.status}</span></div>}
+      {type==='research' && <div class="research-visual"><div>GenAI</div><div>Pedagogy</div><div>Science</div><span>GenAI–TPACK</span></div>}
+      {type==='policy' && <img class="chapter-photo" src={withBase('/images/v2/river-cam-fast.avif')} width="1200" height="674" loading="lazy" decoding="async" alt=""/>}
+      {type==='community' && <img class="chapter-photo" src={withBase('/images/v2/caius-formal-fast.avif')} width="1024" height="768" loading="lazy" decoding="async" alt=""/>}
+    </div>
+    <div class="chapter-copy" data-reveal>
+      <div class="chapter-top"><span>{type==='world'?(zh?'旗舰产品 · 实时公开测试版':'Flagship · Live public beta'):project.organisation}</span><span>{project.period}</span></div>
+      <p class="eyebrow">{project.kicker}</p>
+      <h2>{project.shortTitle}</h2>
+      <p class="chapter-summary">{project.summary}</p>
+      <div class="chapter-bottom"><span class="chapter-cta">{zh?'探索案例':'Explore case study'}<span aria-hidden="true">↗</span></span><span class="chapter-number" aria-hidden="true">{String(index+1).padStart(2,'0')}</span></div>
+      <p class="chapter-domain">{project.capabilities.slice(0,type==='world'?3:2).join(' / ')}</p>
       {type==='world' && <p class="chapter-language">{zh?'中文 / English · 独立产品':'English / 中文 · Independent product'}</p>}
     </div>
   </a>
+  {type==='world' && project.links?.[0] && <a class="chapter-direct" href={project.links[0].href} target="_blank" rel="noopener noreferrer">{project.links[0].label}<span aria-hidden="true">↗</span></a>}
   {type==='research' && <a class="chapter-paper" href="https://doi.org/10.1080/09500693.2026.2733687">{zh?'阅读已发表论文':'Read the published paper'} <span aria-hidden="true">↗</span></a>}
 </article>

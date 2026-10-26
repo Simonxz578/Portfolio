@@ -1,0 +1,113 @@
+---
+import { withBase } from "../utils/urls";
+import "../styles/cosmic-run.css";
+
+interface Props { locale?: "en" | "zh"; }
+const { locale = "en" } = Astro.props;
+const zh = locale === "zh";
+const c = zh ? {
+  name: "张翔", familiar: "Simon", alternate: "Xiang Zhang (Simon)",
+  role: "AI 产品与应用 AI",
+  summary: "从物理与教育出发，把 AI 做成真正有用的产品。",
+  skip: "查看履历 · 跳过序章", projects: "探索项目", scroll: "向下探索", reverse: "随时向上，回到起点",
+  destination: "King’s College Chapel · Cambridge",
+  static: "静态场景 · 场景素材暂不可用", loading: "动作素材加载中", reduced: "静态场景 · 已减少动态效果",
+  description: "使用“查看完整履历”可立即到达同一页面的完整履历；所有主要内容均可继续向下阅读。",
+  stages: [
+    {name:"起点",copy:"从物理出发，理解复杂系统。"},
+    {name:"理解系统",copy:"把模型能力接入真实工作流程。"},
+    {name:"理解人",copy:"从教育研究中，理解真实需求。"},
+    {name:"构建产品",copy:"让技术成为可以使用的产品。"},
+    {name:"回到证据",copy:"用经历与作品，呈现每一步。"},
+    {name:"继续阅读",copy:"完整履历，就在下方。"}
+  ],
+} : {
+  name: "Xiang Zhang", familiar: "Simon", alternate: "张翔",
+  role: "AI Product & Applied AI",
+  summary: "From physics and education to useful AI products.",
+  skip: "View résumé · Skip intro", projects: "Explore projects", scroll: "Scroll to explore", reverse: "Scroll back to return",
+  destination: "King’s College Chapel · Cambridge",
+  static: "Static scene · scene asset unavailable", loading: "Loading the motion asset", reduced: "Static scene · reduced motion",
+  description: "Choose View full résumé to immediately reach the complete résumé on this same page. All main content can also be read by continuing down the page.",
+  stages: [
+    {name:"The starting point",copy:"A foundation in physics and complex systems."},
+    {name:"Understand systems",copy:"Connect model capability with real workflows."},
+    {name:"Understand people",copy:"Explore real needs through education research."},
+    {name:"Build products",copy:"Turn technology into something people can use."},
+    {name:"Return to evidence",copy:"Experience and work, open to inspection."},
+    {name:"Keep reading",copy:"The complete résumé follows."}
+  ],
+};
+const sprite = withBase("/media/cosmic-run/runner-cycle.webp?v=gown-contact-6");
+---
+<section
+  class="cosmic-run"
+  id="cosmic-run"
+  data-cosmic-run
+  data-cosmic-theme="morning"
+  data-cosmic-progress="0"
+  data-cosmic-stage="0"
+  data-sprite-src={sprite}
+  data-frame-count="8"
+  data-frame-columns="4"
+  data-frame-rows="2"
+  data-grounded-frames="1,5"
+  style={`--cosmic-runner-sheet:url('${sprite}')`}
+  aria-labelledby="cosmic-name"
+  aria-describedby="cosmic-description"
+>
+  <script is:inline>
+    // Establish the long scene before the résumé is parsed, preventing scroll-anchor jumps on refresh.
+    (() => {
+      const scene = document.currentScript?.parentElement;
+      if (!scene || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      scene.setAttribute("data-cosmic-enhanced", "");
+      scene.dataset.cosmicBootstrapTimer = String(setTimeout(() => {
+        if (scene.dataset.cosmicInitialised !== "true") {
+          scene.removeAttribute("data-cosmic-enhanced");
+          scene.dataset.cosmicMotion = "static";
+          scene.dataset.cosmicBootstrap = "timed-out";
+        }
+      }, 10000));
+    })();
+  </script>
+  <div class="cosmic-viewport" data-cosmic-viewport>
+    <div class="cosmic-environment" aria-hidden="true">
+      <img class="cosmic-depth-plate" src={withBase("/media/cosmic-run/cosmic-depth.webp?v=morning-3")} width="1280" height="720" alt="" fetchpriority="high" decoding="async" />
+      <div class="cosmic-depth-shade"></div>
+      <div class="cosmic-morning-light"></div>
+      <img class="cosmic-architecture" data-cosmic-architecture src={withBase("/media/cosmic-run/kings-architecture.svg?v=user-campus-6")} width="1600" height="900" alt="" decoding="async" />
+      <div class="cosmic-entry-shadow"></div>
+      <div class="cosmic-foot-shadow" data-cosmic-shadow></div>
+      <div class="cosmic-runner" data-cosmic-runner></div>
+      <figure class="cosmic-entry" data-cosmic-entry>
+        <img class="cosmic-entry-body" src={withBase("/media/cosmic-run/simon-entry.svg?v=canonical-lock-6")} width="512" height="768" alt="" fetchpriority="high" decoding="async" />
+        <img class="cosmic-entry-poster" src={withBase("/media/identity/simon-portrait.jpg?canonical-lock-6")} width="512" height="768" alt="" loading="lazy" decoding="async" />
+      </figure>
+      <div class="cosmic-white-field"></div>
+    </div>
+
+    <div class="cosmic-introduction">
+      <p class="cosmic-alternate">{c.alternate}</p>
+      <h1 id="cosmic-name"><span>{c.name}</span><em>{c.familiar}</em></h1>
+      <p class="cosmic-role">{c.role}</p>
+      <p class="cosmic-summary">{c.summary}</p>
+      <div class="cosmic-actions"><a class="cosmic-skip" href="#resume-start">{c.skip}<span aria-hidden="true">↓</span></a><a class="cosmic-action-secondary" href="#resume-projects">{c.projects}<span aria-hidden="true">↗</span></a></div>
+    </div>
+
+    <div class="cosmic-stage-label" aria-hidden="true">
+      <span class="cosmic-stage-count" data-cosmic-stage-count>01 / 06</span>
+      {c.stages.map((stage, i) => <div class="cosmic-stage-beat" data-cosmic-stage-name={i}><span class="cosmic-stage-name">{stage.name}</span><p class="cosmic-stage-copy">{stage.copy}</p></div>)}
+    </div>
+    <div class="cosmic-scroll-note"><span aria-hidden="true">↓</span><p>{c.scroll}<small>{c.reverse}</small></p></div>
+    <p class="cosmic-destination">{c.destination}</p>
+    <p class="cosmic-fallback-note" data-cosmic-fallback>{c.static}</p>
+    <p class="cosmic-reduced-note">{c.reduced}</p>
+    <noscript><p class="cosmic-nojs-note">{zh ? "静态序章 · 完整履历在下方" : "Static introduction · full résumé below"}</p></noscript>
+  </div>
+  <p class="visually-hidden" id="cosmic-description">{c.description}</p>
+</section>
+<script>
+  import { initialiseCosmicRuns } from "../scripts/cosmic-run";
+  initialiseCosmicRuns();
+</script>

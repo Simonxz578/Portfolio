@@ -7,6 +7,7 @@ import "@styles/global.css";
 
 interface Props {
   title: string;
+  onePage?: boolean;
   description?: string;
   image?: string;
   pageType?: "website" | "article";
@@ -17,6 +18,7 @@ interface Props {
 
 const {
   title,
+  onePage = false,
   description = site.description,
   image = site.socialImage,
   pageType = "website",
@@ -45,10 +47,7 @@ const currentPath = Astro.url.pathname;
     {noIndex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="canonical" href={canonicalUrl} />
-    {(Astro.url.pathname === withBase('/') || Astro.url.pathname === withBase('/zh/')) && <>
-      <link rel="preload" as="image" href={withBase('/images/v2/simon-formal-fast.avif')} fetchpriority="high" />
-      <link rel="preload" as="image" href={withBase('/images/v2/portrait-mask.svg?v=20261005-rounded')} />
-    </>}
+    {(Astro.url.pathname === withBase('/') || Astro.url.pathname === withBase('/zh/')) && <link rel="preload" as="image" href={withBase('/media/cosmic-run/simon-entry.svg?v=canonical-lock-6')} fetchpriority="high" />}
     <link rel="icon" href={withBase("/icons/favicon.svg")} type="image/svg+xml" />
 
     <meta property="og:type" content={pageType} />
@@ -78,13 +77,13 @@ const currentPath = Astro.url.pathname;
       )
     }
   </head>
-  <body>
+  <body data-one-page={onePage ? "true" : undefined}>
     <a class="skip-link" href="#main-content">{locale === "zh-CN" ? "跳到主要内容" : "Skip to main content"}</a>
     <SiteHeader currentPath={currentPath} locale={locale} />
     <main id="main-content">
       <slot />
     </main>
-    <SiteFooter locale={locale} />
+    <SiteFooter locale={locale} sceneCredits={onePage} />
     <script>
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       const revealTargets = document.querySelectorAll<HTMLElement>("[data-reveal]");

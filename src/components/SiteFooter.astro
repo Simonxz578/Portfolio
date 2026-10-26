@@ -2,8 +2,8 @@
 import { site } from "@data/site";
 import { withBase } from "../utils/urls";
 const year = new Date().getFullYear();
-interface Props { locale?: "en-GB" | "zh-CN"; }
-const { locale = "en-GB" } = Astro.props;
+interface Props { locale?: "en-GB" | "zh-CN"; sceneCredits?: boolean; }
+const { locale = "en-GB", sceneCredits = false } = Astro.props;
 const isZh = locale === "zh-CN";
 ---
 
@@ -21,6 +21,7 @@ const isZh = locale === "zh-CN";
       <a href={site.github} rel="me external">GitHub</a>
       <a href={"mailto:" + site.email}>{isZh ? "邮件" : "Email"}</a>
     </nav>
+    {sceneCredits && <details class="scene-credits"><summary>{isZh?"场景图片来源":"Scene image source"}</summary><p>{isZh?"King’s College 建筑原始照片由 Simon 提供。":"The original King’s College architectural photograph was supplied by Simon."}</p></details>}
     <p class="footer-meta">© {year} Xiang Zhang. {isZh ? "使用 Astro 构建的轻量静态网站。" : "Built as a lightweight static Astro site."}</p>
   </div>
 </footer>

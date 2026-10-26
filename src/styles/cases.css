@@ -1,240 +1,181 @@
-/* Case studies: an atmospheric opening, then a quiet, solid reading surface. */
-.physics-case, .case-study {
-  --case-border: rgba(24,36,52,.15);
-  --case-muted: #526275;
-  --case-accent: #326fa4;
-  color: var(--text-on-light, #182434);
-  background: var(--paper-50, #f7f8f7);
-}
-.physics-case :where(section[id]), .case-study :where(section[id]) { scroll-margin-top: 110px; }
-.physics-case :where(figure, blockquote, dl), .case-study :where(figure, blockquote, dl) { margin: 0; }
-.physics-case .case-section, .case-study .case-section { padding-block: clamp(4rem, 7.5vw, 8rem); border-bottom: 1px solid var(--case-border); }
-.physics-case .case-section-tinted, .case-study .case-section-tinted { background: #eef1f7; }
-.physics-case .case-section-dark, .case-study .case-section-dark { color: var(--text-on-dark, #f5f8fd); background: var(--ink-950, #071427); border-color: rgba(255,255,255,.14); }
-.case-section-grid { display: grid; grid-template-columns: minmax(180px, .5fr) minmax(0, 1fr); gap: clamp(2.5rem, 7vw, 7rem); align-items: start; }
-.case-section-grid header { position: sticky; top: 120px; }
-.case-section-grid header h2 { max-width: 13ch; font-size: clamp(1.9rem, 3vw, 3.3rem); line-height: 1.2; }
-.case-wide-heading { display: grid; grid-template-columns: minmax(100px, .25fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); margin-bottom: clamp(2.5rem, 4vw, 4.5rem); }
-.case-wide-heading h2 { max-width: 23ch; font-size: clamp(2rem, 3.8vw, 4rem); line-height: 1.15; }
-.case-wide-heading p:not(.section-number) { max-width: 72ch; color: var(--case-muted); line-height: 1.85; }
-.case-section-dark .case-wide-heading p:not(.section-number) { color: #bfccdb; }
-.section-number { margin: .25rem 0 1.2rem; color: var(--case-accent); font: 600 .68rem/1.6 var(--mono, monospace); letter-spacing: .12em; }
-.case-section-dark .section-number { color: var(--mist-300, #b4cde3); }
-.ninefold-prose { max-width: 73ch; }
-.ninefold-prose > p { font-size: 1.075rem; line-height: 1.9; }
-.physics-case .case-section blockquote, .case-study .case-section blockquote { padding: clamp(1.5rem, 3vw, 2.75rem); margin-top: 2rem; border-left: 2px solid #839bc3; background: #e8edf5; }
-.physics-case .case-section blockquote p, .case-study .case-section blockquote p { margin: 0; font-family: var(--serif, Georgia, serif); font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.6; }
-/* Ninefold's source environment is layered, never simulated by expensive shaders. */
-.physics-case .ninefold-hero { isolation: isolate; position: relative; min-height: min(100svh, 1050px); padding-top: 108px; overflow: hidden; display: grid; align-items: center; background: var(--ink-950, #071427); color: var(--text-on-dark, #f5f8fd); }
-.ninefold-environment { position: absolute; inset: 0; z-index: -2; pointer-events: none; }
-.ninefold-environment img { position: absolute; max-width: none; }
-.ninefold-sky { width: 100%; height: 100%; object-fit: cover; filter: saturate(.62) brightness(.48); }
-.ninefold-clouds { width: 78%; right: -5%; top: 0; opacity: .32; }
-.ninefold-ground { width: 100%; bottom: -1px; height: 41%; object-fit: cover; object-position: center top; filter: saturate(.5) brightness(.5); }
-.ninefold-canopy { width: min(76vw, 1150px); height: auto; right: -13%; bottom: 8%; opacity: .86; filter: saturate(.5) drop-shadow(0 0 40px rgba(190,195,239,.14)); }
-.physics-case .ninefold-hero::after { content: ""; z-index: -1; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,20,39,.96), rgba(7,20,39,.7) 39%, rgba(7,20,39,.08) 78%), linear-gradient(0deg, #071427, transparent 25%); pointer-events: none; }
-.physics-case .ninefold-hero-content { position: relative; padding-block: .5rem 3rem; }
-.case-back-link { display: inline-flex; align-items: center; gap: .75rem; margin-bottom: 1rem; min-height: 44px; font-size: .8rem; color: #c8d6e6; text-decoration: none; }
-.physics-case .ninefold-hero .eyebrow { color: #b4cde3; }
-.physics-case .ninefold-hero h1 { margin: 1.1rem 0 1.5rem; max-width: 7ch; color: #f5f8fd; font-size: clamp(4rem, 7vw, 7.5rem); font-weight: 400; line-height: .88; letter-spacing: -.065em; }
-.physics-case .ninefold-hero h1 em { color: #c4b8ec; font-weight: 400; }
-.physics-case .ninefold-hero h2 { max-width: 25ch; margin-bottom: 1rem; color: #f5f8fd; font-family: var(--sans, sans-serif); font-size: clamp(1.3rem, 2vw, 1.9rem); font-weight: 500; line-height: 1.4; }
-.ninefold-intro { max-width: 60ch; width: 55%; color: #c3d1e1; line-height: 1.85; font-size: .99rem; }
-.physics-hero-flow { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.65rem 0; width: 60%; color: #b4cde3; font-size: .7rem; }
-.physics-hero-flow i { font-style: normal; margin-left: .4rem; color: #7c8ca5; }
-.physics-case .ninefold-hero .button-primary { color: #071427; background: #edf3fc; border-color: #edf3fc; }
-.physics-case .ninefold-hero .button-secondary { color: #f5f8fd; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.3); }
-.physics-case .ninefold-language { display: inline-flex; position: absolute; right: 0; top: .5rem; margin-top: 0; color: #b4cde3; font-size: .78rem; }
-.ninefold-scene-caption { position: absolute; bottom: 3rem; right: 5vw; color: #b4cde3; font: .65rem/1.5 var(--mono, monospace); letter-spacing: .22em; }
-.ninefold-ledger { background: #10253e; color: #f5f8fd; border-block: 1px solid rgba(255,255,255,.12); }
-.ninefold-ledger dl { display: grid; grid-template-columns: .8fr 1.2fr 1fr 1fr; gap: 2rem; padding-block: 2.2rem; }
-.ninefold-ledger dt { margin-bottom: .6rem; color: #b4cde3; font: .65rem/1.5 var(--mono, monospace); letter-spacing: .1em; text-transform: uppercase; }
-.ninefold-ledger dd { margin: 0; font-size: .88rem; line-height: 1.6; }
-.case-chapter-nav { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; padding-block: 1.3rem; border-bottom: 1px solid var(--case-border); }
-.case-chapter-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: .76rem; color: #40566e; text-decoration: none; }
-.case-chapter-nav a:hover { color: #143b65; text-decoration: underline; text-underline-offset: .4em; }
-.learning-loop-map { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); }
-.learning-loop-map li { margin: 0; position: relative; padding: 1.3rem 1rem 0 0; border-top: 1px solid #9aafc5; }
-.learning-loop-map li::before { content: ""; position: absolute; width: 7px; height: 7px; border-radius: 50%; top: -4px; background: #326fa4; }
-.loop-step { color: #657d98; font: .65rem/1.5 var(--mono, monospace); }
-.learning-loop-map h3 { margin: 1.5rem 0 .6rem; font-size: 1.2rem; }
-.learning-loop-map p { margin: 0; color: #526275; font-size: .8rem; line-height: 1.7; }
-.physics-product-shot img { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--case-border); }
-.physics-product-shot figcaption { margin-top: 1rem; color: #526275; font-size: .8rem; line-height: 1.7; }
-.physics-paths, .physics-tracks, .question-types { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1.1rem; }
-.physics-paths article { padding: 1.6rem; border: 1px solid #30455e; border-radius: 16px; background: #10253e; }
-.physics-paths h3 { color: #f5f8fd; font-size: 1.1rem; line-height: 1.5; }
-.physics-paths p { margin: 0; color: #bfccdb; font-size: .9rem; line-height: 1.75; }
-.physics-boundary { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2rem; }
-.physics-boundary article { position: relative; padding: 2rem; border: 1px solid #c9d4e2; border-radius: 20px; background: #e9edf7; }
-.physics-boundary article:last-child { background: #10253e; color: #f5f8fd; border-color: #10253e; }
-.physics-boundary article:first-child::after { content: "↔"; position: absolute; right: -2.1rem; top: 50%; transform: translateY(-50%); width: 2.1rem; text-align: center; color: #657d98; }
-.physics-boundary article > span { display: block; padding-bottom: 1.5rem; border-bottom: 1px solid currentColor; font: .7rem/1.5 var(--mono,monospace); letter-spacing: .15em; }
-.physics-boundary ul { margin: 1.5rem 0 0; padding-left: 1.1rem; }
-.physics-boundary li { margin: .65rem 0; line-height: 1.6; }
-.physics-toolkit-section { background: #e9edf7; }
-.toolkit-flow { display: flex; flex-wrap: wrap; gap: .75rem; margin: 0 0 2rem; font-size: .76rem; color: #40566e; }
-.toolkit-flow span { padding: .8rem 1rem; background: #f7f8f7; border: 1px solid #c8d3e3; border-radius: 10px; }
-.formula-card { display: grid; gap: .8rem; max-width: 620px; padding: 2rem; border-radius: 18px; background: #10253e; color: #f5f8fd; }
-.formula-card small { color: #b4cde3; font: .7rem/1.5 var(--mono,monospace); }
-.formula-card strong { padding: 1rem; margin-top: .4rem; background: #213e55; border: 1px solid #71b4c4; border-radius: 8px; font-size: 1.2rem; }
-.formula-card > span { padding: .5rem 1rem; color: #c0ccdb; }
-.physics-tracks, .question-types { grid-template-columns: repeat(3, minmax(0,1fr)); }
-.physics-tracks article, .question-types article { border-top: 1px solid #9cacc2; padding: 1.6rem 1.5rem 0 0; }
-.physics-tracks h3, .question-types h3 { margin-bottom: .7rem; font-size: 1.3rem; }
-.physics-tracks p, .question-types p { color: #526275; font-size: .9rem; line-height: 1.7; }
-.question-types b { display: block; color: #326fa4; margin-bottom: 2rem; font: .65rem/1.5 var(--mono,monospace); letter-spacing: .12em; }
-.integration-note { margin: 2rem 0 0; padding-top: 2rem; max-width: 80ch; color: #526275; font-size: .85rem; line-height: 1.85; }
-.mark-card { display: grid; gap: .85rem; padding: 2rem; max-width: 800px; border: 1px solid #41566e; border-radius: 18px; background: #10253e; }
-.practice-example-label { color: #b4cde3; font: .65rem/1.7 var(--mono,monospace); }
-.mark-card strong { margin-bottom: .5rem; color: #f5f8fd; font-size: 1.2rem; }
-.mark-card span { color: #c8d6e6; font-size: .95rem; line-height: 1.7; }
-.practice-disclaimer { margin: 2rem 0 0; max-width: 80ch; color: #bfccdb; font-size: .82rem; line-height: 1.85; }
-/* The example contains no model call and is labelled as an illustration. */
-.physics-walkthrough-section { background: #e9edf7; }
-.physics-walkthrough { border: 1px solid #c8d3e3; border-radius: 20px; background: #f7f8f7; overflow: hidden; }
-.walkthrough-question { padding: 1.75rem 2rem; margin: 0; border-bottom: 1px solid #d5dce7; font-size: clamp(1.1rem,2vw,1.5rem); }
-.walkthrough-question > span { display: block; margin-bottom: .6rem; color: #526275; font: .65rem/1.5 var(--mono,monospace); letter-spacing: .1em; text-transform: uppercase; }
-.walkthrough-controls { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0; padding: 1.5rem 2rem; border: 0; }
-.walkthrough-controls[hidden], .walkthrough-panel[hidden] { display: none; }
-.walkthrough-controls legend { float: left; width: 100%; padding-bottom: .75rem; color: #526275; font-size: .75rem; }
-.walkthrough-controls label { position: relative; display: inline-flex; cursor: pointer; }
-.walkthrough-controls input { appearance: none; position: absolute; inset: 0; margin: 0; width: 100%; height: 100%; border: 1px solid #b0bfd1; border-radius: 999px; background: transparent; cursor: pointer; }
-.walkthrough-controls input:checked { background: #10253e; border-color: #10253e; }
-.walkthrough-controls input:focus-visible { outline: 3px solid #326fa4; outline-offset: 4px; }
-.walkthrough-controls label > span { position: relative; display: flex; align-items: center; min-height: 44px; padding: .65rem 1rem; font-size: .8rem; pointer-events: none; }
-.walkthrough-controls input:checked + span { color: #f5f8fd; }
-.walkthrough-panel { padding: 0 2rem 2rem; }
-.physics-case .walkthrough-panel blockquote { padding: 1.5rem; margin: 0 0 2rem; background: #e9edf7; border: 0; border-radius: 12px; }
-.walkthrough-panel blockquote > span { display: block; color: #526275; margin-bottom: .8rem; font-size: .7rem; }
-.physics-case .walkthrough-panel blockquote p { font-size: 1.1rem; line-height: 1.8; }
-.walkthrough-trace { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 2rem; padding: 0; margin: 0; list-style: none; }
-.walkthrough-trace li { margin: 0; border-top: 1px solid #b7c5d5; padding-top: 1rem; }
-.walkthrough-trace li > span { color: #326fa4; font: .65rem/1.5 var(--mono,monospace); letter-spacing: .07em; }
-.walkthrough-trace h3 { margin: 1rem 0 .6rem; font-size: 1rem; line-height: 1.5; }
-.walkthrough-trace p { color: #526275; font-size: .85rem; line-height: 1.8; margin: 0; }
-/* Shared case-study pages. Every project retains its full evidence and limits. */
-.case-study-visual { position: relative; overflow: hidden; }
-.case-system-map { padding-block: 3.5rem; }
-.case-visual-system { background: #10253e; color: #f5f8fd; }
-.case-system-map .eyebrow { color: #b4cde3; }
-.case-system-map ol { list-style: none; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 1.5rem; margin: 2rem 0; padding: 0; }
-.case-system-map li { margin: 0; position: relative; border-top: 1px solid #6b85a2; padding-top: 1.3rem; }
-.case-system-map li:not(:last-child)::after { content: "→"; position: absolute; right: -.7rem; top: -.9rem; color: #b4cde3; }
-.case-system-map li > span { display: block; color: #a6bbd5; font: .65rem/1.5 var(--mono,monospace); margin-bottom: 2rem; }
-.case-system-map strong { display: block; font-size: 1.1rem; margin-bottom: .75rem; font-weight: 500; }
-.case-system-map small { display: block; color: #bfccdb; font-size: .8rem; line-height: 1.75; }
-.case-visual-caption { margin: 1.7rem 0 0; font: .7rem/1.7 var(--mono,monospace); color: inherit; opacity: .8; }
-.case-visual-research { background: #e8e5f2; }
-.case-research-frontispiece { display: grid; grid-template-columns: .8fr 1.2fr; gap: 5vw; align-items: center; padding-block: 3.5rem; }
-.research-model { position: relative; min-height: 240px; max-width: 380px; width: 100%; }
-.research-model > span { position: absolute; display: grid; align-items: start; justify-items: center; padding-top: 28px; width: 160px; height: 160px; border: 1px solid #9b9ab9; border-radius: 50%; font: .7rem/1.5 var(--mono,monospace); color: #4b4f70; }
-.research-model > span:nth-child(1) { top: 0; left: 30%; }
-.research-model > span:nth-child(2) { bottom: 0; left: 9%; padding-top: 95px; }
-.research-model > span:nth-child(3) { bottom: 0; right: 0; padding-top: 95px; }
-.research-model > strong { position: absolute; left: 35%; top: 50%; color: #384b70; font: italic 1.5rem/1 var(--serif,Georgia,serif); }
-.case-research-frontispiece blockquote { margin: 0; max-width: 40ch; font: 400 clamp(1.3rem,2.4vw,2.2rem)/1.5 var(--serif,Georgia,serif); }
-.case-photo-frontispiece { position: relative; margin: 0; aspect-ratio: 3.6; overflow: hidden; background: #10253e; }
-.case-photo-frontispiece::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg,rgba(7,20,39,.85),transparent 70%); }
-.case-photo-frontispiece img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 53%; }
-.case-study-formal-hall-networking-society-website .case-photo-frontispiece { aspect-ratio: 2.4; }
-.case-photo-frontispiece figcaption { position: absolute; bottom: 2rem; left: 5%; right: 5%; z-index: 1; display: flex; justify-content: space-between; gap: 1rem; color: #f5f8fd; font-size: .8rem; }
-.case-study .case-overview { border-bottom: 1px solid var(--case-border); }
-.case-overview-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(260px,.55fr); gap: clamp(2rem,7vw,7rem); }
-.case-overview h2 { max-width: 24ch; font-size: clamp(2rem,3.8vw,4rem); line-height: 1.2; }
-.case-ledger { border-top: 1px solid var(--case-border); }
-.case-ledger > div { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--case-border); }
-.case-ledger dt { color: #526275; font: .65rem/1.6 var(--mono,monospace); text-transform: uppercase; }
-.case-ledger dd { margin: 0; font-size: .85rem; line-height: 1.7; }
-.case-columns { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(2rem,4vw,4rem); }
-.case-columns-single { grid-template-columns: minmax(0,1fr); }
-.case-columns article { min-width: 0; }
-.case-columns h3 { padding-bottom: 1rem; border-bottom: 1px solid var(--case-border); font-size: 1.2rem; }
-.plain-list, .limitation-list { padding: 0; margin: 0; list-style: none; }
-.plain-list li, .limitation-list li { padding: .85rem 0; border-bottom: 1px solid var(--case-border); color: #526275; line-height: 1.85; font-size: .95rem; }
-.case-section-dark .plain-list li { border-color: #30455e; color: #bfccdb; }
-.case-section-dark .case-columns h3 { border-color: #30455e; }
-.case-lead { max-width: 70ch; margin-bottom: 2rem; font-size: clamp(1.15rem,1.8vw,1.4rem); line-height: 1.85; }
-.decision-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--case-border); }
-.decision-list li { display: grid; grid-template-columns: 30px minmax(0,1fr); gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--case-border); }
-.decision-list span { color: #326fa4; font: .65rem/1.7 var(--mono,monospace); }
-.decision-list p { margin: 0; line-height: 1.85; }
-.flow-figure { border: 1px solid var(--case-border); border-radius: 16px; overflow: hidden; background: white; }
-.flow-figure figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; padding: 1.2rem; border-bottom: 1px solid var(--case-border); color: #526275; font: .65rem/1.6 var(--mono,monospace); }
-.flow-figure figcaption span { color: #326fa4; }
-.flow-diagram { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); }
-.flow-diagram li { margin: 0; position: relative; padding: 1.5rem; border-right: 1px solid var(--case-border); min-width: 0; }
-.flow-diagram li:last-child { border-right: 0; }
-.flow-index { display: block; margin-bottom: 2.5rem; color: #326fa4; font: .65rem/1.6 var(--mono,monospace); }
-.flow-diagram strong { display: block; margin-bottom: 1rem; font-size: 1rem; line-height: 1.4; }
-.flow-diagram p { color: #526275; margin: 0; font-size: .8rem; line-height: 1.8; }
-.comparison-flows { display: grid; gap: 2rem; margin-top: 3rem; }
-.comparison-flows > div > p { max-width: 70ch; color: #526275; }
-.related-line { margin-top: 2rem; color: #526275; font-size: .9rem; line-height: 1.9; }
-.case-links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-block: 2rem; }
-.tag-list { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
-.tag-list span { padding: .55rem .8rem; border: 1px solid var(--case-border); border-radius: 999px; color: #526275; font-size: .7rem; }
-.case-nav { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-block: 2rem; border-bottom: 1px solid var(--case-border); }
-.case-nav a { min-height: 44px; display: inline-flex; align-items: center; font-size: .9rem; }
-@media (min-width: 1600px) { .ninefold-canopy { right: -4%; } }
-@media (max-width: 1100px) {
-  .physics-paths { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .ninefold-intro { width: 62%; }
-  .ninefold-canopy { right: -24%; width: 91vw; }
-  .learning-loop-map { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 2rem 0; }
-  .case-section-grid { grid-template-columns: minmax(160px,.4fr) minmax(0,1fr); gap: 3rem; }
-  .case-columns { grid-template-columns: 1fr; }
-}
-@media (max-width: 767px) {
-  .physics-case .ninefold-hero { min-height: auto; padding-top: 90px; }
-  .physics-case .ninefold-hero-content { padding-block: 1rem 4rem; }
-  .physics-case .ninefold-hero::after { background: linear-gradient(0deg,#071427 0%,rgba(7,20,39,.86) 42%,rgba(7,20,39,.4) 100%); }
-  .ninefold-canopy { width: 115%; right: -30%; bottom: 42%; opacity: .3; }
-  .ninefold-clouds { top: 1%; width: 120%; }
-  .ninefold-ground { height: 20%; opacity: .6; }
-  .case-back-link { margin-bottom: 1.5rem; }
-  .physics-case .ninefold-hero h1 { font-size: clamp(4rem,15vw,6.2rem); }
-  .physics-case .ninefold-hero h2 { max-width: 23ch; font-size: 1.4rem; }
-  .ninefold-intro, .physics-hero-flow { width: 100%; max-width: 55ch; }
-  .ninefold-intro { font-size: .92rem; }
-  .physics-hero-flow { font-size: .64rem; }
-  .physics-case .ninefold-language { position: static; margin-top: 1.3rem; }
-  .ninefold-scene-caption { display: none; }
-  .ninefold-ledger dl { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.5rem; }
-  .case-chapter-nav { gap: .3rem 1rem; }
-  .case-chapter-nav a { font-size: .7rem; }
-  .case-section-grid, .case-overview-grid, .case-wide-heading { grid-template-columns: minmax(0,1fr); gap: 1.2rem; }
-  .case-section-grid header { position: static; }
-  .case-section-grid header h2 { max-width: 24ch; }
-  .case-wide-heading h2 { font-size: clamp(1.9rem,7vw,2.6rem); }
-  .case-wide-heading { margin-bottom: 2rem; }
-  .section-number { margin-bottom: .3rem; }
-  .learning-loop-map { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .physics-paths, .physics-tracks, .question-types, .physics-boundary, .walkthrough-trace { grid-template-columns: minmax(0,1fr); }
-  .physics-boundary { gap: 1rem; }
-  .physics-boundary article:first-child::after { display: none; }
-  .physics-paths article { padding: 1.5rem; }
-  .physics-tracks article, .question-types article { padding-top: 1.2rem; }
-  .question-types b { margin-bottom: 1rem; }
-  .walkthrough-question, .walkthrough-controls { padding: 1.25rem; }
-  .walkthrough-panel { padding: 0 1.25rem 1.5rem; }
-  .walkthrough-controls { gap: .5rem; }
-  .walkthrough-controls label > span { padding: .55rem .8rem; font-size: .74rem; }
-  .walkthrough-trace { gap: 1.5rem; }
-  .case-system-map ol, .flow-diagram { grid-template-columns: minmax(0,1fr); }
-  .case-system-map ol { gap: 1.5rem; }
-  .case-system-map li > span { margin-bottom: .75rem; }
-  .case-system-map li:not(:last-child)::after { content: none; }
-  .case-research-frontispiece { grid-template-columns: minmax(0,1fr); gap: 2rem; }
-  .research-model { max-width: 340px; justify-self: center; }
-  .research-model > span { width: 145px; height: 145px; }
-  .case-photo-frontispiece { aspect-ratio: 1.5; }
-  .case-photo-frontispiece figcaption { bottom: 1.5rem; }
-  .flow-diagram li { margin: 0; border-right: 0; border-bottom: 1px solid var(--case-border); }
-  .flow-diagram li:last-child { border-bottom: 0; }
-  .flow-index { margin-bottom: 1rem; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .walkthrough-panel { animation: walkthrough-enter .35s cubic-bezier(.2,0,0,1) both; }
-  @keyframes walkthrough-enter { from { opacity: .3; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
-}
+/* Product case studies share a bright, solid reading surface. */
+.physics-case,.case-study{--case-border:var(--ui-line,#dfe5ef);--case-muted:var(--ui-muted,#55677d);--case-accent:var(--ui-blue,#3559d5);--case-ink:var(--ui-ink,#17283d);color:var(--case-ink);background:var(--ui-paper,#fff);font-size:18px}
+:is(.physics-case,.case-study) :is(h1,h2,h3,h4){font-family:var(--sans,-apple-system,BlinkMacSystemFont,sans-serif);color:var(--case-ink);letter-spacing:-.035em}
+:is(.physics-case,.case-study) :where(section[id]){scroll-margin-top:112px}
+:is(.physics-case,.case-study) :where(figure,blockquote,dl){margin:0}
+:is(.physics-case,.case-study) :is(p,li){line-height:1.8}
+:is(.physics-case,.case-study) .eyebrow{color:var(--case-accent)}
+:is(.physics-case,.case-study) .case-section{padding-block:clamp(72px,8vw,120px);border-bottom:1px solid var(--case-border)}
+:is(.physics-case,.case-study) .case-section-tinted{background:var(--ui-canvas,#f7f9fd)}
+:is(.physics-case,.case-study) .case-section-dark{color:var(--case-ink);background:linear-gradient(120deg,#eef5ff,#f2effb);border-color:var(--case-border)}
+.case-section-grid{display:grid;grid-template-columns:minmax(190px,.46fr) minmax(0,1fr);gap:clamp(40px,7vw,104px);align-items:start}
+.case-section-grid>header{position:sticky;top:116px}
+.case-section-grid>header h2{max-width:15ch;margin:0;font-size:clamp(30px,3vw,42px);font-weight:650;line-height:1.2}
+.case-wide-heading{display:grid;grid-template-columns:minmax(100px,.24fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);margin-bottom:48px}
+.case-wide-heading h2{max-width:28ch;margin:0 0 24px;font-size:clamp(34px,3.7vw,52px);font-weight:650;line-height:1.15;text-wrap:balance}
+.case-wide-heading p:not(.section-number){max-width:70ch;margin:0;color:var(--case-muted);font-size:18px;line-height:1.8}
+.section-number{margin:4px 0 20px;color:var(--case-accent);font-size:15px;font-weight:550;line-height:1.6;letter-spacing:.04em}
+.ninefold-prose{max-width:72ch}
+.ninefold-prose>p{color:var(--case-muted);font-size:18px;line-height:1.85}
+:is(.physics-case,.case-study) .case-section blockquote{padding:clamp(24px,3vw,40px);margin-top:32px;border:1px solid #d8e3f8;border-radius:24px;background:#f1f6ff}
+:is(.physics-case,.case-study) .case-section blockquote p{margin:0;color:var(--case-ink);font-size:clamp(22px,2.1vw,30px);font-weight:500;letter-spacing:-.025em;line-height:1.55}
+/* Ninefold's actual environment is a product illustration, with no dark veil. */
+.physics-case .ninefold-hero{padding:128px 0 0;overflow:hidden;background:linear-gradient(125deg,#fff 25%,#f2f7ff 72%,#f3f0fc);color:var(--case-ink)}
+.case-hero-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:34px}
+.case-back-link{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--case-muted);font-size:15px;text-decoration:none}
+.case-back-link:hover{color:var(--case-accent)}
+.physics-case .ninefold-language{margin:0;font-size:15px;color:var(--case-accent)}
+.ninefold-hero-layout{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(32px,4.5vw,64px);align-items:stretch}
+.physics-case .ninefold-hero-content{align-self:center;padding-block:20px}
+.physics-case .ninefold-hero .eyebrow{margin:0 0 22px;font-size:15px;line-height:1.6}
+.physics-case .ninefold-hero h1{margin:0 0 26px;font-size:clamp(52px,5.5vw,76px);font-weight:650;line-height:.98;letter-spacing:-.06em}
+.physics-case .ninefold-hero h1 em{font-style:normal;color:var(--case-accent)}
+.physics-case .ninefold-hero h2{max-width:27ch;margin:0 0 20px;font-size:clamp(24px,2.4vw,32px);font-weight:600;line-height:1.3;letter-spacing:-.035em}
+.ninefold-intro{max-width:53ch;margin:0;color:var(--case-muted);font-size:18px;line-height:1.8}
+.physics-case .ninefold-hero .button-row{margin-top:28px;gap:10px}
+.physics-case .ninefold-hero .button{font-size:15px;padding-inline:20px;min-height:48px}
+.physics-case .ninefold-hero .button-primary{color:#fff;background:var(--case-accent);border-color:var(--case-accent)}
+.physics-case .ninefold-hero .button-secondary{color:var(--case-accent);background:#fff;border-color:#cad8f1}
+.ninefold-environment{position:relative;isolation:isolate;min-height:570px;overflow:hidden;border:1px solid #d5e3f1;border-radius:28px;background:#abd7f5;pointer-events:none}
+.ninefold-environment img{position:absolute;max-width:none}
+.ninefold-sky{inset:0;width:100%;height:100%;object-fit:cover}
+.ninefold-clouds{width:130%;left:-13%;top:0;height:85%;object-fit:contain;opacity:.85}
+.ninefold-ground{width:150%;left:-20%;bottom:-1px;height:34%;object-fit:cover;object-position:center top}
+.ninefold-canopy{width:150%;height:88%;right:-26%;bottom:8%;object-fit:contain;object-position:center bottom}
+.ninefold-scene-caption{position:absolute;left:22px;bottom:20px;margin:0;padding:8px 13px;border:1px solid #ffffffc9;border-radius:999px;background:#ffffffe3;color:#3c587b;font-size:12px;letter-spacing:.08em;line-height:1.4}
+.physics-hero-flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;padding:30px 0;margin-top:36px;border-top:1px solid var(--case-border);color:var(--case-muted);font-size:15px}
+.physics-hero-flow>span{display:flex;align-items:center;gap:10px;min-width:0}
+.physics-hero-flow b{color:#7a8fb3;font-size:12px;font-weight:500;font-variant-numeric:tabular-nums}
+.physics-hero-flow i{margin-left:auto;color:#8d9db6;font-style:normal}
+.ninefold-ledger{background:var(--ui-paper,#fff);border-block:1px solid var(--case-border)}
+.ninefold-ledger dl{display:grid;grid-template-columns:.8fr 1.2fr 1fr 1fr;gap:28px;padding-block:32px}
+.ninefold-ledger dt{margin-bottom:10px;color:var(--case-muted);font-size:15px;line-height:1.5}
+.ninefold-ledger dd{margin:0;font-size:16px;font-weight:550;line-height:1.6}
+.case-chapter-nav{display:flex;flex-wrap:wrap;gap:8px 24px;padding-block:20px;border-bottom:1px solid var(--case-border)}
+.case-chapter-nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--case-muted);font-size:15px;text-decoration:none;transition:color .18s}
+.case-chapter-nav a:hover{color:var(--case-accent);text-decoration:underline;text-underline-offset:.4em}
+.learning-loop-map{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;padding:0;margin:0;list-style:none}
+.learning-loop-map li{position:relative;min-width:0;margin:0;padding:24px 18px;border:1px solid var(--case-border);border-radius:18px;background:var(--ui-canvas,#f7f9fd)}
+.loop-step{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#e4edff;color:var(--case-accent);font-size:13px;font-variant-numeric:tabular-nums}
+.learning-loop-map h3{margin:28px 0 12px;font-size:20px;font-weight:600;line-height:1.3}
+.learning-loop-map p{margin:0;color:var(--case-muted);font-size:15px;line-height:1.7}
+.physics-product-shot{padding:16px;border:1px solid var(--case-border);border-radius:28px;background:#fff}
+.physics-product-shot img{display:block;width:100%;height:auto;border-radius:16px}
+.physics-product-shot figcaption{margin:18px 12px 6px;color:var(--case-muted);font-size:15px;line-height:1.7}
+.physics-paths,.physics-tracks,.question-types{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.physics-paths article{padding:28px;border:1px solid #d8e2f2;border-radius:24px;background:#ffffffde}
+.physics-paths h3{margin:0 0 16px;font-size:21px;font-weight:600;line-height:1.4}
+.physics-paths p{margin:0;color:var(--case-muted);font-size:16px;line-height:1.8}
+.physics-boundary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.physics-boundary article{padding:32px;border:1px solid #dce0f4;border-radius:24px;background:#f3f0fc}
+.physics-boundary article:last-child{background:#edf6ff;border-color:#d4e5f7}
+.physics-boundary article>span{display:block;padding-bottom:22px;border-bottom:1px solid #ccd4e8;color:var(--case-accent);font-size:15px;font-weight:600;letter-spacing:.04em}
+.physics-boundary ul{margin:20px 0 0;padding-left:20px}
+.physics-boundary li{margin:10px 0;line-height:1.7}
+.physics-toolkit-section{background:#f1f6ff}
+.toolkit-flow{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 28px;color:var(--case-muted);font-size:15px}
+.toolkit-flow span{padding:12px 16px;background:#fff;border:1px solid #d5e1f4;border-radius:12px}
+.formula-card{display:grid;gap:8px;max-width:650px;padding:32px;border:1px solid #d6e2f9;border-radius:24px;background:#fff;box-shadow:0 12px 40px #3559d508}
+.formula-card small{color:var(--case-muted);font-size:15px;line-height:1.6}
+.formula-card strong{padding:18px;margin-top:14px;border:1px solid #a8c3f5;border-radius:12px;background:#eef5ff;color:var(--case-accent);font-size:22px;font-weight:600}
+.formula-card>span{padding:10px 18px;color:var(--case-muted);font-size:18px}
+.physics-tracks,.question-types{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.physics-tracks article,.question-types article{padding:28px;border:1px solid var(--case-border);border-radius:24px;background:#fff}
+.physics-tracks h3,.question-types h3{margin:0 0 14px;font-size:24px;font-weight:600;line-height:1.3}
+.physics-tracks p,.question-types p{margin:0;color:var(--case-muted);font-size:16px;line-height:1.75}
+.question-types b{display:block;margin-bottom:32px;color:var(--case-accent);font-size:15px;font-weight:550;letter-spacing:.03em}
+.integration-note{margin:28px 0 0;padding-top:28px;max-width:85ch;color:var(--case-muted);font-size:16px;line-height:1.85}
+.mark-card{display:grid;gap:14px;max-width:850px;padding:32px;border:1px solid #d0def3;border-radius:24px;background:#fff}
+.practice-example-label{color:var(--case-muted);font-size:15px;line-height:1.7}
+.mark-card strong{margin:10px 0;color:var(--case-accent);font-size:26px;font-weight:600}
+.mark-card span{color:var(--case-muted);font-size:18px;line-height:1.75}
+.practice-disclaimer{margin:28px 0 0;max-width:85ch;color:var(--case-muted);font-size:16px;line-height:1.85}
+/* A native radio group controls this explicitly labelled, non-live example. */
+.physics-walkthrough-section{background:#f6f4fc}
+.physics-walkthrough{overflow:hidden;border:1px solid #dbe1ee;border-radius:28px;background:#fff;box-shadow:0 12px 40px #31416604}
+.walkthrough-question{padding:30px 32px;margin:0;border-bottom:1px solid var(--case-border);font-size:clamp(22px,2.3vw,30px);font-weight:550;letter-spacing:-.02em;line-height:1.5!important}
+.walkthrough-question>span{display:block;margin-bottom:12px;color:var(--case-muted);font-size:15px;font-weight:400;letter-spacing:0;line-height:1.5}
+.walkthrough-controls{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:28px 32px;border:0}
+.walkthrough-controls[hidden],.walkthrough-panel[hidden]{display:none}
+.walkthrough-controls legend{float:left;width:100%;padding-bottom:14px;color:var(--case-muted);font-size:15px}
+.walkthrough-controls label{position:relative;display:inline-flex;cursor:pointer}
+.walkthrough-controls input{appearance:none;position:absolute;inset:0;margin:0;width:100%;height:100%;border:1px solid #cad6eb;border-radius:12px;background:#fff;cursor:pointer;transition:background .18s,border-color .18s}
+.walkthrough-controls input:checked{background:var(--case-accent);border-color:var(--case-accent)}
+.walkthrough-controls input:focus-visible{outline:3px solid var(--case-accent);outline-offset:4px}
+.walkthrough-controls label>span{position:relative;display:flex;align-items:center;min-height:46px;padding:11px 16px;font-size:15px;pointer-events:none}
+.walkthrough-controls input:checked+span{color:#fff}
+.walkthrough-panel{padding:0 32px 32px}
+.physics-case .walkthrough-panel blockquote{padding:26px;margin:0 0 28px;border:0;border-radius:18px;background:#f2f6fd}
+.walkthrough-panel blockquote>span{display:block;margin-bottom:12px;color:var(--case-muted);font-size:15px}
+.physics-case .walkthrough-panel blockquote p{font-size:20px;font-weight:450;line-height:1.75}
+.walkthrough-trace{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;padding:0;margin:0;list-style:none}
+.walkthrough-trace li{margin:0;border-top:1px solid var(--case-border);padding-top:20px}
+.walkthrough-trace li>span{color:var(--case-accent);font-size:15px;font-weight:550}
+.walkthrough-trace h3{margin:20px 0 12px;font-size:20px;font-weight:600;line-height:1.4}
+.walkthrough-trace p{margin:0;color:var(--case-muted);font-size:16px;line-height:1.8}
+/* The supporting cases open with real photos or their actual published workflow. */
+.case-study .page-hero h1{max-width:22ch;font-size:clamp(44px,4.8vw,68px);font-weight:650;line-height:1.08}
+.case-study-visual{position:relative;width:min(1440px,calc(100% - clamp(40px,8vw,160px)));margin:0 auto;overflow:hidden;border:1px solid var(--case-border);border-radius:28px}
+.case-system-map{width:auto!important;max-width:none!important;margin:0!important;padding:clamp(28px,4vw,56px)}
+.case-visual-system{background:linear-gradient(130deg,#eef6ff,#f4f0fc)}
+.case-system-map .eyebrow{font-size:15px;line-height:1.6}
+.case-system-map ol{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;list-style:none;margin:28px 0 0;padding:0}
+.case-system-map li{margin:0;min-width:0;padding:24px 18px;border:1px solid #d2dff4;border-radius:18px;background:#ffffffe8}
+.case-system-map li>span{display:block;margin-bottom:36px;color:#758bb2;font-size:13px;font-variant-numeric:tabular-nums}
+.case-system-map strong{display:block;margin-bottom:14px;font-size:20px;font-weight:600;line-height:1.35}
+.case-system-map small{display:block;color:var(--case-muted);font-size:15px;line-height:1.75}
+.case-visual-caption{margin:28px 0 0;color:var(--case-muted);font-size:15px;line-height:1.7}
+.case-visual-research{background:linear-gradient(130deg,#f0f1fc,#f5f1fc 65%,#eef7ff)}
+.case-research-frontispiece{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,5vw,72px);align-items:center;width:auto!important;max-width:none!important;margin:0!important;padding:clamp(32px,4vw,56px)}
+.research-model{position:relative;min-height:290px;max-width:400px;width:100%}
+.research-model>span{position:absolute;display:grid;align-items:start;justify-items:center;padding-top:30px;width:174px;height:174px;border:1px solid #a9abd455;border-radius:50%;background:#dbe0ff5c;color:#515b8f;font-size:15px;line-height:1.5}
+.research-model>span:nth-child(1){left:calc(50% - 87px);top:0}
+.research-model>span:nth-child(2){left:calc(50% - 163px);top:100px;padding-top:105px;background:#e7ddf75c}
+.research-model>span:nth-child(3){left:calc(50% - 11px);top:100px;padding-top:105px;background:#d3edff5c}
+.research-model>strong{position:absolute;left:0;right:0;top:144px;text-align:center;color:#475b9a;font-size:20px;font-weight:600}
+.case-research-frontispiece blockquote{max-width:36ch;margin:0;font-size:clamp(24px,2.6vw,36px);font-weight:550;line-height:1.45;letter-spacing:-.035em}
+.case-photo-frontispiece{position:relative;aspect-ratio:2.7;overflow:hidden;background:#e7edf6}
+.case-photo-frontispiece img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 53%}
+.case-study-formal-hall-networking-society-website .case-photo-frontispiece{aspect-ratio:2.3}
+.case-photo-frontispiece::after{content:"";position:absolute;inset:50% 0 0;background:linear-gradient(transparent,#10253e99);pointer-events:none}
+.case-photo-frontispiece figcaption{position:absolute;bottom:28px;left:32px;right:32px;z-index:1;display:flex;justify-content:space-between;gap:16px;color:#fff;font-size:15px;line-height:1.6}
+.case-study .case-overview{border-bottom:1px solid var(--case-border)}
+.case-overview-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.55fr);gap:clamp(40px,7vw,104px)}
+.case-overview h2{max-width:27ch;font-size:clamp(32px,3.5vw,48px);font-weight:600;line-height:1.2}
+.case-ledger{border-top:1px solid var(--case-border)}
+.case-ledger>div{display:grid;grid-template-columns:80px minmax(0,1fr);gap:20px;padding:18px 0;border-bottom:1px solid var(--case-border)}
+.case-ledger dt{color:var(--case-muted);font-size:15px;line-height:1.7}
+.case-ledger dd{margin:0;font-size:16px;line-height:1.7}
+.case-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.case-columns-single{grid-template-columns:minmax(0,1fr)}
+.case-columns article{min-width:0}
+.case-columns h3{padding-bottom:18px;margin:0;border-bottom:1px solid var(--case-border);font-size:22px;font-weight:600;line-height:1.4}
+.case-study :is(.plain-list,.limitation-list){padding:0;margin:0;list-style:none}
+.case-study :is(.plain-list,.limitation-list) li{padding:16px 0;margin:0;border-bottom:1px solid var(--case-border);color:var(--case-muted);font-size:18px;line-height:1.85}
+.case-lead{max-width:70ch;margin-bottom:32px;font-size:22px;line-height:1.75!important;letter-spacing:-.015em}
+.decision-list{list-style:none;padding:0;margin:0;border-top:1px solid var(--case-border)}
+.decision-list li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:16px;padding:22px 0;margin:0;border-bottom:1px solid var(--case-border)}
+.decision-list span{color:var(--case-accent);font-size:15px;line-height:1.8}
+.decision-list p{margin:0;color:var(--case-muted);font-size:18px;line-height:1.85}
+.case-study .flow-figure{overflow:hidden;border:1px solid var(--case-border);border-radius:24px;background:#fff}
+.case-study .flow-figure figcaption{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:22px 24px;border-bottom:1px solid var(--case-border);color:var(--case-muted);font-size:15px;line-height:1.6;background:#f7faff}
+.case-study .flow-figure figcaption span{color:var(--case-accent)}
+.case-study .flow-diagram{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.case-study .flow-diagram li{margin:0;position:relative;min-width:0;padding:28px 24px;border-right:1px solid var(--case-border)}
+.case-study .flow-diagram li:last-child{border-right:0}
+.case-study .flow-index{display:block;margin-bottom:40px;color:var(--case-accent);font-size:15px;line-height:1.6;font-variant-numeric:tabular-nums}
+.case-study .flow-diagram strong{display:block;margin-bottom:16px;font-size:20px;font-weight:600;line-height:1.4}
+.case-study .flow-diagram p{color:var(--case-muted);margin:0;font-size:15px;line-height:1.8}
+.case-study .comparison-flows{display:grid;gap:40px;margin-top:48px}
+.case-study .comparison-flows>div>h3{font-size:28px;font-weight:600}
+.case-study .comparison-flows>div>p{max-width:70ch;color:var(--case-muted)}
+.related-line{margin-top:32px;color:var(--case-muted);font-size:16px;line-height:1.9!important;overflow-wrap:anywhere}
+.case-links{display:flex;flex-wrap:wrap;gap:16px 32px;margin-block:32px}
+.tag-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
+.tag-list span{padding:9px 14px;border:1px solid var(--case-border);border-radius:10px;color:var(--case-muted);font-size:15px;line-height:1.5;background:#f7f9fd}
+.case-nav{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-block:32px;border-bottom:1px solid var(--case-border)}
+.case-nav a{display:inline-flex;align-items:center;min-height:44px;font-size:16px}
+@media(max-width:1100px){.ninefold-hero-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}.ninefold-environment{min-height:580px}.physics-case .ninefold-hero h1{font-size:64px}.physics-case .ninefold-hero h2{font-size:26px}.physics-hero-flow{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 32px}.physics-hero-flow>span:nth-child(3) i{visibility:hidden}.learning-loop-map{grid-template-columns:repeat(3,minmax(0,1fr))}.physics-paths{grid-template-columns:repeat(2,minmax(0,1fr))}.case-section-grid{grid-template-columns:minmax(170px,.4fr) minmax(0,1fr);gap:40px}.case-columns{grid-template-columns:1fr}.case-system-map ol{gap:8px}.case-system-map li{padding:20px 14px}.case-system-map strong{font-size:18px}.case-study .flow-diagram li{padding:24px 16px}.research-model{scale:.85;transform-origin:center}}
+@media(max-width:800px){.physics-case .ninefold-hero{padding-top:116px}.ninefold-hero-layout{grid-template-columns:1fr}.physics-case .ninefold-hero-content{max-width:680px;padding:0}.physics-case .ninefold-hero h1{font-size:68px}.physics-case .ninefold-hero h1 br{display:none}.physics-case .ninefold-hero h1 em{margin-left:.15em}.physics-case .ninefold-hero h2{max-width:28ch;font-size:30px}.ninefold-intro{max-width:65ch}.ninefold-environment{min-height:0;aspect-ratio:1.7}.ninefold-canopy{width:105%;height:110%;right:-10%;bottom:0}.ninefold-ground{height:33%;width:120%;left:-10%}.ninefold-ledger dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}.case-section-grid,.case-wide-heading,.case-overview-grid{grid-template-columns:1fr;gap:28px}.case-section-grid>header{position:static}.case-section-grid>header h2{max-width:24ch;font-size:36px}.case-wide-heading{margin-bottom:36px}.case-wide-heading .section-number{margin-bottom:0}.case-wide-heading h2{font-size:40px}.physics-tracks,.question-types{gap:12px}.physics-tracks article,.question-types article{padding:24px 20px}.physics-tracks h3,.question-types h3{font-size:22px}.case-system-map ol{grid-template-columns:repeat(3,minmax(0,1fr))}.case-system-map li>span{margin-bottom:24px}.case-study .flow-diagram{grid-template-columns:1fr}.case-study .flow-diagram li{display:grid;grid-template-columns:32px minmax(0,.65fr) minmax(0,1fr);gap:16px;padding:24px;border-right:0;border-bottom:1px solid var(--case-border)}.case-study .flow-diagram li:last-child{border-bottom:0}.case-study .flow-index,.case-study .flow-diagram strong{margin:0}.case-research-frontispiece{grid-template-columns:minmax(0,.85fr) minmax(0,1fr);gap:16px;padding:28px}.research-model{scale:.78;margin-inline:-20px;width:calc(100% + 40px)}.case-research-frontispiece blockquote{font-size:26px}}
+@media(max-width:600px){.physics-case,.case-study{font-size:16px}.physics-case .ninefold-hero{padding-top:112px}.case-hero-toolbar{margin-bottom:24px}.case-hero-toolbar a{font-size:15px}.ninefold-hero-layout{gap:28px}.physics-case .ninefold-hero .eyebrow{font-size:15px;margin-bottom:20px}.physics-case .ninefold-hero h1{font-size:clamp(44px,11.7vw,64px);letter-spacing:-.055em;margin-bottom:22px}.physics-case .ninefold-hero h2{font-size:26px;line-height:1.35;letter-spacing:-.03em}.ninefold-intro{font-size:16px;line-height:1.8}.physics-case .ninefold-hero .button-row{display:flex;flex-wrap:wrap;margin-top:24px}.physics-case .ninefold-hero .button{padding:12px 17px;font-size:15px}.ninefold-environment{aspect-ratio:1.2;border-radius:24px}.ninefold-canopy{width:140%;height:100%;right:-23%;bottom:4%}.ninefold-ground{height:32%;width:140%;left:-20%}.ninefold-scene-caption{font-size:11px;left:16px;bottom:16px}.physics-hero-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 16px;padding-block:24px;margin-top:24px;font-size:15px}.physics-hero-flow>span{gap:8px}.physics-hero-flow>span:nth-child(3) i{visibility:visible}.physics-hero-flow>span:nth-child(even) i{visibility:hidden}.ninefold-ledger dl{gap:24px 20px;padding-block:28px}.ninefold-ledger dt{font-size:15px}.ninefold-ledger dd{font-size:15px}.case-chapter-nav{gap:4px 20px;padding-block:16px}.case-chapter-nav a{font-size:15px;min-height:40px}.case-section-grid,.case-wide-heading,.case-overview-grid{gap:24px}.case-section-grid>header h2{font-size:30px}.case-wide-heading h2{font-size:32px;line-height:1.2;margin-bottom:20px}.case-wide-heading p:not(.section-number),.ninefold-prose>p{font-size:16px}.section-number{font-size:15px;margin-bottom:16px}.learning-loop-map{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.learning-loop-map li{padding:20px 16px;border-radius:16px}.learning-loop-map h3{margin-top:24px;font-size:20px}.learning-loop-map p{font-size:15px}.physics-product-shot{padding:8px;border-radius:24px}.physics-product-shot img{border-radius:17px}.physics-product-shot figcaption{margin:14px 12px 10px;font-size:15px}.physics-paths,.physics-tracks,.question-types,.physics-boundary,.walkthrough-trace{grid-template-columns:1fr;gap:16px}.physics-paths article,.physics-tracks article,.question-types article,.physics-boundary article{padding:26px;border-radius:22px}.physics-paths h3,.physics-tracks h3,.question-types h3{font-size:22px}.question-types b{margin-bottom:24px}.physics-boundary li{font-size:16px}.toolkit-flow{gap:8px}.toolkit-flow span{padding:10px 13px;font-size:15px}.formula-card,.mark-card{padding:24px;border-radius:22px}.formula-card strong{font-size:20px}.formula-card>span{font-size:16px}.mark-card strong{font-size:24px}.mark-card span,.integration-note,.practice-disclaimer{font-size:16px}.physics-walkthrough{border-radius:24px}.walkthrough-question{padding:24px;font-size:23px}.walkthrough-controls{padding:24px;gap:8px}.walkthrough-controls label{width:100%}.walkthrough-controls label>span{min-height:46px;padding:12px 15px;font-size:15px}.walkthrough-panel{padding:0 24px 24px}.physics-case .walkthrough-panel blockquote{padding:20px;margin-bottom:24px}.physics-case .walkthrough-panel blockquote p{font-size:18px}.walkthrough-trace{gap:24px}.walkthrough-trace h3{font-size:20px;margin-top:14px}.walkthrough-trace p{font-size:16px}.case-study .page-hero h1{font-size:clamp(36px,9.5vw,48px);line-height:1.12}.case-study-visual{border-radius:24px}.case-system-map{padding:24px}.case-system-map ol{grid-template-columns:1fr;gap:8px;margin-top:24px}.case-system-map li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px 14px;padding:20px}.case-system-map li>span{margin:0;grid-row:1/3}.case-system-map strong{font-size:20px;margin:0}.case-system-map small{font-size:15px}.case-visual-caption{font-size:15px}.case-research-frontispiece{grid-template-columns:1fr;gap:8px;padding:24px}.research-model{min-height:270px;scale:.82;margin:0;width:100%;max-width:none}.case-research-frontispiece blockquote{font-size:26px}.case-photo-frontispiece,.case-study-formal-hall-networking-society-website .case-photo-frontispiece{aspect-ratio:1.3}.case-photo-frontispiece figcaption{left:20px;right:20px;bottom:20px;display:block;font-size:15px}.case-photo-frontispiece figcaption>span{display:block}.case-photo-frontispiece figcaption>span+span{margin-top:4px}.case-overview h2{font-size:32px}.case-ledger>div{grid-template-columns:70px minmax(0,1fr);gap:16px}.case-ledger dd{font-size:15px}.case-columns{gap:28px}.case-columns h3{font-size:22px}.case-study :is(.plain-list,.limitation-list) li,.decision-list p{font-size:16px}.case-lead{font-size:20px}.decision-list li{gap:12px;padding-block:20px}.case-study .flow-figure{border-radius:22px}.case-study .flow-figure figcaption{display:block;padding:20px;font-size:15px}.case-study .flow-figure figcaption>span{display:block;margin-bottom:8px}.case-study .flow-diagram li{grid-template-columns:26px minmax(0,1fr);gap:10px 14px;padding:22px 20px}.case-study .flow-index{grid-row:1/3;font-size:15px}.case-study .flow-diagram strong{font-size:20px}.case-study .flow-diagram p{grid-column:2;font-size:15px}.case-study .comparison-flows>div>h3{font-size:26px}.case-study .comparison-flows>div>p{font-size:16px}.related-line{font-size:16px}.tag-list span{font-size:15px}:is(.physics-case,.case-study) .case-section blockquote{padding:24px;border-radius:22px}:is(.physics-case,.case-study) .case-section blockquote p{font-size:22px}.physics-case .walkthrough-panel blockquote p{font-size:18px}.case-nav{padding-block:24px}}
+@media(prefers-reduced-motion:reduce){.case-chapter-nav a,.walkthrough-controls input{transition:none}}

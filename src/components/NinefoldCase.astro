@@ -19,23 +19,29 @@ const tracks = zh ? [["IGCSE Physics","Pearson Edexcel International GCSE Physic
 ---
 <BaseLayout title={c.pageTitle} description={c.description} locale={zh ? "zh-CN" : "en-GB"}>
 <article class="ninefold-case physics-case">
-  <section class="ninefold-hero physics-hero" aria-labelledby="physics-title">
-    <div class="ninefold-environment" aria-hidden="true">
-      <img class="ninefold-sky" src={withBase("/images/ninefold/ninefold-sky.webp")} width="1672" height="941" alt="" fetchpriority="high" />
-      <img class="ninefold-clouds" data-depth="12" src={withBase("/images/ninefold/ninefold-world-fast.avif")} width="1400" height="620" alt="" />
-      <img class="ninefold-ground" src={withBase("/images/ninefold/ninefold-tree.webp")} width="1600" height="500" alt="" />
-      <img class="ninefold-canopy" src={withBase("/images/ninefold/ninefold-canopy.webp")} width="1200" height="720" alt="" />
-    </div>
-    <div class="shell ninefold-hero-content">
-      <a class="case-back-link" href={withBase(zh ? "/zh/work/" : "/work/")}><span aria-hidden="true">←</span> {zh ? "全部项目" : "All work"}</a>
+  <section class="ninefold-hero physics-hero" aria-labelledby="physics-title" data-header-tone="light">
+    <div class="shell">
+      <nav class="case-hero-toolbar" aria-label={zh ? "案例导航" : "Case navigation"}>
+        <a class="case-back-link" href={withBase(zh ? "/zh/work/" : "/work/")}><span aria-hidden="true">←</span> {zh ? "全部项目" : "All work"}</a>
+        <a class="ninefold-language text-link" href={withBase(alternate)}>{c.switchLabel} <span aria-hidden="true">↗</span></a>
+      </nav>
+      <div class="ninefold-hero-layout">
+      <div class="ninefold-hero-content">
       <p class="eyebrow">{c.eyebrow}</p>
       <h1 id="physics-title">Ninefold<br /><em>Physics</em></h1>
       <h2>{c.headline}</h2><p class="ninefold-intro">{c.intro}</p>
-      <div class="physics-hero-flow" aria-label={zh ? "产品体验" : "Product experience"}>{c.flow.map((x,i)=><span>{x}{i !== c.flow.length - 1 ? <i aria-hidden="true"> →</i> : ""}</span>)}</div>
       <div class="button-row"><a class="button button-primary" href={live} target="_blank" rel="noopener noreferrer">{c.liveLabel} <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="#learning-loop">{zh ? "探索产品设计" : "Explore the design"} <span aria-hidden="true">↓</span></a></div>
-      <a class="ninefold-language text-link" href={withBase(alternate)}>{c.switchLabel} <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="ninefold-environment" aria-hidden="true">
+        <img class="ninefold-sky" src={withBase("/images/ninefold/ninefold-sky.webp")} width="1672" height="941" alt="" fetchpriority="high" />
+        <img class="ninefold-clouds" data-depth="12" src={withBase("/images/ninefold/ninefold-world-fast.avif")} width="1400" height="620" alt="" />
+        <img class="ninefold-ground" src={withBase("/images/ninefold/ninefold-tree.webp")} width="1600" height="500" alt="" />
+        <img class="ninefold-canopy" src={withBase("/images/ninefold/ninefold-canopy.webp")} width="1200" height="720" alt="" />
+        <p class="ninefold-scene-caption">A WORLD TO THINK IN.</p>
+      </div>
+      </div>
+      <div class="physics-hero-flow" aria-label={zh ? "产品体验" : "Product experience"}>{c.flow.map((x,i)=><span><b aria-hidden="true">{String(i+1).padStart(2,"0")}</b>{x}{i !== c.flow.length - 1 ? <i aria-hidden="true"> →</i> : ""}</span>)}</div>
     </div>
-    <p class="ninefold-scene-caption" aria-hidden="true">A WORLD TO THINK IN.</p>
   </section>
   <section class="ninefold-ledger"><div class="shell"><dl>{c.meta.map(([k,v])=><div><dt>{k}</dt><dd>{v}</dd></div>)}</dl></div></section>
   <nav class="case-chapter-nav shell" aria-label={zh ? "案例章节" : "Case chapters"}>
