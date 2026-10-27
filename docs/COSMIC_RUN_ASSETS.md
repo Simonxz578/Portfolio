@@ -16,7 +16,7 @@ The user approved the face of the ZIP A/B/C portrait, then reattached that exact
 
 The user supplied a wide photograph of King's College and explicitly requested extracting its buildings. The production SVG preserves the actual Chapel and both flanking buildings from that photograph. A metadata-free building-height photo strip is embedded once and clipped with a native roofline/foundation silhouette. The original sky, lawn, river and foreground bridge are excluded; subtle edge-only sky cleanup removes blue fringes without inventing architecture.
 
-The photograph was supplied and authorized for this task. No additional photographer, ownership or public license is inferred. The previously trialled Billa890/Commons Chapel-front image is no longer selected or embedded in production. The visible footer source note matches the current user-supplied image. King's is a visual destination; no personal college affiliation or institutional endorsement is claimed.
+The photograph was supplied and authorized for this task. No additional photographer, ownership or public license is inferred. The previously trialled Billa890/Commons Chapel-front image is no longer selected or embedded in production. The public source note was removed at the user’s request; this internal source record remains. King's is a visual destination; no personal college affiliation or institutional endorsement is claimed.
 
 The final foundation mask follows the photograph’s uneven building baseline and feathers only its lowest edge into the foreground. The roofline and architectural pixels remain from the supplied photograph. The final 75% browser view is recorded in the QA evidence.
 
@@ -39,14 +39,16 @@ See `COSMIC_RUN_QA.md` for actual browser evidence, current build/deployment sta
 
 ## Final delivery inventory
 
-Updated on 26 October 2026 after the full-body silhouette cleanup. The five selected files total approximately 1.54 MiB. The four embedded photographic payloads remain byte-identical to release c562893; only native silhouette paths, antialiasing masks and the shoulder alpha join changed.
+Updated on 27 October 2026 after the scoped ear/campus cleanup and first-display optimization. The seven retained source/delivery files total approximately 2.15 MiB. This is a repository inventory, not an initial network-transfer measurement. The homepage fetches the two compiled WebPs instead of the SVG sources. All embedded photographic payloads remain byte-identical to fd1d739.
 
 | Selected file | Delivered dimensions | Bytes | SHA-256 |
 | --- | --- | ---: | --- |
 | `public/media/cosmic-run/cosmic-depth.webp` | 1280 × 720 RGB | 148,306 | `7ba42d015e9cff437539f8ebab819a7486f89f3f1bd78b965095bcf665c7bd32` |
-| `public/media/cosmic-run/kings-architecture.svg` | 1600 × 900 SVG; embedded 1024 × 238 JPEG | 174,294 | `03263429a1a65e8ca23d54b27d9430c8baf3b8fc36f0df0b345ddbac98a567bb` |
+| `public/media/cosmic-run/kings-architecture.svg` | 1600 × 900 SVG; embedded 1024 × 238 JPEG | 183,941 | `a3eebec1de0a1e0f61b714770b2e1a982bf60d93f690b7f044af8d6f37278f03` |
 | `public/media/cosmic-run/runner-cycle.webp` | 1280 × 960 RGBA | 195,650 | `77f3ebbbf3993414a1ae5c6823e0fa2c1191696a70af09ad1728653e8df90fbd` |
-| `public/media/cosmic-run/simon-entry.svg` | 512 × 768; 1024 × 1536 viewBox | 1,044,420 | `df28c37b71e05d5bc0d8c109df7787efa316a39c3a87278f512c4aeb150f927b` |
+| `public/media/cosmic-run/simon-entry.svg` | 512 × 768; 1024 × 1536 viewBox | 1,044,495 | `adaada4d61497883bfa0ba7491e83b376354e17f45ca9d1f4a30d88a08cf1344` |
+| `public/media/cosmic-run/simon-entry.webp` | 1024 × 1536 RGBA, lossless | 333,310 | `dc0ca07e04615983c58a82d5b8216ef78e15b9d7d72c51743e50b8e318005d22` |
+| `public/media/cosmic-run/kings-architecture.webp` | 1600 × 900 RGBA, lossless | 297,800 | `27812f542f725cf9b8eba62ef96bffb64550aefd498e81719d79884eed6cd811` |
 | `public/media/identity/simon-portrait.jpg` | 640 × 800 RGB | 54,297 | `10d41fd6072b350a1b8ab7be1fea7daf9659bce2ad6378e4412f4264b1d0d0aa` |
 
 
@@ -62,3 +64,12 @@ The user requested cleaning the entire person, explicitly including the body rat
 The user requested the complete visible King's College architecture from the same supplied photo. The revised native SVG restores the left low wall and complete foundation/floor rows, both real flags/flagpoles and the far-right visible architecture. The broad bottom blur is removed. Alpha-only 1.4-source-pixel rim cleanup suppresses the source JPEG's blue sky fringe while retaining the roof/finial outline. The embedded 1024 × 238 photographic crop and its RGB payload remain byte-identical. Scale1.5/x32 and viewBox1600 × 900 remain; the group is lifted4.5 viewBox units to y555.5 so the complete left low wall fits. Native render alpha bounds are [32,578,1567,899]. No architecture is synthesized. The cache key is complete-campus-7.
 
 The sky refinement preserves the original full background photograph, perspective, ground/path and parallax. Four transparent sky-only veils vary with native scroll; flat opaque sky replacement was rejected and is not part of the final delivery. UI tabs use transparent surfaces and fine outlines. See NINEFOLD_PRODUCT_UPDATE.md and the latest scoped QA for current content and browser evidence.
+
+
+## Scoped ear/campus and runtime delivery refinement — 27 October 2026
+
+This section supersedes the earlier retained-flag details. Local native alpha edits remove the beige lower-ear wedge, exterior-connected cyan sky in roof gaps, false cyan pole patches and far-right detached background. The real stone roofline, ordinary windows, source JPEG, source placement and foundation are retained. The four portrait photographic payloads remain unchanged; no facial generation or geometric reshaping is introduced.
+
+The user-named `aigc-character-skill` v3.0.0 at revision `dcaf0951f007e4059b2e8740289a1b8e3307bf78` guided this existing-source repair and continuity review. `scripts/render-scene-assets.mjs` compiles the editable SVG sources to the two lossless runtime WebPs. Embedded WebP crops are decoded through a lossless in-memory PNG bridge because librsvg does not consistently decode embedded WebP. The script checks decoded output against the native source render: maximum visible RGB difference0 and alpha difference0 for both files. This is a render/export integrity test, distinct from likeness approval.
+
+The portrait preload and rendered image use the same versioned URL; architecture has low fetch priority. The runner begins loading before use and becomes ready only after decode. Repeated unchanged state/frame writes are skipped; a late-ready runner has a bounded140ms opacity handoff. All scene state/sky mathematics and CSS remain unchanged. See FIRST_LOAD_20261027.md for test scope.

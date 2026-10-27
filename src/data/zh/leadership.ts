@@ -1,4 +1,3 @@
-/** The reach qualifier is part of the public record, not a membership claim. */
 export const leadershipItems = [
   {
     title: "Cambridge CEO",
@@ -21,7 +20,6 @@ export const leadershipItems = [
     period: "2025–2026",
     summary: "创办并领导剑桥跨学院华人学生微信社群生态，覆盖2,000余人，同时搭建协会的正式活动、跨学院关系、沟通渠道与长期交接结构。",
     contributions: [
-      "2,000余人指更广泛社群生态的覆盖人数，并非协会注册会员人数，也不是正式活动的到场人数",
       "设计从需求、主题、报名、名额分配、付款、饮食需求、场地协调到现场交付的完整活动流程",
       "明确场地、外联、沟通、摄影与财务分工，并记录换届与重新注册流程",
       "基于反馈维护邮件、协会渠道与公开页面的沟通",

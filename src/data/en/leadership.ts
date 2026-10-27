@@ -25,7 +25,6 @@ export const leadershipItems = [
     summary:
       "Built and led a Cambridge-wide Chinese student WeChat community ecosystem reaching 2,000+ people across colleges, alongside the society’s formal events, cross-college relationships, communications infrastructure and long-term organisational continuity.",
     contributions: [
-      "The 2,000+ figure describes the wider community ecosystem’s reach, not registered society membership or attendance at formally organised events",
       "Designed the end-to-end event workflow: demand, topics, registration, place allocation, payments, dietary requirements, venue coordination and delivery",
       "Defined committee responsibilities across venues, outreach, communications, photography and finance, then documented succession and re-registration",
       "Built feedback-led communications across email, society channels and public pages",

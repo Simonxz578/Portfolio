@@ -146,3 +146,10 @@ The user requested the current Ninefold product story/screenshots, followed by a
 - Production route/asset/integration/preservation checks pass against the release-specific authorized baseline. Only Ninefold factual records and two legacy Ninefold entry URLs are authorized differences; every other project record is byte-identical. No script policy was weakened.
 
 Final campus silhouette verification, asset inventory and publication evidence are recorded with the scoped release artifacts in `output/ninefold-product-20261026/`. Browser measurements are IAB Chromium responsive views, not physical-device, Safari/Firefox or throttled-network benchmarks.
+
+
+## Scoped ear/campus and first-display patch — 27 October 2026
+
+Both-language leadership records delete the complete2,000-person qualifier contribution, retaining the separate reach summary. Ear and campus alpha masks were repaired locally using the user-named AIGC character skill v3.0.0; all photographic payloads remain unchanged. The editable SVGs now compile to pixel-verified lossless runtime WebPs. Independent sky/white/dark composites show the lower-ear wedge, conspicuous cyan pole and right-campus background fragment removed in the inspected areas.
+
+The controller waits for atlas decode, bounds late readiness to a140ms handoff and skips repeated state/frame writes. State/sky mathematics, CSS and scene geometry remain unchanged. Current QA includes controller failure/late-readiness branches and actual production-preview desktop progress/white/reverse captures. Local resource observations are not a simulated4G or low-end-device benchmark. Full details and limitations are in FIRST_LOAD_20261027.md; final deployment evidence accompanies the scoped release outside the public repo.

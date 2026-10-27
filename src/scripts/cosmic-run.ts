@@ -68,6 +68,8 @@ type CosmicQASnapshot = Readonly<{
   lcpMs: number | null;
   cls: number;
   progressUpdates: number;
+  criticalResources: readonly Readonly<{ name: string; durationMs: number; transferBytes: number; encodedBytes: number }>[];
+  longTasks: Readonly<{ count: number; totalMs: number; maxMs: number }>;
   rafIntervalsMs: readonly number[];
   minFrameIntervalMs: number | null;
   medianFrameIntervalMs: number | null;
@@ -85,6 +87,9 @@ function createQAMetrics(section: HTMLElement) {
   let sessionStart: number | null = null;
   let lastShiftAt = 0;
   let progressUpdates = 0;
+  let longTaskCount = 0;
+  let longTaskTotalMs = 0;
+  let longTaskMaxMs = 0;
   let lastUpdateAt = 0;
   const intervals: number[] = [];
   const observers: PerformanceObserver[] = [];
@@ -101,6 +106,11 @@ function createQAMetrics(section: HTMLElement) {
     } catch { /* The measured browser may not implement this entry type. */ }
   };
   observe("largest-contentful-paint", entries => { for (const entry of entries) lcpMs = entry.startTime; publish(); });
+  observe("resource", entries => { if (entries.some(entry => entry.name.includes("/media/cosmic-run/"))) publish(); });
+  observe("longtask", entries => {
+    for (const entry of entries) { longTaskCount++; longTaskTotalMs += entry.duration; longTaskMaxMs = Math.max(longTaskMaxMs, entry.duration); }
+    publish();
+  });
   observe("layout-shift", entries => {
     for (const entry of entries) {
       const shift = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number };
@@ -117,7 +127,12 @@ function createQAMetrics(section: HTMLElement) {
   Object.defineProperty(window, "__cosmicQA", { configurable: true, get: () => {
     const sorted = [...intervals].sort((a, b) => a - b);
     const percentile = (t: number) => sorted.length ? sorted[Math.floor((sorted.length - 1) * t)] ?? null : null;
-    return Object.freeze({ lcpMs, cls, progressUpdates, rafIntervalsMs: Object.freeze([...intervals]),
+    return Object.freeze({ lcpMs, cls, progressUpdates,
+      criticalResources: Object.freeze((performance.getEntriesByType("resource") as PerformanceResourceTiming[])
+        .filter(entry => entry.name.includes("/media/cosmic-run/"))
+        .map(entry => Object.freeze({ name: entry.name, durationMs: entry.duration, transferBytes: entry.transferSize, encodedBytes: entry.encodedBodySize }))),
+      longTasks: Object.freeze({ count: longTaskCount, totalMs: longTaskTotalMs, maxMs: longTaskMaxMs }),
+      rafIntervalsMs: Object.freeze([...intervals]),
       minFrameIntervalMs: percentile(0), medianFrameIntervalMs: percentile(.5), p95FrameIntervalMs: percentile(.95),
       scope: "Local opt-in measurement. Intervals sample rAF updates while scroll progress changes; they are not a sustained GPU/FPS benchmark.",
     });
@@ -161,6 +176,8 @@ export function initialiseCosmicRuns(): void {
     const bootstrapFailed = section.dataset.cosmicBootstrap === "timed-out";
     let enabled = !reduced.matches && !bootstrapFailed;
     let scheduled = 0;
+    let forceRender = false;
+    let disposed = false;
     let settleTimer: ReturnType<typeof setTimeout> | undefined;
     let start = 0;
     let distance = 1;
@@ -168,26 +185,48 @@ export function initialiseCosmicRuns(): void {
     const count = section.querySelector<HTMLElement>("[data-cosmic-stage-count]");
     let lastStage = -1;
     let lastFrame = 0;
+    let writtenFrame = -1;
     let lastProgress = -1;
+    let renderedStateKey = "";
     let spriteStarted = false;
     let spriteReady = false;
     let failed = bootstrapFailed;
+    let handoffPending = false;
+    let handoffStartedAt: number | null = null;
+    let handoffAmount = 0;
     const sprite = new Image();
     sprite.decoding = "async";
+    sprite.fetchPriority = "low";
     const writeFrame = (frame: number) => {
+      if (frame === writtenFrame || disposed) return;
+      writtenFrame = frame;
       runner.style.setProperty("--cosmic-frame-x", `${(frame % columns) / Math.max(1, columns - 1) * 100}%`);
       runner.style.setProperty("--cosmic-frame-y", `${Math.floor(frame / columns) / Math.max(1, rows - 1) * 100}%`);
       section.dataset.cosmicFrame = String(frame);
     };
+    const finishHandoff = () => {
+      handoffPending = false;
+      handoffStartedAt = null;
+      handoffAmount = spriteReady ? 1 : 0;
+      section.dataset.cosmicHandoff = String(handoffAmount);
+    };
+    const cancelRender = () => {
+      if (scheduled) cancelAnimationFrame(scheduled);
+      scheduled = 0;
+    };
     const loadSprite = () => {
-      if (spriteStarted || !enabled || failed) return;
+      if (spriteStarted || !enabled || failed || disposed) return;
       spriteStarted = true;
       section.dataset.cosmicMotion = "loading";
       sprite.src = section.dataset.spriteSrc || "";
     };
     const activateFallback = () => {
+      if (disposed || failed) return;
       failed = true;
       enabled = false;
+      finishHandoff();
+      cancelRender();
+      clearTimeout(settleTimer);
       section.removeAttribute("data-cosmic-enhanced");
       section.dataset.cosmicMotion = "static";
       section.dataset.cosmicSky = "night";
@@ -197,18 +236,27 @@ export function initialiseCosmicRuns(): void {
       introduction?.removeAttribute("inert");
       measure();
     };
-    sprite.onload = () => {
-      if (failed) return;
+    sprite.onload = async () => {
+      if (failed || disposed) return;
+      try { await sprite.decode(); }
+      catch { activateFallback(); return; }
+      if (failed || disposed) return;
       const frameWidth = sprite.naturalWidth / columns;
       const frameHeight = sprite.naturalHeight / rows;
       if (frameWidth < 100 || frameHeight < 150 || Math.abs(frameWidth / frameHeight - 2 / 3) > .02) { activateFallback(); return; }
+      const progress = clamp((window.scrollY - start) / distance);
+      // Only late asset readiness blends. Scroll still owns all scene geometry and sprite frames.
+      handoffPending = enabled && visible && !document.hidden && lastProgress > .08 && lastProgress < .95 && progress > .08 && progress < .95;
+      handoffStartedAt = null;
+      handoffAmount = handoffPending ? 0 : 1;
       spriteReady = true;
+      section.dataset.cosmicHandoff = String(handoffAmount);
       section.dataset.cosmicMotion = reduced.matches ? "reduced" : "ready";
-      requestRender();
+      requestRender(true);
     };
     sprite.onerror = activateFallback;
     if (entry) {
-      const entryFailed = () => section.dataset.cosmicEntry = "poster";
+      const entryFailed = () => { if (!disposed) section.dataset.cosmicEntry = "poster"; };
       entry.addEventListener("error", entryFailed, { once: true });
       if (entry.complete && !entry.naturalWidth) entryFailed();
     }
@@ -218,8 +266,23 @@ export function initialiseCosmicRuns(): void {
     };
     const render = () => {
       scheduled = 0;
-      if (!enabled || document.hidden) return;
+      if (!enabled || document.hidden || disposed) return;
       const state = cosmicRunState((window.scrollY - start) / distance, frameCount);
+      const now = performance.now();
+      if (handoffPending) { handoffStartedAt = now; handoffPending = false; }
+      if (handoffStartedAt !== null) {
+        handoffAmount = smoothstep(0, 140, now - handoffStartedAt);
+        if (handoffAmount === 1) handoffStartedAt = null;
+      }
+      const stateKey = `${state.progress}|${spriteReady}|${handoffAmount}`;
+      const forced = forceRender;
+      forceRender = false;
+      if (!forced && stateKey === renderedStateKey) {
+        if (handoffStartedAt !== null && visible) requestRender();
+        return;
+      }
+      renderedStateKey = stateKey;
+      const fallbackEntryOpacity = 1 - smoothstep(.78, .96, state.progress);
       const style = section.style;
       style.setProperty("--cosmic-progress", String(state.progress));
       style.setProperty("--cosmic-night", String(state.sky.night));
@@ -233,17 +296,18 @@ export function initialiseCosmicRuns(): void {
       style.setProperty("--cosmic-runner-scale", String(state.runnerScale));
       style.setProperty("--cosmic-runner-x", `${state.runnerX}%`);
       style.setProperty("--cosmic-runner-bottom", `${state.runnerBottom}%`);
-      style.setProperty("--cosmic-runner-opacity", String(spriteReady ? state.runnerOpacity : 0));
-      style.setProperty("--cosmic-entry-opacity", String(spriteReady ? state.entryOpacity : 1 - smoothstep(.78, .96, state.progress)));
-      style.setProperty("--cosmic-entry-shift", `${spriteReady ? state.entryShift : 0}%`);
-      style.setProperty("--cosmic-entry-lift", `${spriteReady ? state.entryLift : 0}%`);
+      style.setProperty("--cosmic-runner-opacity", String(spriteReady ? state.runnerOpacity * handoffAmount : 0));
+      style.setProperty("--cosmic-entry-opacity", String(spriteReady ? mix(fallbackEntryOpacity, state.entryOpacity, handoffAmount) : fallbackEntryOpacity));
+      style.setProperty("--cosmic-entry-shift", `${spriteReady ? state.entryShift * handoffAmount : 0}%`);
+      style.setProperty("--cosmic-entry-lift", `${spriteReady ? state.entryLift * handoffAmount : 0}%`);
       style.setProperty("--cosmic-depth-scale", String(state.depthScale));
       style.setProperty("--cosmic-depth-opacity", String(state.depthOpacity));
       style.setProperty("--cosmic-depth-shade", String(state.depthShadeOpacity));
       style.setProperty("--cosmic-white", String(state.whiteOpacity));
       style.setProperty("--cosmic-intro", String(state.introOpacity));
       style.setProperty("--cosmic-labels", String(state.labelsOpacity));
-      style.setProperty("--cosmic-shadow", String(spriteReady ? state.shadowOpacity : 0));
+      style.setProperty("--cosmic-shadow", String(spriteReady ? state.shadowOpacity * handoffAmount : 0));
+      section.dataset.cosmicHandoff = String(handoffAmount);
       if (section.dataset.cosmicSky !== state.sky.phase) section.dataset.cosmicSky = state.sky.phase;
       if (section.dataset.cosmicTone !== state.sky.tone) section.dataset.cosmicTone = state.sky.tone;
       section.dataset.cosmicProgress = state.progress.toFixed(5);
@@ -261,12 +325,14 @@ export function initialiseCosmicRuns(): void {
         }
         lastProgress = state.progress;
       }
+      if (handoffStartedAt !== null && visible) requestRender();
     };
-    function requestRender() {
-      if (!scheduled && enabled && !document.hidden) scheduled = requestAnimationFrame(render);
+    function requestRender(force = false) {
+      forceRender ||= force;
+      if (!scheduled && enabled && !document.hidden && !disposed) scheduled = requestAnimationFrame(render);
     }
     if (architecture) {
-      const architectureFailed = () => { section.dataset.cosmicBuilding = "missing"; activateFallback(); };
+      const architectureFailed = () => { if (disposed) return; section.dataset.cosmicBuilding = "missing"; activateFallback(); };
       architecture.addEventListener("error", architectureFailed, { once: true });
       if (architecture.complete && !architecture.naturalWidth) architectureFailed();
     }
@@ -277,31 +343,36 @@ export function initialiseCosmicRuns(): void {
       if (enabled && visible && previousProgress > 0 && previousProgress < 1) {
         window.scrollTo({top:start + previousProgress * distance,behavior:"instant"});
       }
-      requestRender();
+      requestRender(true);
     };
-    const onRestoration = () => { measure(); requestRender(); };
+    const onRestoration = () => {
+      if (document.hidden) { finishHandoff(); cancelRender(); clearTimeout(settleTimer); return; }
+      measure(); requestRender(true);
+    };
     const onPreference = () => {
       enabled = !reduced.matches && !failed;
       section.toggleAttribute("data-cosmic-enhanced", enabled);
       section.dataset.cosmicMotion = reduced.matches ? "reduced" : failed ? "static" : spriteReady ? "ready" : "loading";
       if (!enabled) {
+        finishHandoff(); cancelRender();
         section.dataset.cosmicSky = "night";
         section.dataset.cosmicTone = "dark";
         introduction?.removeAttribute("inert"); clearTimeout(settleTimer);
       }
       measure();
-      if (enabled) { loadSprite(); requestRender(); }
+      if (enabled) { loadSprite(); requestRender(true); }
     };
     const observer = new IntersectionObserver(entries => {
+      if (disposed) return;
       visible = entries[0]?.isIntersecting ?? false;
-      if (visible) { measure(); loadSprite(); requestRender(); }
-      else { clearTimeout(settleTimer); if (scheduled) { cancelAnimationFrame(scheduled); scheduled = 0; } render(); }
+      if (visible) { measure(); loadSprite(); requestRender(true); }
+      else { finishHandoff(); clearTimeout(settleTimer); cancelRender(); forceRender = true; render(); }
     }, { rootMargin: "100px 0px" });
     observer.observe(section);
     section.toggleAttribute("data-cosmic-enhanced", enabled);
     section.dataset.cosmicMotion = reduced.matches ? "reduced" : failed ? "static" : "loading";
     measure();
-    requestRender();
+    requestRender(true);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize, { passive: true });
     window.addEventListener("pageshow", onRestoration);
@@ -309,10 +380,14 @@ export function initialiseCosmicRuns(): void {
     document.addEventListener("visibilitychange", onRestoration);
     reduced.addEventListener("change", onPreference);
     section.cosmicCleanup = () => {
+      disposed = true;
+      finishHandoff();
       observer.disconnect();
       qa?.disconnect();
-      cancelAnimationFrame(scheduled);
+      cancelRender();
       clearTimeout(settleTimer);
+      sprite.onload = null;
+      sprite.onerror = null;
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pageshow", onRestoration);
