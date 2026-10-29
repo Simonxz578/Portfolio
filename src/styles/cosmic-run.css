@@ -22,7 +22,12 @@
 .cosmic-sky-dawn { background:linear-gradient(180deg,#edc4d138 0%,#ffc9a84a 43%,#f9d6bf00 65%); opacity:var(--cosmic-dawn); }
 .cosmic-sky-sunset { background:linear-gradient(180deg,#aaa3e947 0%,#eeb9d64d 38%,#f5c1a733 65%); opacity:var(--cosmic-sunset); }
 .cosmic-sky-day { background:linear-gradient(180deg,#70c9f226 0%,#b4e8ff1f 45%,#c9edff00 65%); opacity:var(--cosmic-day); }
-[data-cosmic-enhanced] .cosmic-sky { will-change:opacity; }
+[data-cosmic-enhanced][data-cosmic-active=true] .cosmic-sky[data-sky-moving] { will-change:opacity; }
+/* Equivalent anchors are measured only on layout changes, never during scroll. */
+[data-cosmic-enhanced][data-cosmic-composited=true] :is(.cosmic-architecture,.cosmic-runner,.cosmic-foot-shadow,.cosmic-entry,.cosmic-entry-shadow) { bottom:0; transform:var(--cosmic-placement); }
+[data-cosmic-enhanced][data-cosmic-composited=true] :is(.cosmic-runner,.cosmic-foot-shadow,.cosmic-entry,.cosmic-entry-shadow) { left:0; }
+[data-cosmic-enhanced][data-cosmic-composited=true] .cosmic-depth-plate { transform:var(--cosmic-placement); }
+[data-cosmic-enhanced][data-cosmic-active=true] :is(.cosmic-architecture,.cosmic-runner,.cosmic-entry,.cosmic-depth-plate) { will-change:transform,opacity; }
 .cosmic-run:not([data-cosmic-enhanced]) { --cosmic-night:1!important; --cosmic-dawn:0!important; --cosmic-sunset:0!important; --cosmic-day:0!important; }
 
 .cosmic-depth-shade { position:absolute; z-index:2; inset:0; background:linear-gradient(90deg,#f6faffef 0%,#f4f8ffba 29%,#eef5ff3b 54%,transparent 75%); opacity:var(--cosmic-depth-shade); }

@@ -4,6 +4,7 @@ import SiteHeader from "@components/SiteHeader.astro";
 import { site } from "@data/site";
 import { withBase } from "../utils/urls";
 import "@styles/global.css";
+import { sceneEntry } from "../utils/scene-assets";
 
 interface Props {
   title: string;
@@ -47,7 +48,7 @@ const currentPath = Astro.url.pathname;
     {noIndex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="canonical" href={canonicalUrl} />
-    {(Astro.url.pathname === withBase('/') || Astro.url.pathname === withBase('/zh/')) && <link rel="preload" as="image" href={withBase('/media/cosmic-run/simon-entry.webp?v=ear-clean-8')} fetchpriority="high" />}
+    {(Astro.url.pathname === withBase('/') || Astro.url.pathname === withBase('/zh/')) && <link rel="preload" as="image" href={sceneEntry.src} imagesrcset={sceneEntry.srcset} imagesizes={sceneEntry.sizes} fetchpriority="high" />}
     <link rel="icon" href={withBase("/icons/favicon.svg")} type="image/svg+xml" />
 
     <meta property="og:type" content={pageType} />
@@ -104,13 +105,15 @@ const currentPath = Astro.url.pathname;
       const paintDepth = () => {
         pending = false;
         if (reducedMotion.matches) return;
+        const positions: { layer: HTMLElement; transform: string }[] = [];
         visible.forEach((layer) => {
           const rect = layer.parentElement?.getBoundingClientRect();
           if (!rect) return;
           const amount = Math.min(16, Number(layer.dataset.depth) || 12);
           const progress = Math.max(-1, Math.min(1, (window.innerHeight / 2 - rect.top - rect.height / 2) / window.innerHeight));
-          layer.style.transform = `translate3d(0,${(progress * amount).toFixed(1)}px,0)`;
+          positions.push({ layer, transform: `translate3d(0,${(progress * amount).toFixed(1)}px,0)` });
         });
+        positions.forEach(({ layer, transform }) => { if (layer.style.transform !== transform) layer.style.transform = transform; });
       };
       const queueDepth = () => { if (!pending && !reducedMotion.matches && visible.size) { pending = true; requestAnimationFrame(paintDepth); } };
       if (layers.length && "IntersectionObserver" in window) {

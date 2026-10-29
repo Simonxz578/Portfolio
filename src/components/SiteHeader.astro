@@ -77,101 +77,168 @@ const navigation = onePage ? [
   const panel = document.querySelector<HTMLElement>("[data-nav-panel]");
   const label = document.querySelector<HTMLElement>("[data-nav-label]");
   const header = document.querySelector<HTMLElement>("[data-site-header]");
+  const panelLinks = Array.from(panel?.querySelectorAll<HTMLAnchorElement>("a") ?? []);
+  const focusTargets = toggle ? [toggle, ...panelLinks] : panelLinks;
+  const pageRegions = Array.from(document.querySelectorAll<HTMLElement>("main, .site-footer"));
+  const chinese = document.documentElement.lang === "zh-CN";
+  let menuOpen = toggle?.getAttribute("aria-expanded") === "true";
 
   function setOpen(open: boolean, returnFocus = false): void {
     if (!toggle || !panel) return;
-    toggle.setAttribute("aria-expanded", String(open));
-    panel.classList.toggle("is-open", open);
-    document.body.classList.toggle("nav-open", open);
-    if (label) label.textContent = open ? (document.documentElement.lang === "zh-CN" ? "关闭" : "Close") : (document.documentElement.lang === "zh-CN" ? "菜单" : "Menu");
-    document.querySelectorAll<HTMLElement>("main, .site-footer").forEach((region) => region.inert = open);
-    if (open) panel.querySelector<HTMLAnchorElement>("a")?.focus();
+    if (open !== menuOpen) {
+      menuOpen = open;
+      toggle.setAttribute("aria-expanded", String(open));
+      panel.classList.toggle("is-open", open);
+      document.body.classList.toggle("nav-open", open);
+      if (label) label.textContent = open ? (chinese ? "关闭" : "Close") : (chinese ? "菜单" : "Menu");
+      pageRegions.forEach(region => { region.inert = open; });
+      invalidateGeometry();
+      if (open) panelLinks[0]?.focus();
+    }
     if (!open && returnFocus) toggle.focus();
   }
 
-  toggle?.addEventListener("click", () => {
-    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  toggle?.addEventListener("click", () => setOpen(!menuOpen));
+  panel?.addEventListener("click", event => {
+    if (event.target instanceof Element && event.target.closest("a")) setOpen(false);
   });
-
-  panel?.addEventListener("click", (event) => {
-    if (event.target instanceof Element && event.target.closest("a")) {
-      setOpen(false);
-    }
+  document.addEventListener("click", event => {
+    if (menuOpen && event.target instanceof Node && !toggle?.contains(event.target) && !panel?.contains(event.target)) setOpen(false);
   });
-
-  document.addEventListener("click", (event) => {
-    if (
-      toggle?.getAttribute("aria-expanded") === "true" &&
-      event.target instanceof Node &&
-      !toggle.contains(event.target) &&
-      !panel?.contains(event.target)
-    ) {
-      setOpen(false);
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Tab" && toggle?.getAttribute("aria-expanded") === "true" && panel) {
-      const targets = [toggle, ...panel.querySelectorAll<HTMLAnchorElement>("a")];
-      const first = targets[0]; const last = targets[targets.length - 1];
+  document.addEventListener("keydown", event => {
+    if (event.key === "Tab" && menuOpen && panel) {
+      const first = focusTargets[0];
+      const last = focusTargets[focusTargets.length - 1];
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     }
-    if (event.key === "Escape" && toggle?.getAttribute("aria-expanded") === "true") {
-      setOpen(false, true);
-    }
+    if (event.key === "Escape" && menuOpen) setOpen(false, true);
   });
-
   const desktop = window.matchMedia("(min-width: 1101px)");
   desktop.addEventListener("change", () => setOpen(false));
 
   const onePage = header?.dataset.onepageNav === "true";
   const darkScene = document.querySelector<HTMLElement>(".cosmic-run, .work-intro, .ninefold-hero");
+  const sceneViewport = darkScene?.querySelector<HTMLElement>("[data-cosmic-viewport]");
   const readingSections = Array.from(document.querySelectorAll<HTMLElement>(".one-page-resume > section[id]"));
-  const languageLinks = document.querySelectorAll<HTMLAnchorElement>("[data-language-link]");
-  let currentSection: HTMLElement | undefined;
+  const languageLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-language-link]"));
+  const anchorLinks = panelLinks.filter(link => link.getAttribute("href")?.startsWith("#"));
+  const readingInset = 190;
+  type ReadingGeometry = { element: HTMLElement; top: number; height: number };
+  let geometry: ReadingGeometry[] = [];
+  let sceneGeometry: { top: number; bottom: number; height: number; viewport: number } | undefined;
+  let layoutWidth = 0;
+  let geometryDirty = true;
+  let currentReading: ReadingGeometry | undefined;
   let readingFraction = 0;
+  let pendingRestore: { id: string; fraction: number } | undefined;
+  let pendingResize: { id: string; fraction: number; width: number; sections: ReadingGeometry[] } | undefined;
   let headerFrame = 0;
+  let activeReadingId: string | undefined;
+  let scrolledState = header?.classList.contains("is-scrolled") ?? false;
+  let lightState = header?.classList.contains("is-light") ?? false;
+  let opacityState = Number(header?.style.opacity || "1");
+  let inertState = header?.inert ?? false;
+
+  // All layout reads happen together, only after a layout-affecting event.
+  function measureGeometry(): void {
+    const scrollY = window.scrollY;
+    const rect = darkScene?.getBoundingClientRect();
+    sceneGeometry = rect && darkScene ? {
+      top: rect.top + scrollY,
+      bottom: rect.bottom + scrollY,
+      height: darkScene.offsetHeight,
+      viewport: sceneViewport?.offsetHeight || window.innerHeight
+    } : undefined;
+    geometry = readingSections.map(element => ({ element, top: element.getBoundingClientRect().top + scrollY, height: element.offsetHeight }));
+    layoutWidth = document.documentElement.clientWidth || window.innerWidth;
+    geometryDirty = false;
+  }
+  function readingLayoutChanged(previous: { width: number; sections: ReadingGeometry[] }): boolean {
+    if (Math.abs(layoutWidth - previous.width) > .5 || geometry.length !== previous.sections.length) return true;
+    return geometry.some((section, index) => {
+      const before = previous.sections[index];
+      return !before || before.element !== section.element || Math.abs(before.top - section.top) > .5 || Math.abs(before.height - section.height) > .5;
+    });
+  }
+  function readingAt(scrollY: number): ReadingGeometry | undefined {
+    let current: ReadingGeometry | undefined;
+    for (const section of geometry) if (section.top <= scrollY + readingInset) current = section;
+    return current;
+  }
   function updateHeader(): void {
     headerFrame = 0;
-    header?.classList.toggle("is-scrolled", window.scrollY > 8);
-    const sceneRect = darkScene?.getBoundingClientRect();
-    const scenePassed = !sceneRect || sceneRect.bottom < 100;
-    const cosmic = darkScene?.matches(".cosmic-run[data-cosmic-enhanced]");
-    const stageHeight = darkScene?.querySelector<HTMLElement>("[data-cosmic-viewport]")?.offsetHeight || window.innerHeight;
-    const progress = cosmic && sceneRect && darkScene ? Math.max(0,Math.min(1,-sceneRect.top / Math.max(1,darkScene.offsetHeight-stageHeight))) : 0;
+    if (document.hidden) return;
+    if (geometryDirty) measureGeometry();
+    let scrollY = window.scrollY;
+    let restoreTop: number | undefined;
+    const restore = pendingRestore || (pendingResize && readingLayoutChanged(pendingResize) ? pendingResize : undefined);
+    pendingRestore = undefined;
+    pendingResize = undefined;
+    if (restore) {
+      const target = geometry.find(section => section.element.id === restore.id);
+      if (target) restoreTop = Math.max(0, target.top + restore.fraction * target.height - readingInset);
+    }
+    // Geometry is already cached before any scroll or DOM writes.
+    if (restoreTop !== undefined && Math.abs(scrollY - restoreTop) > .5) {
+      window.scrollTo({top:restoreTop,behavior:"instant"});
+      scrollY = window.scrollY;
+    }
+    const sceneBottom = sceneGeometry ? sceneGeometry.bottom - scrollY : 0;
+    const scenePassed = !sceneGeometry || sceneBottom < 100;
+    const cosmic = darkScene?.matches(".cosmic-run[data-cosmic-enhanced]") ?? false;
+    const progress = cosmic && sceneGeometry ? Math.max(0,Math.min(1,(scrollY - sceneGeometry.top) / Math.max(1,sceneGeometry.height-sceneGeometry.viewport))) : 0;
     const paleScene = cosmic && progress > .61;
-    const whitening = cosmic && sceneRect && sceneRect.bottom >= stageHeight - 1;
-    const headerOpacity = whitening ? 1 - Math.max(0,Math.min(1,(progress-.91)/.05)) : 1;
-    if (header) { header.style.opacity = String(headerOpacity); header.inert = headerOpacity < .01; }
+    const whitening = cosmic && sceneGeometry && sceneBottom >= sceneGeometry.viewport - 1;
+    const opacity = whitening ? 1 - Math.max(0,Math.min(1,(progress-.91)/.05)) : 1;
+    const inert = opacity < .01;
     const morningScene = darkScene?.dataset.cosmicTheme === "morning" || darkScene?.dataset.headerTone === "light";
-    header?.classList.toggle("is-light", scenePassed || !!paleScene || morningScene);
+    const light = scenePassed || paleScene || morningScene;
+    const scrolled = scrollY > 8;
+    currentReading = onePage ? readingAt(scrollY) : undefined;
+    if (currentReading) readingFraction = Math.max(0,Math.min(1,(scrollY + readingInset - currentReading.top) / Math.max(1,currentReading.height)));
+
+    if (header) {
+      if (scrolled !== scrolledState) { header.classList.toggle("is-scrolled", scrolled); scrolledState = scrolled; }
+      if (light !== lightState) { header.classList.toggle("is-light", light); lightState = light; }
+      if (opacity !== opacityState) { header.style.opacity = String(opacity); opacityState = opacity; }
+      if (inert !== inertState) { header.inert = inert; inertState = inert; }
+    }
     if (!onePage) return;
-    currentSection = undefined;
-    for (const section of readingSections) {
-      if (section.getBoundingClientRect().top <= 190) currentSection = section;
-    }
-    if (currentSection) readingFraction = Math.max(0, Math.min(1, (190 - currentSection.getBoundingClientRect().top) / Math.max(1, currentSection.offsetHeight)));
-    panel?.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
-      if (link.hash === "#" + currentSection?.id) link.setAttribute("aria-current", "location");
-      else link.removeAttribute("aria-current");
+    const id = currentReading?.element.id || "";
+    if (id === activeReadingId) return;
+    activeReadingId = id;
+    anchorLinks.forEach(link => {
+      if (link.hash === "#" + id) {
+        if (link.getAttribute("aria-current") !== "location") link.setAttribute("aria-current", "location");
+      } else if (link.hasAttribute("aria-current")) link.removeAttribute("aria-current");
     });
-    languageLinks.forEach(link => { link.href = (link.dataset.languageBase || "") + (currentSection ? "#" + currentSection.id : ""); });
+    languageLinks.forEach(link => {
+      const href = (link.dataset.languageBase || "") + (id ? "#" + id : "");
+      if (link.getAttribute("href") !== href) link.setAttribute("href", href);
+    });
   }
-  const scheduleHeader = () => { if (!headerFrame) headerFrame = requestAnimationFrame(updateHeader); };
+  function scheduleHeader(): void {
+    if (!headerFrame && !document.hidden) headerFrame = requestAnimationFrame(updateHeader);
+  }
+  function invalidateGeometry(): void { geometryDirty = true; scheduleHeader(); }
+  function cancelHeaderFrame(): void { if (headerFrame) cancelAnimationFrame(headerFrame); headerFrame = 0; }
   const restoreReadingAfterResize = () => {
-    if (onePage && currentSection) {
-      const target = currentSection.getBoundingClientRect().top + window.scrollY + readingFraction * currentSection.offsetHeight - 190;
-      window.scrollTo({top:Math.max(0,target),behavior:"instant"});
+    // Mobile chrome/keyboards may resize the viewport while the document layout stays put.
+    if (onePage && currentReading && !pendingRestore && !pendingResize) {
+      pendingResize = {id:currentReading.element.id,fraction:readingFraction,width:layoutWidth,sections:geometry};
     }
-    scheduleHeader();
+    invalidateGeometry();
   };
   languageLinks.forEach(link => link.addEventListener("click", () => {
-    if (!onePage || !currentSection) return;
-    const top = currentSection.getBoundingClientRect().top + window.scrollY;
-    const readingInset = 190;
-    const fraction = Math.max(0, Math.min(1, (window.scrollY + readingInset - top) / Math.max(1, currentSection.offsetHeight)));
-    try { sessionStorage.setItem("portfolio-reading-position", JSON.stringify({path:new URL(link.href).pathname,id:currentSection.id,fraction})); } catch { /* Anchors remain the fallback. */ }
+    if (!onePage) return;
+    if (geometryDirty) measureGeometry();
+    const current = readingAt(window.scrollY);
+    const href = (link.dataset.languageBase || "") + (current ? "#" + current.element.id : "");
+    if (link.getAttribute("href") !== href) link.setAttribute("href", href);
+    if (!current) return;
+    const fraction = Math.max(0,Math.min(1,(window.scrollY + readingInset - current.top) / Math.max(1,current.height)));
+    try { sessionStorage.setItem("portfolio-reading-position", JSON.stringify({path:new URL(link.href).pathname,id:current.element.id,fraction})); } catch { /* Anchors remain the fallback. */ }
   }));
   try {
     const raw = sessionStorage.getItem("portfolio-reading-position");
@@ -180,15 +247,36 @@ const navigation = onePage ? [
       sessionStorage.removeItem("portfolio-reading-position");
       if (onePage && saved.path === window.location.pathname && window.location.hash === "#" + saved.id) {
         requestAnimationFrame(() => requestAnimationFrame(() => {
-          const section = document.getElementById(saved.id);
-          if (section) window.scrollTo({top:Math.max(0,section.getBoundingClientRect().top + window.scrollY + Math.max(0,Math.min(1,saved.fraction))*section.offsetHeight - 190),behavior:"instant"});
-          scheduleHeader();
+          pendingRestore = {id:saved.id,fraction:Math.max(0,Math.min(1,saved.fraction))};
+          geometryDirty = true;
+          cancelHeaderFrame();
+          updateHeader();
         }));
       }
     }
   } catch { /* A disabled storage API does not prevent navigation. */ }
-  updateHeader();
+
+  if ("ResizeObserver" in window) {
+    const sizeObserver = new ResizeObserver(invalidateGeometry);
+    const targets = new Set<HTMLElement>([document.documentElement, ...readingSections]);
+    if (darkScene) targets.add(darkScene);
+    if (sceneViewport) targets.add(sceneViewport);
+    targets.forEach(target => sizeObserver.observe(target));
+  }
+  if (darkScene && "MutationObserver" in window) {
+    const sceneObserver = new MutationObserver(invalidateGeometry);
+    sceneObserver.observe(darkScene, {attributes:true,attributeFilter:["data-cosmic-enhanced","data-cosmic-theme","data-header-tone"]});
+  }
+  const onImageLayout = (event: Event) => { if (event.target instanceof HTMLImageElement) invalidateGeometry(); };
+  document.addEventListener("load", onImageLayout, true);
+  document.addEventListener("error", onImageLayout, true);
+  document.fonts?.ready.then(invalidateGeometry);
+  document.fonts?.addEventListener("loadingdone", invalidateGeometry);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) cancelHeaderFrame(); else invalidateGeometry(); });
   window.addEventListener("scroll", scheduleHeader, {passive:true});
   window.addEventListener("resize", restoreReadingAfterResize, {passive:true});
-  window.addEventListener("pageshow", scheduleHeader);
+  window.addEventListener("hashchange", scheduleHeader);
+  window.addEventListener("pageshow", invalidateGeometry);
+  window.addEventListener("pagehide", cancelHeaderFrame);
+  updateHeader();
 </script>

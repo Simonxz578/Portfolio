@@ -9,10 +9,16 @@ interface Props {
 
 const { eyebrow, title, intro, meta = [], variant = "" } = Astro.props;
 import { withBase } from "../utils/urls";
+import { responsiveImageSrcSet } from "../utils/responsiveImages";
+// This case repeats the same photograph in its frontispiece. Matching candidate
+// selection lets both instances share one download instead of fetching two sizes.
+const backgroundSizes = /\/work\/ai-policy-teacher-agency\/?$/.test(Astro.url.pathname)
+  ? "(max-width: 600px) 137vw, 100vw"
+  : "(max-width: 800px) 100vw, 43vw";
 ---
 
 <section class:list={["page-hero", variant && `page-hero-${variant}`]}>
-  <img class="page-hero-background" src={withBase("/images/v2/river-cam-fast.avif")} width="1200" height="674" alt="" aria-hidden="true" fetchpriority="high" />
+  <img class="page-hero-background" src={withBase("/images/v2/river-cam-fast.avif")} srcset={responsiveImageSrcSet("/images/v2/river-cam-fast.avif", [320, 480, 640, 768], 1200)} sizes={backgroundSizes} width="1200" height="674" alt="" aria-hidden="true" loading="eager" fetchpriority="low" decoding="async" />
   <div class="shell page-hero-grid">
     <div>
       <p class="eyebrow">{eyebrow}</p>

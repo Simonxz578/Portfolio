@@ -10,6 +10,8 @@ export default defineConfig({
   site,
   base: process.env.BASE_PATH ?? "/",
   trailingSlash: "always",
+  // Prepare only a link the visitor hovers/focuses; keep native page navigation.
+  prefetch: { prefetchAll: true, defaultStrategy: "hover" },
   build: {
     format: "directory"
   },

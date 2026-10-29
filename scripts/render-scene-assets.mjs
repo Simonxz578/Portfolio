@@ -47,3 +47,11 @@ for (const spec of specifications) {
 }
 if (process.argv[2]) await writeFile(process.argv[2], JSON.stringify(reports, null, 2) + '\n');
 console.log(JSON.stringify(reports, null, 2));
+
+// Responsive derivatives of the same accepted composition; no crop or recolour.
+const entry = path.join(root, 'public/media/cosmic-run/simon-entry.webp');
+for (const width of [512, 768]) {
+  const output = path.join(root, `public/media/cosmic-run/simon-entry-${width}.webp`);
+  await sharp(entry).resize({ width, kernel: 'lanczos3' }).webp({ lossless: true, effort: 6 }).toFile(output);
+  console.log(`${path.relative(root, output)}: ${(await readFile(output)).length} bytes`);
+}

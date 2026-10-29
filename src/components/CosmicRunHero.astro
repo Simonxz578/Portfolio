@@ -1,6 +1,7 @@
 ---
 import { withBase } from "../utils/urls";
 import "../styles/cosmic-run.css";
+import { sceneEntry } from "../utils/scene-assets";
 
 interface Props { locale?: "en" | "zh"; }
 const { locale = "en" } = Astro.props;
@@ -86,7 +87,7 @@ const sprite = withBase("/media/cosmic-run/runner-cycle.webp?v=gown-contact-6");
       <div class="cosmic-foot-shadow" data-cosmic-shadow></div>
       <div class="cosmic-runner" data-cosmic-runner></div>
       <figure class="cosmic-entry" data-cosmic-entry>
-        <img class="cosmic-entry-body" src={withBase("/media/cosmic-run/simon-entry.webp?v=ear-clean-8")} width="512" height="768" alt="" fetchpriority="high" decoding="async" />
+        <img class="cosmic-entry-body" src={sceneEntry.src} srcset={sceneEntry.srcset} sizes={sceneEntry.sizes} width="512" height="768" alt="" fetchpriority="high" decoding="async" />
         <img class="cosmic-entry-poster" src={withBase("/media/identity/simon-portrait.jpg?canonical-lock-6")} width="512" height="768" alt="" loading="lazy" decoding="async" />
       </figure>
       <div class="cosmic-white-field"></div>

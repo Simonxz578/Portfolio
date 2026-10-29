@@ -44,6 +44,7 @@ const otherResearch = research.filter((item) => !("doi" in item));
 const capabilityContext = isZh
   ? ["把模型能力接入工作流。", "从用户问题到产品取舍。", "把情境转化为可以检验的问题。", "让团队与组织持续运行。"]
   : ["Connect model capability to a workflow.", "Turn user problems into product choices.", "Make contextual questions testable.", "Help teams and organisations continue."];
+import { responsiveImageSrcSet } from "../utils/responsiveImages";
 ---
 
 <div class:list={["one-page-resume", { "opr-standalone": standalone }]}>
@@ -69,7 +70,7 @@ const capabilityContext = isZh
         </div>
       </div>
       <figure class="opr-identity-portrait">
-        <div class="opr-portrait-mount"><img src={withBase("/media/identity/simon-portrait.jpg?canonical-lock-6")} width="640" height="800" alt={isZh ? "张翔 Simon 身着黑色学袍和蓝色西装的肖像。" : "Portrait of Xiang Zhang (Simon) in a black academic gown and blue suit."} loading={standalone ? "eager" : "lazy"} decoding="async" /></div>
+        <div class="opr-portrait-mount"><img src={withBase("/media/identity/simon-portrait.jpg?canonical-lock-6")} srcset={responsiveImageSrcSet("/media/identity/simon-portrait.jpg?canonical-lock-6", [240, 320, 480], 640)} sizes="(max-width: 767px) 112px, (max-width: 1100px) 260px, 360px" width="640" height="800" alt={isZh ? "张翔 Simon 身着黑色学袍和蓝色西装的肖像。" : "Portrait of Xiang Zhang (Simon) in a black academic gown and blue suit."} loading={standalone ? "eager" : "lazy"} fetchpriority={standalone ? "high" : "low"} decoding="async" /></div>
         <figcaption><span>{isZh ? "物理 · 教育 · AI产品" : "Physics · Education · AI product"}</span><span>{isZh ? "张翔 Simon" : "Xiang Zhang (Simon)"}</span></figcaption>
       </figure>
     </div>
@@ -109,14 +110,14 @@ const capabilityContext = isZh
             <header class="opr-project-header"><p class="opr-kicker">{project.kicker}</p><h3><a href={casePath(project.slug)}>{project.shortTitle}<span aria-hidden="true">↗</span></a></h3><p class="opr-project-status">{project.status}</p><div class="opr-project-meta"><time>{project.period}</time><span>{project.organisation}</span></div></header>
             {project.slug === "ninefold" && <figure class="opr-project-media opr-world-scene opr-screenshot-frame" aria-labelledby="resume-ninefold-scene-caption">
               <a href={project.links?.[0]?.href ?? casePath(project.slug)} aria-label={isZh ? "体验 Ninefold" : "Experience Ninefold"}>
-                <div class="opr-world-layers" aria-hidden="true"><img class="opr-scene-showcase" src={withBase("/images/ninefold/ninefold-showcase.webp")} width="1920" height="1106" alt="" loading="lazy" decoding="async"/></div>
+                <div class="opr-world-layers" aria-hidden="true"><img class="opr-scene-showcase" src={withBase("/images/ninefold/ninefold-showcase.webp")} srcset={responsiveImageSrcSet("/images/ninefold/ninefold-showcase.webp", [480, 768, 1024, 1280, 1600], 1920)} sizes="(max-width: 767px) calc(100vw - 82px), (max-width: 1100px) calc(92vw - 66px), (max-width: 1336px) calc(92vw - 98px), 1120px" width="1920" height="1106" alt="" loading="lazy" decoding="async"/></div>
                 <span class="opr-media-action" aria-hidden="true">{isZh ? "进入学习世界" : "Enter the learning world"}<span>↗</span></span>
               </a><figcaption id="resume-ninefold-scene-caption">{isZh ? "Ninefold · 在同一个世界里探索物理、数学与实验" : "Ninefold · Physics, mathematics and experiments in one learning world"}</figcaption>
             </figure>}
             {project.slug === "industrial-ai-agent-rag-workflow" && <figure class="opr-project-media opr-system-visual" aria-labelledby="resume-industrial-flow-caption"><figcaption id="resume-industrial-flow-caption">{isZh ? "公开版工作流 · 从检测情境到人工复核" : "Public workflow · From inspection context to human review"}</figcaption><ol>{project.workflow.map((step) => <li><strong>{step.label}</strong><p>{step.detail}</p></li>)}</ol></figure>}
             {project.slug === "ai-enhanced-science-education" && <figure class="opr-project-media opr-tpack-visual" aria-labelledby="resume-tpack-caption"><div class="opr-tpack-diagram" aria-hidden="true"><span class="opr-tpack-domain opr-domain-technology">{isZh ? "生成式AI" : "Generative AI"}</span><span class="opr-tpack-domain opr-domain-pedagogy">{isZh ? "教学法" : "Pedagogy"}</span><span class="opr-tpack-domain opr-domain-science">{isZh ? "学科知识" : "Subject knowledge"}</span></div><figcaption id="resume-tpack-caption">{isZh ? "GenAI–TPACK · 研究视角" : "GenAI–TPACK · The research lens"}</figcaption></figure>}
-            {project.slug === "ai-policy-teacher-agency" && <figure class="opr-project-media opr-policy-photo"><a href={casePath(project.slug)} aria-label={isZh ? "阅读AI政策与教师能动性案例" : "Read the AI policy and teacher agency case"}><img src={withBase("/images/v2/river-cam-fast.avif")} width="1200" height="674" alt={isZh ? "剑桥康河畔的学院建筑与校园环境" : "College architecture and the River Cam at Cambridge."} loading="lazy" decoding="async"/></a><figcaption>{isZh ? "剑桥大学 · 教育政策、领导力与改进" : "University of Cambridge · Education policy, leadership and improvement"}</figcaption></figure>}
-            {project.slug === "formal-hall-networking-society-website" && <figure class="opr-project-media opr-community-photo"><a href={casePath(project.slug)} aria-label={isZh ? "阅读FHNS网站案例" : "Read the FHNS website case study"}><img src={withBase("/images/v2/caius-formal-fast.avif")} width="1024" height="768" alt={isZh ? "学生们身着学位服在剑桥学院Formal Hall内合影" : "Students in academic dress gathered inside a Cambridge college Formal Hall."} loading="lazy" decoding="async"/></a><figcaption>{isZh ? "Formal Hall Networking Society · 从社群运营到公开产品" : "Formal Hall Networking Society · From community operations to a public product"}</figcaption></figure>}
+            {project.slug === "ai-policy-teacher-agency" && <figure class="opr-project-media opr-policy-photo"><a href={casePath(project.slug)} aria-label={isZh ? "阅读AI政策与教师能动性案例" : "Read the AI policy and teacher agency case"}><img src={withBase("/images/v2/river-cam-fast.avif")} srcset={responsiveImageSrcSet("/images/v2/river-cam-fast.avif", [320, 480, 640, 768], 1200)} sizes="(max-width: 767px) 535px, (max-width: 900px) calc(92vw - 66px), 750px" width="1200" height="674" alt={isZh ? "剑桥康河畔的学院建筑与校园环境" : "College architecture and the River Cam at Cambridge."} loading="lazy" decoding="async"/></a><figcaption>{isZh ? "剑桥大学 · 教育政策、领导力与改进" : "University of Cambridge · Education policy, leadership and improvement"}</figcaption></figure>}
+            {project.slug === "formal-hall-networking-society-website" && <figure class="opr-project-media opr-community-photo"><a href={casePath(project.slug)} aria-label={isZh ? "阅读FHNS网站案例" : "Read the FHNS website case study"}><img src={withBase("/images/v2/caius-formal-fast.avif")} srcset={responsiveImageSrcSet("/images/v2/caius-formal-fast.avif", [320, 480, 640], 1024)} sizes="(max-width: 767px) 400px, (max-width: 900px) calc(92vw - 66px), 560px" width="1024" height="768" alt={isZh ? "学生们身着学位服在剑桥学院Formal Hall内合影" : "Students in academic dress gathered inside a Cambridge college Formal Hall."} loading="lazy" decoding="async"/></a><figcaption>{isZh ? "Formal Hall Networking Society · 从社群运营到公开产品" : "Formal Hall Networking Society · From community operations to a public product"}</figcaption></figure>}
           </div>
           {project.slug === "ninefold" && <ol class="opr-learning-flow" aria-label={isZh ? "六步学习流程" : "Six-step learning flow"}>{project.workflow.map((step) => <li>{step.label}</li>)}</ol>}
           <div class="opr-project-detail"><div class="opr-project-question"><p class="opr-field-label">{isZh ? "核心问题" : "The question"}</p><p>{project.question}</p><p class="opr-project-summary">{project.summary}</p></div><div class="opr-project-delivery"><p class="opr-field-label">{isZh ? "我的角色" : "My role"}</p><p>{project.role}</p><ul>{project.outcomes.slice(0, 3).map((outcome) => <li>{outcome}</li>)}</ul></div></div>
@@ -151,22 +152,60 @@ const capabilityContext = isZh
 <script>
   const chapterNav = document.querySelector<HTMLElement>("[data-opr-chapter-nav]");
   const sentinel = document.querySelector<HTMLElement>("[data-opr-index-sentinel]");
-  const chapterLinks = chapterNav?.querySelectorAll<HTMLAnchorElement>("a[href^='#']");
+  const chapterLinks = Array.from(chapterNav?.querySelectorAll<HTMLAnchorElement>("a[href^='#']") ?? []);
   const chapters = Array.from(document.querySelectorAll<HTMLElement>(".one-page-resume > section[id]"));
-  if (chapterNav && sentinel && "IntersectionObserver" in window) {
-    const stickyObserver = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      if (entry) chapterNav.classList.toggle("is-stuck", !entry.isIntersecting && entry.boundingClientRect.top < 100);
-    }, {rootMargin: "-96px 0px 0px 0px"});
-    stickyObserver.observe(sentinel);
-    const locationObserver = new IntersectionObserver(() => {
+  if (chapterNav && sentinel) {
+    let chapterTops: {id:string;top:number}[] = [];
+    let dirty = true;
+    let frame = 0;
+    let activeId: string | undefined;
+    const updateLocation = () => {
+      frame = 0;
+      if (document.hidden) return;
+      const scrollY = window.scrollY;
+      if (dirty) {
+        chapterTops = chapters.map(chapter => ({id:chapter.id,top:chapter.getBoundingClientRect().top + scrollY}));
+        dirty = false;
+      }
       let current = "";
-      for (const chapter of chapters) if (chapter.getBoundingClientRect().top <= 200) current = chapter.id;
-      chapterLinks?.forEach((link) => {
-        if (link.hash === "#" + current) link.setAttribute("aria-current", "location");
-        else link.removeAttribute("aria-current");
+      for (const chapter of chapterTops) if (chapter.top <= scrollY + 200) current = chapter.id;
+      if (current === activeId) return;
+      activeId = current;
+      chapterLinks.forEach(link => {
+        if (link.hash === "#" + current) {
+          if (link.getAttribute("aria-current") !== "location") link.setAttribute("aria-current", "location");
+        } else if (link.hasAttribute("aria-current")) link.removeAttribute("aria-current");
       });
-    }, {rootMargin: "-160px 0px -60% 0px", threshold: 0});
-    chapters.forEach((chapter) => locationObserver.observe(chapter));
+    };
+    const scheduleLocation = () => { if (!frame && !document.hidden) frame = requestAnimationFrame(updateLocation); };
+    const invalidateLocation = () => { dirty = true; scheduleLocation(); };
+    const cancelLocation = () => { if (frame) cancelAnimationFrame(frame); frame = 0; };
+    if ("IntersectionObserver" in window) {
+      let stuck = chapterNav.classList.contains("is-stuck");
+      const stickyObserver = new IntersectionObserver(entries => {
+        const entry = entries[0];
+        if (!entry) return;
+        const next = !entry.isIntersecting && entry.boundingClientRect.top < 100;
+        if (next !== stuck) { chapterNav.classList.toggle("is-stuck", next); stuck = next; }
+      }, {rootMargin:"-96px 0px 0px 0px"});
+      stickyObserver.observe(sentinel);
+    }
+    if ("ResizeObserver" in window) {
+      const sizeObserver = new ResizeObserver(invalidateLocation);
+      sizeObserver.observe(document.documentElement);
+      chapters.forEach(chapter => sizeObserver.observe(chapter));
+    }
+    const onImageLayout = (event: Event) => { if (event.target instanceof HTMLImageElement) invalidateLocation(); };
+    document.addEventListener("load", onImageLayout, true);
+    document.addEventListener("error", onImageLayout, true);
+    document.fonts?.ready.then(invalidateLocation);
+    document.fonts?.addEventListener("loadingdone", invalidateLocation);
+    document.addEventListener("visibilitychange", () => { if (document.hidden) cancelLocation(); else invalidateLocation(); });
+    window.addEventListener("scroll", scheduleLocation, {passive:true});
+    window.addEventListener("resize", invalidateLocation, {passive:true});
+    window.addEventListener("hashchange", scheduleLocation);
+    window.addEventListener("pageshow", invalidateLocation);
+    window.addEventListener("pagehide", cancelLocation);
+    updateLocation();
   }
 </script>
