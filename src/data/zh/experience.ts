@@ -23,7 +23,7 @@ export const selectedExperience: ExperienceItem[] = [
   {
     period: "2024",
     organisation: "经纬恒润，北京",
-    role: "硬件产品实习生",
+    role: "硬件项目经理实习",
     summary: "参与模型部署、评估、RAG检索和Agent工作流在工业场景中的集成。"
   },
   {
