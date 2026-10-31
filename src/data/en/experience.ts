@@ -27,7 +27,7 @@ export const selectedExperience: ExperienceItem[] = [
   {
     period: "2024",
     organisation: "Hirain, Beijing",
-    role: "Hardware Project Manager Intern",
+    role: "Hardware Product Intern",
     summary: "Worked on model deployment, evaluation, RAG retrieval and agent workflow integration in an industrial context."
   },
   {
