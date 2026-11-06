@@ -98,3 +98,21 @@ html[lang=zh-CN] .cosmic-introduction h1 > em { margin-left:.25em; font-size:.82
   .cosmic-run { --cosmic-night:1!important; --cosmic-dawn:0!important; --cosmic-sunset:0!important; --cosmic-day:0!important; }.cosmic-run .cosmic-sky { will-change:auto; }
   .cosmic-run .cosmic-viewport { position:relative; height:100%; }.cosmic-scroll-note,.cosmic-destination,.cosmic-loading-note { display:none!important; }.cosmic-reduced-note { display:block; }.cosmic-skip,.cosmic-action-secondary,.cosmic-action-secondary span { transition:none; }
 }
+
+/* The initial scene holds position only while its required layers are loading. */
+html[data-cosmic-waiting] { scrollbar-gutter:stable; }
+html[data-cosmic-waiting],html[data-cosmic-waiting] body {
+  overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:pinch-zoom;
+}
+html[data-cosmic-waiting] :is(.one-page-resume,.site-footer) { visibility:hidden; }
+.cosmic-load-status { display:none; position:absolute; width:min(196px,100%); margin-top:10px; color:#405b80; font-size:14px; line-height:1.4; }
+.cosmic-load-status p { margin:0 0 5px; }
+.cosmic-load-status progress { display:block; width:100%; height:4px; accent-color:#3559d5; }
+.cosmic-retry { display:none; margin-top:6px; color:inherit; text-underline-offset:3px; }
+[data-cosmic-motion=loading] .cosmic-load-status,
+[data-cosmic-loaded-feedback] .cosmic-load-status,
+[data-cosmic-retry] .cosmic-retry { display:block; }
+
+[data-cosmic-motion=loading] .cosmic-scroll-note { visibility:hidden; }

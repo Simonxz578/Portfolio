@@ -1,7 +1,7 @@
 ---
 import { withBase } from "../utils/urls";
 import "../styles/cosmic-run.css";
-import { sceneEntry } from "../utils/scene-assets";
+import { sceneEntry, sceneDepth, sceneArchitecture, sceneSprite } from "../utils/scene-assets.mjs";
 
 interface Props { locale?: "en" | "zh"; }
 const { locale = "en" } = Astro.props;
@@ -12,7 +12,7 @@ const c = zh ? {
   summary: "从物理与教育出发，把 AI 做成真正有用的产品。",
   skip: "查看履历 · 跳过序章", projects: "探索项目", scroll: "向下探索", reverse: "随时向上，回到起点",
   destination: "King’s College Chapel · Cambridge",
-  static: "静态场景 · 场景素材暂不可用", loading: "动作素材加载中", reduced: "静态场景 · 已减少动态效果",
+  static: "静态序章 · 向下阅读履历", loading: "正在载入动画", loaded: "加载完毕", failed: "动画加载失败", retry: "重新加载", reduced: "静态场景 · 已减少动态效果",
   description: "使用“查看完整履历”可立即到达同一页面的完整履历；所有主要内容均可继续向下阅读。",
   stages: [
     {name:"起点",copy:"从物理出发，理解复杂系统。"},
@@ -28,7 +28,7 @@ const c = zh ? {
   summary: "From physics and education to useful AI products.",
   skip: "View résumé · Skip intro", projects: "Explore projects", scroll: "Scroll to explore", reverse: "Scroll back to return",
   destination: "King’s College Chapel · Cambridge",
-  static: "Static scene · scene asset unavailable", loading: "Loading the motion asset", reduced: "Static scene · reduced motion",
+  static: "Static introduction · scroll to read the résumé", loading: "Loading animation", loaded: "Animation ready", failed: "Animation could not load", retry: "Reload", reduced: "Static scene · reduced motion",
   description: "Choose View full résumé to immediately reach the complete résumé on this same page. All main content can also be read by continuing down the page.",
   stages: [
     {name:"The starting point",copy:"A foundation in physics and complex systems."},
@@ -39,7 +39,6 @@ const c = zh ? {
     {name:"Keep reading",copy:"The complete résumé follows."}
   ],
 };
-const sprite = withBase("/media/cosmic-run/runner-cycle.webp?v=gown-contact-6");
 ---
 <section
   class="cosmic-run"
@@ -50,39 +49,70 @@ const sprite = withBase("/media/cosmic-run/runner-cycle.webp?v=gown-contact-6");
   data-cosmic-tone="dark"
   data-cosmic-progress="0"
   data-cosmic-stage="0"
-  data-sprite-src={sprite}
+  data-sprite-src={sceneSprite}
+  data-scene-cache-worker={withBase("/scene-cache.js")}
   data-frame-count="8"
   data-frame-columns="4"
   data-frame-rows="2"
   data-grounded-frames="1,5"
-  style={`--cosmic-runner-sheet:url('${sprite}')`}
+  style={`--cosmic-runner-sheet:url('${sceneSprite}')`}
   aria-labelledby="cosmic-name"
   aria-describedby="cosmic-description"
 >
   <script is:inline>
-    // Establish the long scene before the résumé is parsed, preventing scroll-anchor jumps on refresh.
     (() => {
       const scene = document.currentScript?.parentElement;
-      if (!scene || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (!scene) return;
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+      if (reduced.matches) { scene.dataset.cosmicMotion = "reduced"; return; }
+      const navigation = performance.getEntriesByType("navigation")[0];
+      const restoringPosition = (location.hash && location.hash !== "#cosmic-run")
+        || scrollY > 0 || navigation?.type === "back_forward" || navigation?.type === "reload";
+
+      const root = document.documentElement;
+      const startedAt = performance.now();
+      const listeners = new AbortController();
+      const { signal } = listeners;
+      scene.dataset.cosmicMotion = "loading";
+      // Reserve the original scroll range before the browser restores an anchor.
       scene.setAttribute("data-cosmic-enhanced", "");
-      scene.dataset.cosmicBootstrapTimer = String(setTimeout(() => {
-        if (scene.dataset.cosmicInitialised !== "true") {
-          scene.removeAttribute("data-cosmic-enhanced");
-          scene.dataset.cosmicMotion = "static";
-          scene.dataset.cosmicBootstrap = "timed-out";
-        }
-      }, 10000));
+      if (!restoringPosition) root.setAttribute("data-cosmic-waiting", "");
+
+      // Keep a recovery link available if a request or the scene module stalls.
+      const timer = setTimeout(() => scene.setAttribute("data-cosmic-retry", ""), 8000);
+      scene.cosmicRelease = (state) => {
+        if (scene.dataset.cosmicMotion !== "loading") return false;
+        const elapsed = performance.now() - startedAt;
+        clearTimeout(timer);
+        listeners.abort();
+        root.removeAttribute("data-cosmic-waiting");
+        scene.removeAttribute("data-cosmic-retry");
+        scene.dataset.cosmicMotion = state;
+        if (state !== "ready") scene.removeAttribute("data-cosmic-enhanced");
+        scene.dataset.cosmicWaitMs = String(Math.round(elapsed));
+        return state === "ready";
+      };
+      const skip = () => scene.cosmicRelease("static");
+      if (!restoringPosition) {
+        document.addEventListener("click", (event) => {
+          if (event.target instanceof Element && event.target.closest("a[href]")) skip();
+        }, { capture: true, signal });
+        window.addEventListener("hashchange", skip, { signal });
+      }
+      reduced.addEventListener("change", () => {
+        if (reduced.matches) scene.cosmicRelease("reduced");
+      }, { signal });
     })();
   </script>
   <div class="cosmic-viewport" data-cosmic-viewport>
     <div class="cosmic-environment" aria-hidden="true">
-      <img class="cosmic-depth-plate" src={withBase("/media/cosmic-run/cosmic-depth.webp?v=morning-3")} width="1280" height="720" alt="" fetchpriority="high" decoding="async" />
+      <img class="cosmic-depth-plate" src={sceneDepth} width="1280" height="720" alt="" fetchpriority="high" decoding="async" />
       <div class="cosmic-sky cosmic-sky-night"></div>
       <div class="cosmic-sky cosmic-sky-dawn"></div>
       <div class="cosmic-sky cosmic-sky-sunset"></div>
       <div class="cosmic-sky cosmic-sky-day"></div>
       <div class="cosmic-depth-shade"></div>
-      <img class="cosmic-architecture" data-cosmic-architecture src={withBase("/media/cosmic-run/kings-architecture.webp?v=sky-clean-8")} width="1600" height="900" alt="" fetchpriority="low" decoding="async" />
+      <img class="cosmic-architecture" data-cosmic-architecture src={sceneArchitecture} width="1600" height="900" alt="" decoding="async" />
       <div class="cosmic-entry-shadow"></div>
       <div class="cosmic-foot-shadow" data-cosmic-shadow></div>
       <div class="cosmic-runner" data-cosmic-runner></div>
@@ -99,6 +129,11 @@ const sprite = withBase("/media/cosmic-run/runner-cycle.webp?v=gown-contact-6");
       <p class="cosmic-role">{c.role}</p>
       <p class="cosmic-summary">{c.summary}</p>
       <div class="cosmic-actions"><a class="cosmic-skip" href="#resume-start">{c.skip}<span aria-hidden="true">↓</span></a><a class="cosmic-action-secondary" href="#resume-projects">{c.projects}<span aria-hidden="true">↗</span></a></div>
+      <div class="cosmic-load-status" data-cosmic-load-status data-ready-text={c.loaded} data-failed-text={c.failed}>
+        <p id="cosmic-load-message" role="status" data-cosmic-load-message>{c.loading}</p>
+        <progress max="4" value="0" aria-labelledby="cosmic-load-message"></progress>
+        <a class="cosmic-retry" href={withBase(zh ? "/zh/" : "/")}>{c.retry}</a>
+      </div>
     </div>
 
     <div class="cosmic-stage-label" aria-hidden="true">
@@ -115,5 +150,8 @@ const sprite = withBase("/media/cosmic-run/runner-cycle.webp?v=gown-contact-6");
 </section>
 <script>
   import { initialiseCosmicRuns } from "../scripts/cosmic-run";
+  import { registerSceneCache } from "../scripts/scene-cache";
   initialiseCosmicRuns();
+  const worker = document.querySelector<HTMLElement>("[data-scene-cache-worker]")?.dataset.sceneCacheWorker;
+  if (worker) registerSceneCache(worker);
 </script>

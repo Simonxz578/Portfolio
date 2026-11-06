@@ -4,7 +4,7 @@ import SiteHeader from "@components/SiteHeader.astro";
 import { site } from "@data/site";
 import { withBase } from "../utils/urls";
 import "@styles/global.css";
-import { sceneEntry } from "../utils/scene-assets";
+import { sceneEntry, sceneDepth, sceneArchitecture, sceneSprite } from "../utils/scene-assets.mjs";
 
 interface Props {
   title: string;
@@ -48,7 +48,12 @@ const currentPath = Astro.url.pathname;
     {noIndex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="canonical" href={canonicalUrl} />
-    {(Astro.url.pathname === withBase('/') || Astro.url.pathname === withBase('/zh/')) && <link rel="preload" as="image" href={sceneEntry.src} imagesrcset={sceneEntry.srcset} imagesizes={sceneEntry.sizes} fetchpriority="high" />}
+    {(currentPath === withBase('/') || currentPath === withBase('/zh/')) && <>
+      <link rel="preload" as="image" href={sceneDepth} fetchpriority="high" />
+      <link rel="preload" as="image" imagesrcset={sceneEntry.srcset} imagesizes={sceneEntry.sizes} fetchpriority="high" />
+      <link rel="preload" as="image" href={sceneArchitecture} />
+      <link rel="preload" as="image" href={sceneSprite} media="(prefers-reduced-motion: no-preference)" />
+    </>}
     <link rel="icon" href={withBase("/icons/favicon.svg")} type="image/svg+xml" />
 
     <meta property="og:type" content={pageType} />
