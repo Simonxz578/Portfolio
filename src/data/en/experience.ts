@@ -31,9 +31,9 @@ export const selectedExperience: ExperienceItem[] = [
     summary: "Worked on model deployment, evaluation, RAG retrieval and agent workflow integration in an industrial context."
   },
   {
-    period: "Aug–Oct 2023",
+    period: "2023",
     organisation: "Siemens, Beijing",
-    role: "Technical Product Manager Intern",
+    role: "Product Manager Intern",
     summary: "Collaborated with business, IT and R&D teams to write PRDs, designed interactive prototypes and business processes using Axure and Visio, and developed a multidimensional product evaluation framework to optimise the end-to-end workflow from materials search and selection through production implementation, reducing average task completion time."
   }
 ];

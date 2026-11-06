@@ -27,9 +27,9 @@ export const selectedExperience: ExperienceItem[] = [
     summary: "参与模型部署、评估、RAG检索和Agent工作流在工业场景中的集成。"
   },
   {
-    period: "2023.08–2023.10",
+    period: "2023",
     organisation: "西门子，北京",
-    role: "技术产品经理实习",
+    role: "产品经理实习",
     summary: "协同业务、IT 及研发部门完成 PRD 撰写，使用 Axure 与 Visio 设计交互原型及业务流程，构建多维度产品评价体系，推动材料检索、选型至生产落地的全流程优化，降低平均任务耗时。"
   }
 ];
